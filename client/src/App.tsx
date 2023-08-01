@@ -3,6 +3,7 @@ import useCarsStore from 'pages/Cars/store'
 import { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Navbar, Footer } from 'ui'
+import CreateListing from 'ui/Modals/Create listing'
 
 function App() {
     const { fetchCars } = useCarsStore()
@@ -21,6 +22,7 @@ function App() {
                 </Routes>
                 <Footer />
             </BrowserRouter>
+            <CreateListing />
         </div>
     )
 }

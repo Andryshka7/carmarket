@@ -3,7 +3,7 @@ import { Car as ICar } from 'types'
 const SERVER_URL = import.meta.env.VITE_SERVER_URL
 
 const Car = ({ model, year, price }: ICar) => (
-    <div className='bg-neutral-700 rounded-lg'>
+    <div className='text-white bg-neutral-700 rounded-lg'>
         <div className='overflow-hidden rounded-t-lg'>
             <img
                 src={`${SERVER_URL}/images/m5.jpg`}
@@ -11,10 +11,10 @@ const Car = ({ model, year, price }: ICar) => (
             />
         </div>
         <div className='mx-4 mt-1 mb-2'>
-            <h1 className='font-semibold text-white text-xl'>{model}</h1>
-            <div className='flex justify-between mt-0.5'>
-                <h2 className='text-white font-semibold text-xl'>{year}</h2>
-                <h2 className='text-white font-semibold text-xl'>
+            <h1 className='font-semibold text-xl'>{model}</h1>
+            <div className='flex justify-between mt-0.5text-xl'>
+                <h2 className='font-semibold text-xl'>{year}</h2>
+                <h2 className='font-semibold text-xl'>
                     ${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
                 </h2>
             </div>
