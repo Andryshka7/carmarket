@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { AiOutlineCloseCircle } from 'react-icons/ai'
+
 import { Portal } from 'ui'
+import { Transmission, Type, ImagesInput } from './components'
 
 type Data = {
     model: string
@@ -9,12 +12,14 @@ type Data = {
     description: number
 }
 
-const transmissions = ['Automatic', 'Manual']
-const types = ['Fuel', 'Electric']
+interface Props {
+    close: () => void
+}
 
-const CreateListing = () => {
-    const [transmission, setTransmission] = useState(transmissions[0])
-    const [type, setType] = useState(types[0])
+const CreateListing = ({ close }: Props) => {
+    const [transmission, setTransmission] = useState('Automatic')
+    const [type, setType] = useState('Fuel')
+    const [images, setImages] = useState<File[]>([])
 
     const { register, handleSubmit } = useForm<Data>()
 
@@ -22,73 +27,66 @@ const CreateListing = () => {
 
     return (
         <Portal>
-            <form
-                className='absolute top-0 left-0 w-full h-full px-8 text-white bg-neutral-700'
-                onSubmit={handleSubmit(submit)}
+            <div
+                className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center'
+                onClick={close}
             >
-                <div>
-                    <input
-                        type='text'
-                        {...register('model')}
-                        className='font-semibold mt-6 w-full rounded bg-transparent focus:outline-none border-2 border-[#858585] h-12'
-                    />
-                    <h3 className='text-center text-[#858585] text-sm mt-1 font-bold'>Make & Model</h3>
-                </div>
-                <div className='mt-2 flex w-full justify-between'>
-                    <div>
-                        <input
-                            type='number'
-                            {...register('year')}
-                            className='font-semibold rounded bg-transparent focus:outline-none border-2 border-[#858585] w-36 h-12'
-                        />
-                        <h3 className='text-center text-[#858585] text-sm mt-1 font-bold'>Year</h3>
-                    </div>
-                    <div>
-                        <input
-                            type='number'
-                            {...register('price')}
-                            className='font-semibold rounded bg-transparent focus:outline-none border-2 border-[#858585] w-36 h-12'
-                        />
-                        <h3 className='text-center text-[#858585] text-sm mt-1 font-bold'>Price</h3>
-                    </div>
-                </div>
-                <div className='mt-2 flex w-full justify-between'>
-                    {transmissions.map((item) => (
-                        <div
-                            onClick={() => setTransmission(item)}
-                            className={`text-[#858585] transition duration-200 w-36 font-semibold text-lg flex items-center justify-center rounded focus:outline-none border-2 border-[#858585] h-12 ${
-                                transmission === item ? 'bg-[#858585] text-neutral-700' : 'bg-transparent'
-                            }`}
-                            key={item}
-                        >
-                            {item}
-                        </div>
-                    ))}
-                </div>
-                <div className='mt-5 flex w-full justify-between'>
-                    {types.map((item) => (
-                        <div
-                            onClick={() => setType(item)}
-                            className={`text-[#858585] transition duration-200 w-36 font-semibold text-lg flex items-center justify-center rounded focus:outline-none border-2 border-[#858585] h-12 ${
-                                type === item ? 'bg-[#858585] text-neutral-700' : 'bg-transparent'
-                            }`}
-                            key={item}
-                        >
-                            {item}
-                        </div>
-                    ))}
-                </div>
-                <textarea
-                    {...register('price')}
-                    className='mt-5 w-full rounded bg-transparent focus:outline-none border-2 border-[#858585] h-36'
-                />
-                <button
-                    className='mt-5 block m-auto w-72 rounded-md bg-green-600 h-12 font-semibold'
-                    type='submit'
+                <form
+                    className='w-full h-full md:w-[800px] md:h-[800px] md:rounded-lg overflow-auto py-5 md:py-12 px-8 md:px-[134px] text-white bg-neutral-700'
+                    onSubmit={handleSubmit(submit)}
+                    onClick={(e) => e.stopPropagation()}
                 >
-                    Create listing
-                </button>
-            </form>
+                    <div>
+                        <input
+                            type='text'
+                            {...register('model')}
+                            className='font-semibold w-full rounded bg-transparent focus:outline-none border-2 border-[#858585] h-12'
+                        />
+                        <h3 className='text-center text-[#858585] text-sm mt-1 font-bold'>Make & Model</h3>
+                    </div>
+
+                    <div className='mt-2 flex w-full justify-between'>
+                        <div className='w-[45%]'>
+                            <input
+                                type='number'
+                                {...register('year')}
+                                className='font-semibold rounded bg-transparent focus:outline-none border-2 border-[#858585] w-full h-12'
+                            />
+                            <h3 className='text-center text-[#858585] text-sm mt-1 font-bold'>Year</h3>
+                        </div>
+                        <div className='w-[45%]'>
+                            <input
+                                type='number'
+                                {...register('price')}
+                                className='font-semibold rounded bg-transparent focus:outline-none border-2 border-[#858585] w-full h-12'
+                            />
+                            <h3 className='text-center text-[#858585] text-sm mt-1 font-bold'>Price</h3>
+                        </div>
+                    </div>
+
+                    <Transmission transmission={transmission} switchTransmission={setTransmission} />
+                    <Type type={type} switchType={setType} />
+
+                    <div>
+                        <textarea
+                            {...register('description')}
+                            className='mt-5 w-full rounded bg-transparent focus:outline-none border-2 border-[#858585] h-36'
+                        />
+                        <h3 className='text-center text-[#858585] text-sm font-bold'>Description</h3>
+                    </div>
+
+                    <ImagesInput images={images} setImages={setImages} />
+
+                    <button
+                        className='mt-5 block m-auto w-72 rounded-md bg-green-600 transition duration-200 hover:bg-opacity-90 h-12 font-semibold'
+                        type='submit'
+                    >
+                        Create listing
+                    </button>
+
+                    <AiOutlineCloseCircle size={50} className='md:hidden mt-5 mx-auto' onClick={close} />
+                </form>
+            </div>
         </Portal>
     )
 }

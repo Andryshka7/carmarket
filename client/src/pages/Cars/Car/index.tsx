@@ -12,7 +12,7 @@ const Car = ({ model, year, price }: ICar) => (
         </div>
         <div className='mx-4 mt-1 mb-2'>
             <h1 className='font-semibold text-xl'>{model}</h1>
-            <div className='flex justify-between mt-0.5text-xl'>
+            <div className='flex justify-between mt-0.5 text-xl'>
                 <h2 className='font-semibold text-xl'>{year}</h2>
                 <h2 className='font-semibold text-xl'>
                     ${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}

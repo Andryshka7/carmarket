@@ -1,7 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { IoCarSport } from 'react-icons/io5'
-import { BiMessageSquareAdd } from 'react-icons/bi'
-import { HiLogout } from 'react-icons/hi'
+import { Dropdown } from './components'
 import useAuthStore from './store'
 
 const Auth = () => {
@@ -25,30 +23,17 @@ const Auth = () => {
     }, [showDropDown])
 
     return (
-        <div
-            className='text-white hidden md:flex items-center gap-3 cursor-pointer'
-            onClick={() => setShowDropDown(true)}
-            ref={dropDownRef}
-        >
-            <img src={avatar} className='w-8 h-8 rounded-full' />
-            <h2 className='font-semibold text-xl'>{name}</h2>
-            {showDropDown && (
-                <div className='rounded-lg bg-neutral-600 absolute top-14 right-16 py-2 z-[1]'>
-                    <div className='my-1 flex items-center gap-2 px-6 cursor-pointer hover:bg-neutral-500'>
-                        <IoCarSport size={25} color='white' />
-                        <h2 className='font-semibold text-lg'>My listings</h2>
-                    </div>
-                    <div className='my-1 flex items-center gap-2 px-6 cursor-pointer hover:bg-neutral-500'>
-                        <BiMessageSquareAdd size={25} color='white' />
-                        <h2 className='font-semibold text-lg'>List car</h2>
-                    </div>
-                    <div className='my-1 flex items-center gap-2 px-6 cursor-pointer hover:bg-neutral-500'>
-                        <HiLogout size={25} color='white' />
-                        <h2 className='font-semibold text-lg'>Logout</h2>
-                    </div>
-                </div>
-            )}
-        </div>
+        <>
+            <div
+                ref={dropDownRef}
+                className='hidden md:flex items-center gap-3 cursor-pointer'
+                onClick={() => setShowDropDown(true)}
+            >
+                <img src={avatar} className='w-8 h-8 rounded-full' />
+                <h2 className='text-white font-semibold text-xl'>{name}</h2>
+            </div>
+            <Dropdown showDropdown={showDropDown} />
+        </>
     )
 }
 

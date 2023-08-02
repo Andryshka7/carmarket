@@ -31,7 +31,7 @@ const Menu = () => {
                         <Price />
                         <Transmission />
                         <Type />
-                        <Buttons />
+                        <Buttons closeMenu={toggleMenu} />
                         <div>
                             <AiOutlineCloseCircle
                                 color='white'
