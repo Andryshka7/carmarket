@@ -6,7 +6,7 @@ import { Transmission, Type, ImagesInput } from './components'
 import { createCarQuery } from 'Api/cars'
 import { Car } from 'types'
 import Loader from 'ui/Loader'
-import useCarsStore from 'pages/Cars/store'
+import useCarsStore from 'pages/Cars/components/Cars/store'
 
 type Data = Omit<Car, 'type' | 'transmission' | 'images' | 'id' | 'seller'>
 
@@ -54,7 +54,7 @@ const CreateListing = ({ close }: Props) => {
 
             const created = await createCarQuery(formData)
             createCar(created)
-            
+
             close()
         } catch (error) {
             setLoading(false)

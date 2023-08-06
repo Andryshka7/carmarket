@@ -1,4 +1,4 @@
-import useCarsStore from 'pages/Cars/store'
+import useCarsStore from 'pages/Cars/components/Cars/store'
 import { useParams } from 'react-router-dom'
 import { Car, Error } from './components'
 

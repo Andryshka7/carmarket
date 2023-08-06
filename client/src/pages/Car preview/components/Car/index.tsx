@@ -14,7 +14,10 @@ const Car = ({
     transmission,
     seller: { username, email, avatar, phoneNumber }
 }: ICar) => {
-    const [image, setImage] = useState(images[0])
+    const [image, setImage] = useState(0)
+
+    const setPrevImage = () => setImage(image > 0 ? image - 1 : images.length - 1)
+    const setNextImage = () => setImage(image < images.length - 1 ? image + 1 : 0)
 
     return (
         <div className='m-5 mx-auto w-[300px] text-white sm:w-[450px] md:w-[600px] xl:w-[800px] 2xl:w-[1000px]'>
@@ -22,37 +25,34 @@ const Car = ({
                 <FcPrevious
                     size={35}
                     className='absolute -left-10 top-1/2 -translate-y-1/2 cursor-pointer'
-                    onClick={() => {
-                        const index = images.indexOf(image) - 1
-                        setImage(images[index % images.length])
-                    }}
+                    onClick={setPrevImage}
                 />
-                <img src={`${SERVER_URL}/images/${image}`} className='aspect-video rounded-lg object-cover' />
+                <img
+                    src={`${SERVER_URL}/images/${images[image]}`}
+                    className='aspect-video rounded-lg object-cover'
+                />
                 <FcNext
                     size={35}
                     className='absolute -right-10 top-1/2 -translate-y-1/2 cursor-pointer'
-                    onClick={() => {
-                        const index = images.indexOf(image) + 1
-                        setImage(images[index % images.length])
-                    }}
+                    onClick={setNextImage}
                 />
             </div>
-            <div className='mt-1 flex justify-between text-lg font-bold xl:text-xl'>
+            <div className='mt-1 flex justify-between text-lg font-bold xl:text-xl 2xl:text-2xl'>
                 <h2>{model}</h2>
                 <h3>${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}</h3>
             </div>
-            <div className='mt-2 text-lg font-medium xl:text-xl'>
+            <div className='mt-2 text-lg font-medium xl:text-xl 2xl:text-2xl'>
                 <p>Transmission: {transmission}</p>
                 <p>Power: {power}</p>
                 <p>Type: {type}</p>
             </div>
-            <p className='mt-2 xl:text-lg'>{description}</p>
+            <p className='mt-2 xl:text-lg 2xl:text-xl'>{description}</p>
             <div className='mt-2 flex flex-wrap gap-2 md:gap-3'>
-                {images.map((image) => (
+                {images.map((image, index) => (
                     <img
                         src={`${SERVER_URL}/images/${image}`}
                         className='aspect-video w-[144px] cursor-pointer rounded-lg object-cover md:w-[190px]'
-                        onClick={() => setImage(image)}
+                        onClick={() => setImage(index)}
                         key={image}
                     />
                 ))}

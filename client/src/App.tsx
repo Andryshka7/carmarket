@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Navbar, Footer } from 'ui'
 import { Cars, MyListings } from 'pages'
-import useCarsStore from 'pages/Cars/store'
+import useCarsStore from 'pages/Cars/components/Cars/store'
 import CarPreview from 'pages/Car preview'
 
 function App() {
