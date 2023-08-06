@@ -1,17 +1,17 @@
 const Price = () => (
     <>
-        <h2 className='text-white mx-auto text-4xl mt-5 font-semibold'>Price</h2>
-        <div className='flex gap-2 mt-4'>
+        <h2 className='mx-auto mt-5 text-4xl font-semibold text-white'>Price</h2>
+        <div className='mt-4 flex gap-2'>
             <input
                 type='text'
                 placeholder='From'
-                className='bg-transparent h-8 w-20 text-white text-center rounded border border-[#999] focus:outline-none'
+                className='h-8 w-20 rounded border border-[#999] bg-transparent text-center text-white focus:outline-none'
             />
-            <p className='text-[#999] text-lg font-bold'>-</p>
+            <p className='text-lg font-bold text-[#999]'>-</p>
             <input
                 type='text'
                 placeholder='To'
-                className='bg-transparent h-8 w-20 text-white text-center rounded border border-[#999] focus:outline-none'
+                className='h-8 w-20 rounded border border-[#999] bg-transparent text-center text-white focus:outline-none'
             />
         </div>
     </>

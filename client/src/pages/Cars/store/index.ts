@@ -1,4 +1,4 @@
-import { fetchCars } from 'Api/cars'
+import { fetchCarsQuery } from 'Api/cars'
 import { Car } from 'types'
 import { create } from 'zustand'
 
@@ -7,6 +7,7 @@ interface Store {
     loading: boolean
     error: boolean
     fetchCars: () => void
+    createCar: (car: Car) => void
 }
 
 const useCarsStore = create<Store>()((set) => ({
@@ -16,11 +17,14 @@ const useCarsStore = create<Store>()((set) => ({
     fetchCars: async () => {
         try {
             set({ loading: true })
-            const cars = await fetchCars()
+            const cars = await fetchCarsQuery()
             set({ cars, loading: false })
         } catch (error) {
             set({ error: true })
         }
+    },
+    createCar: (car: Car) => {
+        set((state) => ({ cars: [...state.cars, car] }))
     }
 }))
 

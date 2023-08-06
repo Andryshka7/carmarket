@@ -1,7 +1,4 @@
-import User from './User'
-
 interface Car {
-    id: number
     model: string
     year: number
     price: number
@@ -9,7 +6,6 @@ interface Car {
     type: string
     transmission: string
     description: string
-    seller: User
 }
 
 export default Car

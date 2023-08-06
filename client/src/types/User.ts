@@ -1,11 +1,9 @@
 interface User {
     id: number
-    name: string
-    surname: string
-    age: number
+    username: string
     email: string
+    phoneNumber: string
     avatar: string
-    password: string
 }
 
 export default User

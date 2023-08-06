@@ -9,11 +9,8 @@ interface Store {
 
 const me = {
     id: 1,
-    name: 'Andryshka',
-    surname: 'Lapchik',
-    password: '',
+    username: 'Andryshka',
     avatar: 'http://localhost:4000/images/panda.png',
-    age: 17,
     email: 'a.lapchik7@gmail.com'
 }
 

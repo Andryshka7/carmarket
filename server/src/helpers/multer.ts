@@ -1,11 +1,14 @@
 import multer from 'multer'
+import { uuid } from 'uuidv4'
 
 const storage = multer.diskStorage({
     destination: function (req, file, callBack) {
-        callBack(null, 'images/')
+        callBack(null, 'src/images/')
     },
     filename: function (req, file, callBack) {
-        callBack(null, file.originalname)
+        const extension = file.originalname.slice(file.originalname.indexOf('.'))
+        const name = uuid() + extension
+        callBack(null, name)
     }
 })
 

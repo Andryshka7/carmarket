@@ -1,5 +1,5 @@
 const Footer = () => (
-    <div className='bg-neutral-700 w-full h-12 flex items-center justify-center mt-auto text-white'>
+    <div className='mt-auto flex h-12 w-full items-center justify-center bg-neutral-700 text-white'>
         © 2023 carmarket All Rights Reserved
     </div>
 )

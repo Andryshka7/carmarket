@@ -12,7 +12,7 @@ const Transmission = ({ transmission, switchTransmission }: Props) => (
         {transmissions.map((item) => (
             <div
                 onClick={() => switchTransmission(item)}
-                className={`text-[#858585] cursor-pointer transition duration-200 w-[45%] font-semibold text-lg flex items-center justify-center rounded focus:outline-none border-2 border-[#858585] h-12 ${
+                className={`flex h-12 w-[45%] cursor-pointer items-center justify-center rounded border-2 border-[#858585] text-lg font-semibold text-[#858585] transition duration-200 focus:outline-none ${
                     transmission === item ? 'bg-[#858585] text-neutral-700' : 'bg-transparent'
                 }`}
                 key={item}

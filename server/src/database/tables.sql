@@ -1,8 +1,8 @@
 CREATE TABLE cars (
     id INT PRIMARY KEY AUTO_INCREMENT,
     model VARCHAR(255),
-    year VARCHAR(4),
-    price DECIMAL(10, 2),
+    year INT,
+    price INT,
     power VARCHAR(10),
     type VARCHAR(50),
     transmission VARCHAR(50),
@@ -11,13 +11,25 @@ CREATE TABLE cars (
     FOREIGN KEY (seller) REFERENCES users(id)
 );
 
-
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255),
-    surname VARCHAR(255),
-    age INT,
+    username VARCHAR(255),
     email VARCHAR(255),
-    avatar VARCHAR(255),
     password VARCHAR(255)
 );
+
+CREATE TABLE images (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    car INT,
+    FOREIGN KEY (car) REFERENCES cars(id)
+);
+
+CREATE TABLE avatars (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    user INT,
+    FOREIGN KEY (user) REFERENCES users(id)
+);
+
+INSERT INTO users (username, email, password) VALUES ('Andryshka16', 'a.lapchik7@gmail.com', 'Andrey2828');

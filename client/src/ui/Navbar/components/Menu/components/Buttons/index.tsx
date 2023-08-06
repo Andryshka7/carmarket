@@ -12,26 +12,25 @@ interface Props {
 const Buttons = ({ closeMenu }: Props) => {
     const [showModal, setShowModal] = useState(false)
 
-    const openModal = () => setShowModal(true)
-    const closeModal = () => setShowModal(false)
-
-    useEffect(() => {
+    const openModal = () => {
         document.body.classList.add('overflow-hidden')
-        return () => {
-            document.body.classList.remove('overflow-hidden')
-        }
-    }, [showModal])
+        setShowModal(true)
+    }
+    const closeModal = () => {
+        document.body.classList.remove('overflow-hidden')
+        setShowModal(false)
+    }
 
     return (
         <>
-            <div className='text-white mt-4' onClick={closeMenu}>
+            <div className='mt-4 text-white' onClick={closeMenu}>
                 <NavLink to='mylistings' className='mt-1 flex items-center gap-2'>
                     <IoCarSport size={35} color='white' />
-                    <h2 className='font-semibold text-xl'>My listings</h2>
+                    <h2 className='text-xl font-semibold'>My listings</h2>
                 </NavLink>
                 <div className='mt-1 flex items-center gap-2' onClick={openModal}>
                     <BiMessageSquareAdd size={35} color='white' />
-                    <h2 className='font-semibold text-xl'>List car</h2>
+                    <h2 className='text-xl font-semibold'>List car</h2>
                 </div>
                 <div
                     className='mt-1 flex items-center gap-2'
@@ -40,7 +39,7 @@ const Buttons = ({ closeMenu }: Props) => {
                     }}
                 >
                     <HiLogout size={35} color='white' />
-                    <h2 className='font-semibold text-xl'>Logout</h2>
+                    <h2 className='text-xl font-semibold'>Logout</h2>
                 </div>
             </div>
             {showModal && <CreateListing close={closeModal} />}

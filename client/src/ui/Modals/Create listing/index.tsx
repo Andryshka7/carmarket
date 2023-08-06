@@ -1,91 +1,155 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
-
 import { Portal } from 'ui'
 import { Transmission, Type, ImagesInput } from './components'
+import { createCarQuery } from 'Api/cars'
+import { Car } from 'types'
+import Loader from 'ui/Loader'
+import useCarsStore from 'pages/Cars/store'
 
-type Data = {
-    model: string
-    year: string
-    price: number
-    description: number
-}
+type Data = Omit<Car, 'type' | 'transmission' | 'images' | 'id' | 'seller'>
 
 interface Props {
     close: () => void
 }
 
 const CreateListing = ({ close }: Props) => {
+    const { createCar } = useCarsStore()
+
     const [transmission, setTransmission] = useState('Automatic')
     const [type, setType] = useState('Fuel')
     const [images, setImages] = useState<File[]>([])
 
-    const { register, handleSubmit } = useForm<Data>()
+    const [loading, setLoading] = useState(false)
 
-    const submit = () => {}
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<Data>()
+
+    const submit = async (data: Data) => {
+        try {
+            setLoading(true)
+
+            const { model, price, power, year, description } = data
+
+            const car = {
+                model,
+                power,
+                year: +year,
+                price: +price,
+                type,
+                transmission,
+                description
+            }
+
+            const formData = new FormData()
+            formData.append('car', JSON.stringify(car))
+
+            images.forEach((item) => {
+                formData.append(`image`, item)
+            })
+
+            const created = await createCarQuery(formData)
+            createCar(created)
+            
+            close()
+        } catch (error) {
+            setLoading(false)
+            console.log('An error occured')
+        }
+    }
 
     return (
         <Portal>
             <div
-                className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center'
+                className='absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50'
                 onClick={close}
             >
-                <form
-                    className='w-full h-full md:w-[800px] md:h-[800px] md:rounded-lg overflow-auto py-5 md:py-12 px-8 md:px-[134px] text-white bg-neutral-700'
-                    onSubmit={handleSubmit(submit)}
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <div>
-                        <input
-                            type='text'
-                            {...register('model')}
-                            className='font-semibold w-full rounded bg-transparent focus:outline-none border-2 border-[#858585] h-12'
-                        />
-                        <h3 className='text-center text-[#858585] text-sm mt-1 font-bold'>Make & Model</h3>
+                {loading ? (
+                    <div className='flex h-full w-full items-center justify-center bg-neutral-700 md:h-[800px] md:w-[770px] md:rounded-lg'>
+                        <Loader />
                     </div>
-
-                    <div className='mt-2 flex w-full justify-between'>
-                        <div className='w-[45%]'>
-                            <input
-                                type='number'
-                                {...register('year')}
-                                className='font-semibold rounded bg-transparent focus:outline-none border-2 border-[#858585] w-full h-12'
-                            />
-                            <h3 className='text-center text-[#858585] text-sm mt-1 font-bold'>Year</h3>
-                        </div>
-                        <div className='w-[45%]'>
-                            <input
-                                type='number'
-                                {...register('price')}
-                                className='font-semibold rounded bg-transparent focus:outline-none border-2 border-[#858585] w-full h-12'
-                            />
-                            <h3 className='text-center text-[#858585] text-sm mt-1 font-bold'>Price</h3>
-                        </div>
-                    </div>
-
-                    <Transmission transmission={transmission} switchTransmission={setTransmission} />
-                    <Type type={type} switchType={setType} />
-
-                    <div>
-                        <textarea
-                            {...register('description')}
-                            className='mt-5 w-full rounded bg-transparent focus:outline-none border-2 border-[#858585] h-36'
-                        />
-                        <h3 className='text-center text-[#858585] text-sm font-bold'>Description</h3>
-                    </div>
-
-                    <ImagesInput images={images} setImages={setImages} />
-
-                    <button
-                        className='mt-5 block m-auto w-72 rounded-md bg-green-600 transition duration-200 hover:bg-opacity-90 h-12 font-semibold'
-                        type='submit'
+                ) : (
+                    <form
+                        className='scrollbar h-full w-full overflow-auto bg-neutral-700 px-8 py-5 text-white md:h-[800px] md:w-[770px] md:rounded-lg md:px-28 md:py-10'
+                        onSubmit={handleSubmit(submit)}
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        Create listing
-                    </button>
+                        <div>
+                            <input
+                                type='text'
+                                {...register('model', { required: true })}
+                                className={`h-12 w-full rounded border-2 bg-transparent text-center font-semibold transition duration-200 focus:outline-none ${
+                                    errors['model'] ? 'border-red-500' : 'border-[#858585]'
+                                }`}
+                            />
+                            <h3 className='mt-1 text-center text-sm font-bold text-[#858585]'>
+                                Make & Model
+                            </h3>
+                        </div>
 
-                    <AiOutlineCloseCircle size={50} className='md:hidden mt-5 mx-auto' onClick={close} />
-                </form>
+                        <div className='mt-2 flex w-full justify-between'>
+                            <div className='w-[45%]'>
+                                <input
+                                    type='number'
+                                    {...register('year', { required: true })}
+                                    className={`h-12 w-full rounded border-2 bg-transparent pl-4 text-center font-semibold transition duration-200 focus:outline-none ${
+                                        errors['year'] ? 'border-red-500' : 'border-[#858585]'
+                                    }`}
+                                />
+                                <h3 className='mt-1 text-center text-sm font-bold text-[#858585]'>Year</h3>
+                            </div>
+                            <div className='w-[45%]'>
+                                <input
+                                    type='text'
+                                    {...register('power', { required: true })}
+                                    className={`h-12 w-full rounded border-2 bg-transparent text-center font-semibold transition duration-200 focus:outline-none ${
+                                        errors['power'] ? 'border-red-500' : 'border-[#858585]'
+                                    }`}
+                                />
+                                <h3 className='mt-1 text-center text-sm font-bold text-[#858585]'>Power</h3>
+                            </div>
+                        </div>
+
+                        <Transmission transmission={transmission} switchTransmission={setTransmission} />
+                        <Type type={type} switchType={setType} />
+
+                        <div className='mt-5'>
+                            <input
+                                type='number'
+                                {...register('price', { required: true })}
+                                className={`h-12 w-full rounded border-2 bg-transparent text-center font-semibold transition duration-200 focus:outline-none ${
+                                    errors['price'] ? 'border-red-500' : 'border-[#858585]'
+                                }`}
+                            />
+                            <h3 className='mt-1 text-center text-sm font-bold text-[#858585]'>Price ($)</h3>
+                        </div>
+
+                        <div className='mt-3'>
+                            <textarea
+                                {...register('description', { required: true })}
+                                className={`h-36 w-full rounded border-2 bg-transparent px-2 py-1 transition duration-200 focus:outline-none ${
+                                    errors['description'] ? 'border-red-500' : 'border-[#858585]'
+                                }`}
+                            />
+                            <h3 className='text-center text-sm font-bold text-[#858585]'>Description</h3>
+                        </div>
+
+                        <ImagesInput images={images} setImages={setImages} />
+
+                        <button
+                            className='m-auto mt-5 block h-12 w-72 rounded-md bg-green-600 font-semibold transition duration-200 hover:bg-opacity-90'
+                            type='submit'
+                        >
+                            Create listing
+                        </button>
+
+                        <AiOutlineCloseCircle size={50} className='mx-auto mt-5 md:hidden' onClick={close} />
+                    </form>
+                )}
             </div>
         </Portal>
     )

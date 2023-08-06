@@ -10,6 +10,7 @@ interface Car {
     transmission: string
     description: string
     seller: User
+    images: string[]
 }
 
 export default Car

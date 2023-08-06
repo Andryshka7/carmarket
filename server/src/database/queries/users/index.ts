@@ -9,13 +9,13 @@ const fetchUsers = async () => {
     return rows
 }
 
-const addUser = async ({ name, surname, age, email, password }: User) => {
+const createUser = async ({ username, email, password }: User) => {
     const sql = `
     INSERT INTO users
-    (name, surname, age, email, password)
-    VALUES (?, ?, ?, ?, ?)
+    (username, email, password)
+    VALUES (?, ?, ?)
     `
-    await pool.query(sql, [name, surname, age, email, password])
+    await pool.query(sql, [username, email, password])
 }
 
 const deleteUser = async (id: number) => {
@@ -26,4 +26,4 @@ const deleteUser = async (id: number) => {
     await pool.query(sql, [id])
 }
 
-export { fetchUsers, addUser, deleteUser }
+export { fetchUsers, createUser, deleteUser }

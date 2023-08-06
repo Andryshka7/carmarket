@@ -8,7 +8,7 @@ interface Props {
 }
 
 const ImagesInput = ({ images, setImages }: Props) => (
-    <div className='mt-2 w-full flex flex-wrap gap-y-3 gap-x-4'>
+    <div className='mt-2 flex w-full flex-wrap gap-x-4 gap-y-3'>
         {images.map((image, index) => (
             <Image
                 source={URL.createObjectURL(image)}
@@ -20,7 +20,7 @@ const ImagesInput = ({ images, setImages }: Props) => (
             />
         ))}
         <label htmlFor='images-input'>
-            <div className='flex flex-col items-center w-40 h-[90px] bg-neutral-900 rounded-lg'>
+            <div className='flex h-[90px] w-40 flex-col items-center rounded-lg bg-neutral-900'>
                 <h3 className='mt-3 text-lg font-semibold text-zinc-300'>Add image</h3>
                 <BiSolidMessageSquareAdd className='mt-1 text-green-600' size={30} />
             </div>

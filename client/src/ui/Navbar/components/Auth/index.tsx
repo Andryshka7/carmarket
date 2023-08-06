@@ -4,7 +4,7 @@ import useAuthStore from './store'
 
 const Auth = () => {
     const {
-        user: { avatar, name }
+        user: { avatar, username }
     } = useAuthStore()
 
     const [showDropDown, setShowDropDown] = useState(false)
@@ -26,11 +26,11 @@ const Auth = () => {
         <>
             <div
                 ref={dropDownRef}
-                className='hidden md:flex items-center gap-3 cursor-pointer'
+                className='hidden cursor-pointer items-center gap-3 md:flex'
                 onClick={() => setShowDropDown(true)}
             >
-                <img src={avatar} className='w-8 h-8 rounded-full' />
-                <h2 className='text-white font-semibold text-xl'>{name}</h2>
+                <img src={avatar} className='h-8 w-8 rounded-full' />
+                <h2 className='text-xl font-semibold text-white'>{username}</h2>
             </div>
             <Dropdown showDropdown={showDropDown} />
         </>
