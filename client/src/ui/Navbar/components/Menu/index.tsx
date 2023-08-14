@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { HiMenu } from 'react-icons/hi'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { Portal } from 'ui'
-import { Buttons, Make, Price, Transmission, Type } from './components'
+import { Buttons, Filters } from './components'
 
 const Menu = () => {
     const [showMenu, setShowMenu] = useState(false)
@@ -24,13 +24,10 @@ const Menu = () => {
             <HiMenu size={35} color='white' onClick={toggleMenu} />
             <Portal>
                 <div
-                    className={`w-full h-full flex fixed top-0 left-0 bg-neutral-700 transition duration-200 overflow-y-scroll ${visibility}`}
+                    className={`fixed left-0 top-0 flex h-full w-full overflow-y-scroll bg-neutral-700 transition duration-200 ${visibility}`}
                 >
-                    <div className='w-full h-fit my-auto flex flex-col items-center'>
-                        <Make />
-                        <Price />
-                        <Transmission />
-                        <Type />
+                    <div className='my-auto flex h-fit w-full flex-col items-center'>
+                        <Filters />
                         <Buttons closeMenu={toggleMenu} />
                         <div>
                             <AiOutlineCloseCircle

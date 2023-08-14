@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import { Dropdown } from './components'
-import useAuthStore from './store'
+import useAuthStore from 'store/auth'
+import { NavLink } from 'react-router-dom'
 
 const Auth = () => {
-    const {
-        user: { avatar, username }
-    } = useAuthStore()
+    const { user } = useAuthStore()
 
     const [showDropDown, setShowDropDown] = useState(false)
     const dropDownRef = useRef<null | HTMLDivElement>(null)
@@ -22,6 +21,25 @@ const Auth = () => {
         }
     }, [showDropDown])
 
+    if (!user) {
+        return (
+            <div className='hidden gap-5 md:flex'>
+                <NavLink
+                    to='login'
+                    className='rounded-md border-2 border-white bg-neutral-700 px-5 py-0.5 font-semibold text-white'
+                >
+                    Log In
+                </NavLink>
+                <NavLink
+                    to='signup'
+                    className='rounded-md bg-neutral-500 px-5 py-0.5 font-semibold text-white'
+                >
+                    Sign Up
+                </NavLink>
+            </div>
+        )
+    }
+
     return (
         <>
             <div
@@ -29,8 +47,8 @@ const Auth = () => {
                 className='hidden cursor-pointer items-center gap-3 md:flex'
                 onClick={() => setShowDropDown(true)}
             >
-                <img src={avatar} className='h-8 w-8 rounded-full' />
-                <h2 className='text-xl font-semibold text-white'>{username}</h2>
+                <img src={user.avatar} className='h-8 w-8 rounded-full' />
+                <h2 className='text-xl font-semibold text-white'>{user.username}</h2>
             </div>
             <Dropdown showDropdown={showDropDown} />
         </>

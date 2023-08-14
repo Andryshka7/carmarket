@@ -3,6 +3,11 @@ import { fetchCars, deleteCar } from 'database/queries/cars'
 import { createCar } from 'database/queries/cars'
 import upload from 'helpers/multer'
 import { createImage } from 'database/queries/images'
+import dotenv from 'dotenv'
+
+dotenv.config()
+
+const SERVER_URL = process.env.SERVER_URL
 
 const carsRouter = Router()
 
@@ -20,9 +25,6 @@ carsRouter.post('/', upload.array('image'), async (req, res) => {
     try {
         const seller = 1
         const car = JSON.parse(req.body.car)
-
-        console.log(car)
-
         const id = await createCar(car, seller)
 
         const images: string[] = []
@@ -36,7 +38,8 @@ carsRouter.post('/', upload.array('image'), async (req, res) => {
         const promises: Promise<void>[] = []
 
         images.forEach((image) => {
-            promises.push(createImage(image, id))
+            const name = `${SERVER_URL}/images/${image}`
+            promises.push(createImage(name, id))
         })
 
         await Promise.all(promises)

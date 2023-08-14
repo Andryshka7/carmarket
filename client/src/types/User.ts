@@ -1,8 +1,7 @@
 interface User {
-    id: number
+    id: number | string
     username: string
     email: string
-    phoneNumber: string
     avatar: string
 }
 

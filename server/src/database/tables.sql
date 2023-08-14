@@ -14,7 +14,7 @@ CREATE TABLE cars (
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(255),
-    email VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
     password VARCHAR(255)
 );
 
@@ -31,5 +31,3 @@ CREATE TABLE avatars (
     user INT,
     FOREIGN KEY (user) REFERENCES users(id)
 );
-
-INSERT INTO users (username, email, password) VALUES ('Andryshka16', 'a.lapchik7@gmail.com', 'Andrey2828');

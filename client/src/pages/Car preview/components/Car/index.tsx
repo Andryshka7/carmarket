@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { FcPrevious, FcNext } from 'react-icons/fc'
+import { NavLink } from 'react-router-dom'
 import { Car as ICar } from 'types'
-
-const SERVER_URL = import.meta.env.VITE_SERVER_URL
 
 const Car = ({
     model,
@@ -12,7 +11,7 @@ const Car = ({
     images,
     type,
     transmission,
-    seller: { username, email, avatar, phoneNumber }
+    seller: { username, email, avatar }
 }: ICar) => {
     const [image, setImage] = useState(0)
 
@@ -27,10 +26,9 @@ const Car = ({
                     className='absolute -left-10 top-1/2 -translate-y-1/2 cursor-pointer'
                     onClick={setPrevImage}
                 />
-                <img
-                    src={`${SERVER_URL}/images/${images[image]}`}
-                    className='aspect-video rounded-lg object-cover'
-                />
+                <NavLink to={`${images[image]}`}>
+                    <img src={images[image]} className='aspect-video rounded-lg object-cover' />
+                </NavLink>
                 <FcNext
                     size={35}
                     className='absolute -right-10 top-1/2 -translate-y-1/2 cursor-pointer'
@@ -50,7 +48,7 @@ const Car = ({
             <div className='mt-2 flex flex-wrap gap-2 md:gap-3'>
                 {images.map((image, index) => (
                     <img
-                        src={`${SERVER_URL}/images/${image}`}
+                        src={image}
                         className='aspect-video w-[144px] cursor-pointer rounded-lg object-cover md:w-[190px]'
                         onClick={() => setImage(index)}
                         key={image}
@@ -59,14 +57,10 @@ const Car = ({
             </div>
             <div className='my-2'>
                 <div className='mt-4 flex items-center gap-3'>
-                    <img
-                        src={`${SERVER_URL}/images/panda.png`}
-                        className='h-8 w-8 rounded-full object-cover'
-                    />
+                    <img src={avatar} className='h-8 w-8 rounded-full object-cover' />
                     <h3 className='text-xl font-semibold'>{username}</h3>
                 </div>
                 <h3 className='mt-2 font-semibold'>Email: {email}</h3>
-                <h3 className='mt-0.5 font-semibold'>Phone: +371 28176717{phoneNumber}</h3>
             </div>
         </div>
     )

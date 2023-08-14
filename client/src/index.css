@@ -6,6 +6,15 @@ body {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
 .scrollbar::-webkit-scrollbar {
     width: 8px;
     background-color: transparent;

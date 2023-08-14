@@ -1,6 +1,6 @@
-import useCarsStore from 'pages/Cars/components/Cars/store'
+import useCarsStore from 'store/cars'
 import { useParams } from 'react-router-dom'
-import { Car, Error } from './components'
+import { Car } from './components'
 
 const CarPreview = () => {
     const { id } = useParams()
@@ -8,7 +8,7 @@ const CarPreview = () => {
 
     const car = cars.find((car) => car.id === Number(id))
 
-    return car ? <Car {...car} /> : <Error />
+    return car ? <Car {...car} /> : null
 }
 
 export default CarPreview

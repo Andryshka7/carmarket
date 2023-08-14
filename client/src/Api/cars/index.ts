@@ -1,18 +1,14 @@
-import axios from 'axios'
+import API from 'Api'
 import { Car } from 'types'
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL
-
 const fetchCarsQuery = async () => {
-    const response = await axios.get<Car[]>(`${SERVER_URL}/cars`)
+    const response = await API.get<Car[]>(`/cars`)
     return response.data
 }
 
 const createCarQuery = async (data: FormData) => {
-    const response = await axios.post<Car>(`${SERVER_URL}/cars`, data, {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
+    const response = await API.post<Car>(`/cars`, data, {
+        headers: { 'Content-Type': 'multipart/form-data' }
     })
     return response.data
 }

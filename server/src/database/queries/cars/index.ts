@@ -1,5 +1,5 @@
 import pool from 'database'
-import { ResultSetHeader } from 'mysql2'
+import { ResultSetHeader, RowDataPacket } from 'mysql2'
 import { Car } from 'types'
 import { deleteImage } from '../images'
 
@@ -17,10 +17,13 @@ const fetchCars = async () => {
     LEFT JOIN images ON images.car = cars.id
     GROUP BY cars.id
   `
-    const [rows] = await pool.query(sql)
-    console.log(rows)
+    const [rows] = await pool.query<RowDataPacket[]>(sql)
 
-    return rows
+    if (rows.length) {
+        return rows as Car[]
+    } else {
+        return []
+    }
 }
 
 const createCar = async (
