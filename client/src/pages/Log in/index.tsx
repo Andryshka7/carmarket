@@ -15,7 +15,7 @@ type Data = {
 
 const LogIn = () => {
     const navigate = useNavigate()
-    const { login } = useAuthStore()
+    const { setUser } = useAuthStore()
 
     const [loading, setLoading] = useState(false)
     const { handleSubmit, register, reset } = useForm<Data>()
@@ -25,7 +25,7 @@ const LogIn = () => {
 
         const user = await logInQuery(data)
 
-        login(user)
+        setUser(user)
         navigate('/')
         setLoading(false)
         reset()

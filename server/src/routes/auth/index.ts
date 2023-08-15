@@ -4,7 +4,6 @@ import upload from 'helpers/multer'
 import { compare, hash } from 'bcrypt'
 import { Profile } from 'passport-google-oauth20'
 import { createUser, fetchUserByEmail } from 'database/queries/users'
-import { createAvatar } from 'database/queries/avatars'
 import { authenticate, createTokens } from 'middleware/jwt'
 import dotenv from 'dotenv'
 import { User } from 'types'
@@ -42,13 +41,14 @@ authRouter.post('/login', async (req, res) => {
 
 authRouter.post('/signup', upload.single('avatar'), async (req, res) => {
     try {
-        const username = req.body.username
-        const email = req.body.email
+        const username = req.body.username as string
+        const email = req.body.email as string
         const password = await hash(req.body.password, 10)
         const avatar = `${SERVER_URL}/images/${req.file?.filename}`
 
-        const id = await createUser({ username, email, password })
-        await createAvatar(avatar, id)
+        console.log({ username, email, avatar, password })
+
+        const id = await createUser({ username, email, avatar, password })
 
         const user = { id, username, email, avatar }
         const tokens = createTokens(user)
@@ -69,16 +69,24 @@ authRouter.get(
     async (req, res) => {
         try {
             const profile = req.user as Profile
-
-            const id = profile.id
-            const username = profile.displayName
             const email = profile.emails![0].value
-            const avatar = profile.photos![0].value
 
-            const user = { id, email, username, avatar }
-            const tokens = createTokens(user)
+            const user = await fetchUserByEmail(email)
 
-            res.cookie('tokens', JSON.stringify(tokens))
+            if (user) {
+                const { id, username, avatar } = user
+                const tokens = createTokens({ id, username, email, avatar })
+                res.cookie('tokens', JSON.stringify(tokens))
+            } else {
+                const username = profile.displayName
+                const avatar = profile.photos![0].value
+                const google_id = profile.id
+                const id = await createUser({ username, email, avatar, google_id })
+
+                const tokens = createTokens({ id, username, email, avatar })
+                res.cookie('tokens', JSON.stringify(tokens))
+            }
+
             res.redirect(CLIENT_URL!)
         } catch (error) {
             res.status(400).json('Error while signing up')

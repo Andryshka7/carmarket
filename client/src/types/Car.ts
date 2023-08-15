@@ -9,7 +9,7 @@ interface Car {
     type: string
     transmission: string
     description: string
-    seller: User
+    user: User
     images: string[]
 }
 

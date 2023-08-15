@@ -11,7 +11,7 @@ const Car = ({
     images,
     type,
     transmission,
-    seller: { username, email, avatar }
+    user: { username, email, avatar }
 }: ICar) => {
     const [image, setImage] = useState(0)
 

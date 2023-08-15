@@ -7,7 +7,9 @@ import Loader from 'ui/Loader'
 import useCarsStore from 'store/cars'
 import { useNavigate } from 'react-router-dom'
 
-type Data = Omit<Car, 'type' | 'transmission' | 'images' | 'id' | 'seller'>
+import { getAccessToken } from 'helpers'
+
+type Data = Omit<Car, 'type' | 'transmission' | 'images' | 'id' | 'user'>
 
 const CreateListing = () => {
     const navigate = useNavigate()
@@ -48,25 +50,31 @@ const CreateListing = () => {
                 formData.append(`image`, item)
             })
 
-            const created = await createCarQuery(formData)
-            createCar(created)
+            const accessToken = getAccessToken()
 
-            navigate('/')
+            if (accessToken) {
+                const created = await createCarQuery(formData, accessToken)
+                createCar(created)
+                navigate('/')
+            } else {
+                setLoading(false)
+                console.log('No token provided')
+            }
         } catch (error) {
             setLoading(false)
-            console.log('An error occured')
+            console.log(error)
         }
     }
 
     return (
         <div className='m-auto my-5 flex h-full w-full items-center justify-center'>
             {loading ? (
-                <div className='absolute left-0 top-0 flex h-full w-full items-center justify-center md:w-[770px]'>
+                <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
                     <Loader />
                 </div>
             ) : (
                 <form
-                    className='scrollbar h-fit w-11/12 rounded-lg bg-neutral-700 px-8 py-5 text-white md:w-[770px] md:px-28 md:py-10'
+                    className='scrollbar h-fit w-11/12 rounded-lg bg-neutral-700 px-8 py-5 text-white sm:px-14 md:w-[770px] md:px-28 md:py-10'
                     onSubmit={handleSubmit(submit)}
                     onClick={(e) => e.stopPropagation()}
                 >

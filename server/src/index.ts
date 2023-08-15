@@ -5,6 +5,7 @@ import cors from 'cors'
 import passport from 'middleware/passport'
 import cookieParser from 'cookie-parser'
 import { usersRouter, carsRouter, authRouter } from 'routes'
+import pool from 'database'
 
 dotenv.config()
 

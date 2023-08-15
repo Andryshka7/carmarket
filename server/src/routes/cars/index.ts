@@ -4,6 +4,8 @@ import { createCar } from 'database/queries/cars'
 import upload from 'helpers/multer'
 import { createImage } from 'database/queries/images'
 import dotenv from 'dotenv'
+import { authenticate } from 'middleware/jwt'
+import { User } from 'types'
 
 dotenv.config()
 
@@ -21,30 +23,32 @@ carsRouter.get('/', async (req, res) => {
     }
 })
 
-carsRouter.post('/', upload.array('image'), async (req, res) => {
+carsRouter.post('/', authenticate, upload.array('image'), async (req, res) => {
     try {
-        const seller = 1
+        const user_id = (req.user as User).id
         const car = JSON.parse(req.body.car)
-        const id = await createCar(car, seller)
+        console.log(car)
 
+        const car_id = await createCar(car, user_id)
+
+        console.log(car_id)
         const images: string[] = []
 
         if (Array.isArray(req.files)) {
             req.files.forEach((image) => {
-                images.push(image.filename)
+                images.push(`${SERVER_URL}/images/${image.filename}`)
             })
         }
 
         const promises: Promise<void>[] = []
 
         images.forEach((image) => {
-            const name = `${SERVER_URL}/images/${image}`
-            promises.push(createImage(name, id))
+            promises.push(createImage(image, car_id))
         })
 
         await Promise.all(promises)
 
-        const created = { ...car, id, seller, images }
+        const created = { ...car, id: car_id, user: req.user, images }
 
         res.status(200).json(created)
     } catch (error) {

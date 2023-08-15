@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Buttons = ({ closeMenu }: Props) => {
-    const { logout } = useAuthStore()
+    const { setUser } = useAuthStore()
     return (
         <div className='mt-4 text-white' onClick={closeMenu}>
             <NavLink to='mylistings' className='mt-1 flex items-center gap-2'>
@@ -20,7 +20,7 @@ const Buttons = ({ closeMenu }: Props) => {
                 <BiMessageSquareAdd size={35} color='white' />
                 <h2 className='text-xl font-semibold'>List car</h2>
             </NavLink>
-            <div className='mt-1 flex items-center gap-2' onClick={logout}>
+            <div className='mt-1 flex items-center gap-2' onClick={()=>setUser(null)}>
                 <HiLogout size={35} color='white' />
                 <h2 className='text-xl font-semibold'>Logout</h2>
             </div>

@@ -14,6 +14,8 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
             const { id, username, email, avatar } = jwt.verify(token, JWT_SECRET) as User
             req.user = { id, username, email, avatar }
             next()
+        } else {
+            res.status(401).json('Token not provided')
         }
     } catch (error) {
         console.log('Error while authenticating')
@@ -22,8 +24,8 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
 }
 
 const createTokens = (user: User) => {
-    const accessToken = jwt.sign(user, JWT_SECRET, { expiresIn: '10s' })
-    const refreshToken = jwt.sign(user, JWT_SECRET, { expiresIn: '1m' })
+    const accessToken = jwt.sign(user, JWT_SECRET, { expiresIn: '1h' })
+    const refreshToken = jwt.sign(user, JWT_SECRET, { expiresIn: '1d' })
 
     return { accessToken, refreshToken }
 }

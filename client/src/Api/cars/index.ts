@@ -6,9 +6,9 @@ const fetchCarsQuery = async () => {
     return response.data
 }
 
-const createCarQuery = async (data: FormData) => {
+const createCarQuery = async (data: FormData, token: string) => {
     const response = await API.post<Car>(`/cars`, data, {
-        headers: { 'Content-Type': 'multipart/form-data' }
+        headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` }
     })
     return response.data
 }

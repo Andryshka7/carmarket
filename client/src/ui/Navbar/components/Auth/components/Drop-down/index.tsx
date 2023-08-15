@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Dropdown = ({ showDropdown }: Props) => {
-    const { logout } = useAuthStore()
+    const { setUser } = useAuthStore()
     return (
         showDropdown && (
             <div className='absolute right-16 top-14 z-[1] rounded-lg bg-neutral-600 py-2 text-white'>
@@ -29,7 +29,7 @@ const Dropdown = ({ showDropdown }: Props) => {
                 </NavLink>
                 <div
                     className='my-1 flex cursor-pointer items-center gap-2 px-6 hover:bg-neutral-500'
-                    onClick={logout}
+                    onClick={() => setUser(null)}
                 >
                     <HiLogout size={25} color='white' />
                     <h2 className='text-lg font-semibold'>Logout</h2>
