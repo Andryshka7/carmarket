@@ -28,13 +28,7 @@ const Auth = () => {
                     to='login'
                     className='rounded-md border-2 border-white bg-neutral-700 px-5 py-0.5 font-semibold text-white'
                 >
-                    Log In
-                </NavLink>
-                <NavLink
-                    to='signup'
-                    className='rounded-md bg-neutral-500 px-5 py-0.5 font-semibold text-white'
-                >
-                    Sign Up
+                    Sign In
                 </NavLink>
             </div>
         )

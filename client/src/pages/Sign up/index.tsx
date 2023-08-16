@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
 import googleIcon from 'assets/google.png'
-import { signUpQuery } from 'Api/users'
+import { signUpQuery } from 'Api/auth'
 import Loader from 'ui/Loader'
 import useAuthStore from 'store/auth'
 
@@ -42,12 +42,12 @@ const SignUp = () => {
     }
 
     return loading ? (
-        <div className='m-auto flex h-[640px] w-[500px] items-center justify-center rounded-lg bg-neutral-700'>
+        <div className='m-auto flex h-[660px] w-[500px] items-center justify-center rounded-lg bg-neutral-700'>
             <Loader />
         </div>
     ) : (
         <form
-            className='m-auto h-[640px] w-[500px] rounded-lg bg-neutral-700 p-10 text-white'
+            className='m-auto h-[660px] w-[500px] rounded-lg bg-neutral-700 p-10 text-white'
             onSubmit={handleSubmit(submit)}
         >
             <h1 className='text-center text-3xl font-semibold'>Create account</h1>
@@ -99,12 +99,12 @@ const SignUp = () => {
 
             <button
                 type='submit'
-                className='mx-auto mt-6 block rounded bg-green-600 px-8 py-1 font-semibold transition duration-200'
+                className='mx-auto mt-6 block rounded bg-green-600 px-8 py-1 font-semibold transition duration-200 hover:bg-opacity-90'
             >
                 Sign Up
             </button>
 
-            <p className='my-5 text-center text-neutral-300'>or</p>
+            <p className='my-3 text-center text-neutral-300'>or</p>
 
             <NavLink
                 to={GOOGLE_AUTH}
@@ -112,6 +112,11 @@ const SignUp = () => {
             >
                 <img src={googleIcon} className='h-8 w-8' />
                 <h3 className='font-semibold'>Sign in with Google</h3>
+            </NavLink>
+            <NavLink to='/login'>
+                <p className='mt-7 block text-center font-medium text-zinc-300 transition duration-200 hover:text-zinc-200'>
+                    Already have an account?
+                </p>
             </NavLink>
         </form>
     )

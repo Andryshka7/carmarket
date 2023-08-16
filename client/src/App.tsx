@@ -4,6 +4,7 @@ import { Navbar, Footer } from 'ui'
 import { Cars, MyListings, CreateListing, CarPreview, LogIn, SignUp } from 'pages'
 import Loader from 'ui/Loader'
 import useLoadData from 'hooks/useLoadData'
+import ProtectedPage from 'ui/Protected page'
 
 function App() {
     const { loading, loadData } = useLoadData()
@@ -21,17 +22,34 @@ function App() {
             <BrowserRouter>
                 <Navbar />
                 <Routes>
-                    <Route path='/mylistings' element={<MyListings />} />
-                    <Route path='/createlisting' element={<CreateListing />} />
-                    <Route path='/login' element={<LogIn />} />
-                    <Route path='/signup' element={<SignUp />} />
                     <Route path='/'>
                         <Route index element={<Cars />} />
                         <Route path=':id'>
                             <Route index element={<CarPreview />} />
                         </Route>
                     </Route>
+
+                    <Route path='/login' element={<LogIn />} />
+                    <Route path='/signup' element={<SignUp />} />
+
+                    <Route
+                        path='/mylistings'
+                        element={
+                            <ProtectedPage>
+                                <MyListings />
+                            </ProtectedPage>
+                        }
+                    />
+                    <Route
+                        path='/createlisting'
+                        element={
+                            <ProtectedPage>
+                                <CreateListing />
+                            </ProtectedPage>
+                        }
+                    />
                 </Routes>
+                
                 <Footer />
             </BrowserRouter>
         </div>

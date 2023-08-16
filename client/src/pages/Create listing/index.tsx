@@ -2,18 +2,26 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Transmission, Type, ImagesInput } from './components'
 import { createCarQuery } from 'Api/cars'
-import { Car } from 'types'
 import Loader from 'ui/Loader'
 import useCarsStore from 'store/cars'
 import { useNavigate } from 'react-router-dom'
 
-import { getAccessToken } from 'helpers'
+import { getAccessToken } from 'helpers/tokens'
+import useAuthStore from 'store/auth'
+import createFormData from './helpers/createFormData'
 
-type Data = Omit<Car, 'type' | 'transmission' | 'images' | 'id' | 'user'>
+type Data = {
+    model: string
+    year: number
+    price: number
+    power: string
+    description: string
+}
 
 const CreateListing = () => {
     const navigate = useNavigate()
     const { createCar } = useCarsStore()
+    const { user } = useAuthStore()
 
     const [transmission, setTransmission] = useState('Automatic')
     const [type, setType] = useState('Fuel')
@@ -30,26 +38,7 @@ const CreateListing = () => {
     const submit = async (data: Data) => {
         try {
             setLoading(true)
-
-            const { model, price, power, year, description } = data
-
-            const car = {
-                model,
-                power,
-                year: +year,
-                price: +price,
-                type,
-                transmission,
-                description
-            }
-
-            const formData = new FormData()
-            formData.append('car', JSON.stringify(car))
-
-            images.forEach((item) => {
-                formData.append(`image`, item)
-            })
-
+            const formData = createFormData({ ...data, transmission, type }, images)
             const accessToken = getAccessToken()
 
             if (accessToken) {

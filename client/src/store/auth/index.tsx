@@ -1,5 +1,6 @@
 import { User } from 'types'
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 import Cookies from 'js-cookie'
 
 interface Store {
@@ -7,16 +8,21 @@ interface Store {
     setUser: (user: User | null) => void
 }
 
-const useAuthStore = create<Store>()((set) => ({
-    user: null,
-    setUser: (user: User | null) => {
-        if (user) {
-            set({ user })
-        } else {
-            set({ user: null })
-            Cookies.remove('tokens')
-        }
-    }
-}))
+const useAuthStore = create<Store>()(
+    persist(
+        (set) => ({
+            user: null,
+            setUser: (user: User | null) => {
+                if (user) {
+                    set({ user })
+                } else {
+                    set({ user: null })
+                    Cookies.remove('tokens')
+                }
+            }
+        }),
+        { name: 'auth' }
+    )
+)
 
 export default useAuthStore

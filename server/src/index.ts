@@ -2,10 +2,9 @@ import path from 'path'
 import express, { json } from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
-import passport from 'middleware/passport'
+import { passport } from 'middleware'
 import cookieParser from 'cookie-parser'
-import { usersRouter, carsRouter, authRouter } from 'routes'
-import pool from 'database'
+import { carsRouter, authRouter } from 'routes'
 
 dotenv.config()
 
@@ -23,7 +22,6 @@ app.use(passport.initialize())
 app.use('/images', express.static(path.join(__dirname, 'images')))
 
 app.use('/cars', carsRouter)
-app.use('/users', usersRouter)
 app.use('/auth', authRouter)
 
 app.use('/', (req, res) => {

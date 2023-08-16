@@ -23,11 +23,4 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-const createTokens = (user: User) => {
-    const accessToken = jwt.sign(user, JWT_SECRET, { expiresIn: '1h' })
-    const refreshToken = jwt.sign(user, JWT_SECRET, { expiresIn: '1d' })
-
-    return { accessToken, refreshToken }
-}
-
-export { authenticate, createTokens }
+export default authenticate
