@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom'
 import { IoCarSport } from 'react-icons/io5'
 import { BiMessageSquareAdd } from 'react-icons/bi'
 import { HiLogout } from 'react-icons/hi'
-import useAuthStore from 'store/auth'
+import { useAuthStore } from 'store'
 
 interface Props {
     showDropdown: boolean

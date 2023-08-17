@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import useFiltersStore from 'store/filters'
+import { useFiltersStore } from 'store'
 
 type Data = {
     from: number

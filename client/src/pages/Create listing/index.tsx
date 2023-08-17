@@ -1,13 +1,11 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Transmission, Type, ImagesInput } from './components'
-import { createCarQuery } from 'Api/cars'
-import Loader from 'ui/Loader'
-import useCarsStore from 'store/cars'
 import { useNavigate } from 'react-router-dom'
-
-import { getAccessToken } from 'helpers/tokens'
-import useAuthStore from 'store/auth'
+import { createCarQuery } from 'Api/cars'
+import { useCarsStore } from 'store'
+import { useCreateProtectedRequest } from 'hooks'
+import { Loader } from 'ui'
+import { Transmission, Type, ImagesInput } from './components'
 import createFormData from './helpers/createFormData'
 
 type Data = {
@@ -20,8 +18,8 @@ type Data = {
 
 const CreateListing = () => {
     const navigate = useNavigate()
+    const createProtectedRequest = useCreateProtectedRequest()
     const { createCar } = useCarsStore()
-    const { user } = useAuthStore()
 
     const [transmission, setTransmission] = useState('Automatic')
     const [type, setType] = useState('Fuel')
@@ -39,16 +37,16 @@ const CreateListing = () => {
         try {
             setLoading(true)
             const formData = createFormData({ ...data, transmission, type }, images)
-            const accessToken = getAccessToken()
 
-            if (accessToken) {
-                const created = await createCarQuery(formData, accessToken)
-                createCar(created)
-                navigate('/')
-            } else {
-                setLoading(false)
-                console.log('No token provided')
-            }
+            const postCar = createProtectedRequest(
+                async (token) => await createCarQuery(formData, token),
+                (response) => {
+                    createCar(response)
+                    navigate('/')
+                }
+            )
+
+            await postCar()
         } catch (error) {
             setLoading(false)
             console.log(error)

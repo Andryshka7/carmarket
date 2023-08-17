@@ -2,9 +2,8 @@ import { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Navbar, Footer } from 'ui'
 import { Cars, MyListings, CreateListing, CarPreview, LogIn, SignUp } from 'pages'
-import Loader from 'ui/Loader'
-import useLoadData from 'hooks/useLoadData'
-import ProtectedPage from 'ui/Protected page'
+import { Loader, ProtectedPage } from 'ui'
+import { useLoadData } from 'hooks'
 
 function App() {
     const { loading, loadData } = useLoadData()
@@ -49,7 +48,7 @@ function App() {
                         }
                     />
                 </Routes>
-                
+
                 <Footer />
             </BrowserRouter>
         </div>

@@ -2,13 +2,16 @@ import { refreshTokenQuery } from 'Api/auth'
 import { getAccessToken, getRefreshToken } from 'helpers/tokens'
 
 const useCreateProtectedRequest = () => {
-    const createProtectedRequest = (callback: (accessToken: string) => void) => {
+    const createProtectedRequest = <T>(
+        requestQuery: (accessToken: string) => Promise<T>,
+        callback: (response: T) => void
+    ) => {
         const protectedRequest = async () => {
             try {
                 const accessToken = getAccessToken()
                 if (accessToken) {
-                    callback(accessToken)
-                    console.log('Request gone successfully')
+                    const response = await requestQuery(accessToken)
+                    callback(response)
                 }
             } catch (error) {
                 console.log('Access token expired')
@@ -17,11 +20,12 @@ const useCreateProtectedRequest = () => {
                     const refreshToken = getRefreshToken()
                     if (refreshToken) {
                         const accessToken = await refreshTokenQuery(refreshToken)
-                        callback(accessToken)
-                        console.log('Request gone successfully')
+                        console.log('Access token renewed')
+                        const response = await requestQuery(accessToken)
+                        callback(response)
                     }
                 } catch (error) {
-                    console.log('Refresh token expired')
+                    console.log('Refresh token expired, need to login')
                 }
             }
         }

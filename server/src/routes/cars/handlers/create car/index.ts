@@ -12,11 +12,9 @@ const handleCreateCar = async (req: Request, res: Response) => {
     try {
         const user_id = (req.user as User).id
         const car = JSON.parse(req.body.car)
-        console.log(car)
 
         const car_id = await createCar(car, user_id)
 
-        console.log(car_id)
         const images: string[] = []
 
         if (Array.isArray(req.files)) {

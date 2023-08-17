@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Dropdown } from './components'
-import useAuthStore from 'store/auth'
+import { useAuthStore } from 'store'
 import { NavLink } from 'react-router-dom'
 
 const Auth = () => {

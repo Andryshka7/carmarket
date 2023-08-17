@@ -15,8 +15,6 @@ const handleSignUp = async (req: Request, res: Response) => {
         const password = await hash(req.body.password, 10)
         const avatar = `${SERVER_URL}/images/${req.file?.filename}`
 
-        console.log({ username, email, avatar, password })
-
         const id = await createUser({ username, email, avatar, password })
 
         const user = { id, username, email, avatar }

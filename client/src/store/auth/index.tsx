@@ -1,6 +1,6 @@
 import { User } from 'types'
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+// import { persist } from 'zustand/middleware'
 import Cookies from 'js-cookie'
 
 interface Store {
@@ -9,7 +9,7 @@ interface Store {
 }
 
 const useAuthStore = create<Store>()(
-    persist(
+    // persist(
         (set) => ({
             user: null,
             setUser: (user: User | null) => {
@@ -17,11 +17,13 @@ const useAuthStore = create<Store>()(
                     set({ user })
                 } else {
                     set({ user: null })
-                    Cookies.remove('tokens')
+                    Cookies.remove('accessToken')
+                    Cookies.remove('refreshToken')
                 }
             }
-        }),
-        { name: 'auth' }
+        }
+        // ),
+        // { name: 'auth' }
     )
 )
 

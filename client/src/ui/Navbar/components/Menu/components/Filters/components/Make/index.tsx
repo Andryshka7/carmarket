@@ -1,4 +1,4 @@
-import useFiltersStore from 'store/filters'
+import { useFiltersStore } from 'store'
 
 const allMakes = ['bmw', 'porche', 'mercedes', 'lamborgini']
 

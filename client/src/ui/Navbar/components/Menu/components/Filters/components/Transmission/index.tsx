@@ -1,5 +1,5 @@
 import { FaCheck } from 'react-icons/fa'
-import useFiltersStore from 'store/filters'
+import { useFiltersStore } from 'store'
 
 const Transmission = () => {
     const { transmissions, switchTransition } = useFiltersStore()

@@ -1,5 +1,5 @@
-import useCarsStore from 'store/cars'
 import { useParams } from 'react-router-dom'
+import { useCarsStore } from 'store'
 import { Car } from './components'
 
 const CarPreview = () => {

@@ -2,7 +2,7 @@ import { IoCarSport } from 'react-icons/io5'
 import { BiMessageSquareAdd } from 'react-icons/bi'
 import { HiLogout } from 'react-icons/hi'
 import { NavLink } from 'react-router-dom'
-import useAuthStore from 'store/auth'
+import { useAuthStore } from 'store'
 
 interface Props {
     closeMenu: () => void
@@ -20,7 +20,7 @@ const Buttons = ({ closeMenu }: Props) => {
                 <BiMessageSquareAdd size={35} color='white' />
                 <h2 className='text-xl font-semibold'>List car</h2>
             </NavLink>
-            <div className='mt-1 flex items-center gap-2' onClick={()=>setUser(null)}>
+            <div className='mt-1 flex items-center gap-2' onClick={() => setUser(null)}>
                 <HiLogout size={35} color='white' />
                 <h2 className='text-xl font-semibold'>Logout</h2>
             </div>

@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { fetchUserQuery } from 'Api/auth'
-import useAuthStore from 'store/auth'
-import useCarsStore from 'store/cars'
 import { useCreateProtectedRequest } from 'hooks'
+import { useCarsStore, useAuthStore } from 'store'
 
 const useLoadData = () => {
     const createProtectedRequest = useCreateProtectedRequest()
@@ -11,12 +10,12 @@ const useLoadData = () => {
     const { fetchCars } = useCarsStore()
     const { setUser } = useAuthStore()
 
-    const fetchUser = createProtectedRequest(async (token: string) => {
-        const user = await fetchUserQuery(token)
-        setUser(user)
+    const fetchUser = createProtectedRequest(fetchUserQuery, (response) => {
+        setUser(response)
     })
 
     const loadData = async () => {
+        setLoading(true)
         await Promise.all([fetchCars(), fetchUser()])
         setLoading(false)
     }

@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import useCarsStore from 'store/cars'
+import { useCarsStore } from 'store'
 
 const Cars = () => {
     const { cars } = useCarsStore()

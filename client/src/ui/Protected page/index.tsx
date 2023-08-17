@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { NavLink } from 'react-router-dom'
-import useAuthStore from 'store/auth'
+import { useAuthStore } from 'store'
 
 interface Props {
     children: ReactNode
