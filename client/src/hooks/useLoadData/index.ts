@@ -4,8 +4,8 @@ import { useCreateProtectedRequest } from 'hooks'
 import { useCarsStore, useAuthStore } from 'store'
 
 const useLoadData = () => {
-    const createProtectedRequest = useCreateProtectedRequest()
     const [loading, setLoading] = useState(true)
+    const createProtectedRequest = useCreateProtectedRequest()
 
     const { fetchCars } = useCarsStore()
     const { setUser } = useAuthStore()

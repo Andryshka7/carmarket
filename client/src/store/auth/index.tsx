@@ -1,29 +1,32 @@
 import { User } from 'types'
 import { create } from 'zustand'
-// import { persist } from 'zustand/middleware'
+import { persist } from 'zustand/middleware'
 import Cookies from 'js-cookie'
+import { logOutQuery } from 'Api/auth'
 
 interface Store {
     user: User | null
-    setUser: (user: User | null) => void
+    setUser: (user: User) => Promise<void>
+    logOut: () => void
 }
 
 const useAuthStore = create<Store>()(
-    // persist(
-        (set) => ({
+    persist(
+        (set, get) => ({
             user: null,
-            setUser: (user: User | null) => {
+            setUser: async (user: User) => {
+                set({ user })
+            },
+            logOut: async () => {
+                const user = get().user
                 if (user) {
-                    set({ user })
-                } else {
                     set({ user: null })
                     Cookies.remove('accessToken')
-                    Cookies.remove('refreshToken')
+                    logOutQuery(user.id)
                 }
             }
-        }
-        // ),
-        // { name: 'auth' }
+        }),
+        { name: 'auth' }
     )
 )
 

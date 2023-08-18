@@ -1,8 +1,13 @@
 import API from 'Api'
 import { User } from 'types'
 
-const logIn = async (data: { email: string; password: string }) => {
-    const response = await API.post<User>('/auth/login', data)
+interface Body {
+    email: string
+    password: string
+}
+
+const logIn = async (body: Body) => {
+    const response = await API.post<User>('/auth/login', body)
     return response.data
 }
 

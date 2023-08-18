@@ -1,7 +1,14 @@
 import { Router } from 'express'
 import upload from 'helpers/multer'
 import { authenticate, passport } from 'middleware'
-import { handleGetMe, handleGoogleSignIn, handleLogIn, handleRefreshToken, handleSignUp } from './handlers'
+import {
+    handleGetMe,
+    handleGoogleSignIn,
+    handleLogIn,
+    handleRefreshToken,
+    handleSignUp,
+    handleLogOut
+} from './handlers'
 
 import dotenv from 'dotenv'
 
@@ -15,6 +22,7 @@ authRouter.get('/getme', authenticate, handleGetMe)
 
 authRouter.post('/login', handleLogIn)
 authRouter.post('/signup', upload.single('avatar'), handleSignUp)
+authRouter.post('/logout', handleLogOut)
 
 authRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 authRouter.get(
@@ -23,6 +31,6 @@ authRouter.get(
     handleGoogleSignIn
 )
 
-authRouter.get('/refreshtoken', authenticate, handleRefreshToken)
+authRouter.post('/refreshtoken', handleRefreshToken)
 
 export default authRouter

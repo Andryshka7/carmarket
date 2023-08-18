@@ -16,42 +16,53 @@ type Data = {
 const LogIn = () => {
     const navigate = useNavigate()
     const { setUser } = useAuthStore()
-
     const [loading, setLoading] = useState(false)
-    const { handleSubmit, register, reset } = useForm<Data>()
+
+    const {
+        handleSubmit,
+        register,
+        reset,
+        formState: { errors }
+    } = useForm<Data>()
 
     const submit = async (data: Data) => {
-        setLoading(true)
-
-        const user = await logInQuery(data)
-
-        setUser(user)
-        navigate('/')
+        try {
+            setLoading(true)
+            const user = await logInQuery(data)
+            setUser(user)
+            navigate('/')
+        } catch (error) {
+            console.log('Invalid credentials')
+        }
         setLoading(false)
         reset()
     }
 
     return loading ? (
-        <div className='m-auto flex h-[480px] w-[500px] items-center justify-center rounded-lg bg-neutral-700'>
+        <div className='m-auto flex h-[480px] w-11/12 max-w-[500px] items-center justify-center rounded-lg bg-neutral-700'>
             <Loader />
         </div>
     ) : (
         <form
-            className='m-auto h-[480px] w-[500px] rounded-lg bg-neutral-700 p-10 text-white'
+            className='m-auto h-fit min-h-[480px] w-11/12 max-w-[500px] rounded-lg bg-neutral-700 p-10 text-white'
             onSubmit={handleSubmit(submit)}
         >
             <h1 className='text-center text-3xl font-semibold'>Welcome Back</h1>
             <input
                 type='text'
-                {...register('email')}
+                {...(register('email'), { required: true })}
                 placeholder='Email'
-                className='mt-8 w-full border-b-2 border-neutral-500 bg-transparent p-2 focus:outline-none'
+                className={`mt-8 w-full border-b-2 border-neutral-500 bg-transparent p-2 focus:outline-none ${
+                    errors['email'] ? 'border-red-500' : ''
+                }`}
             />
             <input
                 type='text'
-                {...register('password')}
+                {...register('password', { required: true })}
                 placeholder='Password'
-                className='mt-6 w-full border-b-2 border-neutral-500 bg-transparent p-2 focus:outline-none'
+                className={`mt-6 w-full border-b-2 border-neutral-500 bg-transparent p-2 focus:outline-none ${
+                    errors['password'] ? 'border-red-500' : ''
+                }`}
             />
 
             <button
@@ -65,7 +76,7 @@ const LogIn = () => {
 
             <NavLink
                 to={GOOGLE_AUTH}
-                className='mx-auto flex w-fit cursor-pointer items-center gap-5 rounded-lg border-2 border-neutral-500 px-6 py-2'
+                className='mx-auto flex w-fit cursor-pointer items-center gap-5 rounded-lg border-2 border-neutral-500 px-6 py-2 transition duration-200 hover:bg-neutral-500 hover:bg-opacity-20'
             >
                 <img src={googleIcon} className='h-8 w-8' />
                 <h3 className='font-semibold'>Sign in with Google</h3>

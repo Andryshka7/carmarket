@@ -8,7 +8,8 @@ const fetchCars = async () => {
            JSON_OBJECT(
              'id', users.id,
              'username', users.username,
-             'email', users.email
+             'email', users.email,
+             'avatar', users.avatar
            ) AS user,
            JSON_ARRAYAGG(images.name) AS images
     FROM cars

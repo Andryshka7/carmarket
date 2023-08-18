@@ -3,6 +3,7 @@ import { createUser } from 'database/queries/users'
 import { Request, Response } from 'express'
 import { createAccessToken, createRefreshToken } from 'helpers/jwt'
 import dotenv from 'dotenv'
+import { storeRefreshToken } from 'database/queries/refresh tokens'
 
 dotenv.config()
 
@@ -19,8 +20,11 @@ const handleSignUp = async (req: Request, res: Response) => {
 
         const user = { id, username, email, avatar }
 
-        res.cookie('accessToken', createAccessToken(user))
-        res.cookie('refreshToken', createRefreshToken(user))
+        const accessToken = createAccessToken(user)
+        const refreshToken = createRefreshToken(user)
+
+        res.cookie('accessToken', accessToken)
+        await storeRefreshToken(refreshToken, user.id)
 
         res.status(200).json(user)
     } catch (error) {

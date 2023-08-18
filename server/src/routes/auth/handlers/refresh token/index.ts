@@ -1,11 +1,22 @@
+import getRefreshToken from 'database/queries/refresh tokens/get token'
 import { Request, Response } from 'express'
 import { createAccessToken, createRefreshToken } from 'helpers/jwt'
 import { User } from 'types'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
 
-const handleRefreshToken = (req: Request, res: Response) => {
+dotenv.config()
+
+const JWT_SECRET = process.env.JWT_SECRET!
+
+const handleRefreshToken = async (req: Request, res: Response) => {
     try {
-        const user = req.user as User
-        const accessToken = createAccessToken(user)
+        const userId = req.body.userId as number
+        const refreshToken = await getRefreshToken(userId)
+
+        const { id, username, email, avatar } = jwt.verify(refreshToken, JWT_SECRET) as User
+        const accessToken = createAccessToken({ id, username, email, avatar })
+
         res.cookie('accessToken', accessToken)
         res.json(accessToken)
     } catch (error) {

@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import { createAccessToken, createRefreshToken } from 'helpers/jwt'
 import { Profile } from 'passport'
 import dotenv from 'dotenv'
+import { storeRefreshToken } from 'database/queries/refresh tokens'
 
 dotenv.config()
 
@@ -17,16 +18,23 @@ const handleGoogleSignIn = async (req: Request, res: Response) => {
 
         if (user) {
             const { id, username, avatar } = user
-            res.cookie('accessToken', createAccessToken({ id, username, email, avatar }))
-            res.cookie('refreshToken', createRefreshToken({ id, username, email, avatar }))
+
+            const accessToken = createAccessToken({ id, username, email, avatar })
+            const refreshToken = createRefreshToken({ id, username, email, avatar })
+
+            res.cookie('accessToken', accessToken)
+            await storeRefreshToken(refreshToken, id)
         } else {
             const username = profile.displayName
             const avatar = profile.photos![0].value
             const google_id = profile.id
             const id = await createUser({ username, email, avatar, google_id })
 
-            res.cookie('accessToken', createAccessToken({ id, username, email, avatar }))
-            res.cookie('refreshToken', createRefreshToken({ id, username, email, avatar }))
+            const accessToken = createAccessToken({ id, username, email, avatar })
+            const refreshToken = createRefreshToken({ id, username, email, avatar })
+
+            res.cookie('accessToken', accessToken)
+            await storeRefreshToken(refreshToken, id)
         }
 
         res.redirect(CLIENT_URL!)

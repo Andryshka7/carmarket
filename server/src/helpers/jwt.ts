@@ -10,4 +10,3 @@ const createAccessToken = (user: User) => jwt.sign(user, JWT_SECRET, { expiresIn
 const createRefreshToken = (user: User) => jwt.sign(user, JWT_SECRET, { expiresIn: '24h' })
 
 export { createAccessToken, createRefreshToken }
-;``

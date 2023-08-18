@@ -18,67 +18,94 @@ type Data = {
 const SignUp = () => {
     const navigate = useNavigate()
     const { setUser } = useAuthStore()
-
     const [loading, setLoading] = useState(false)
-    const { handleSubmit, register, reset } = useForm<Data>()
     const [file, setFile] = useState<null | File>()
+
+    const {
+        handleSubmit,
+        register,
+        watch,
+        reset,
+        formState: { errors }
+    } = useForm<Data>({ mode: 'onSubmit' })
 
     const submit = async (data: Data) => {
         setLoading(true)
-        if (file) {
-            const formData = new FormData()
-            formData.append('avatar', file)
-            formData.append('username', data.username)
-            formData.append('email', data.email)
-            formData.append('password', data.password)
 
-            const user = await signUpQuery(formData)
+        const formData = new FormData()
 
-            setUser(user)
-            navigate('/')
-        }
+        formData.append('username', data.username)
+        formData.append('email', data.email)
+        formData.append('password', data.password)
+
+        if (file) formData.append('avatar', file)
+
+        const user = await signUpQuery(formData)
+
+        setUser(user)
+        navigate('/')
+
         setLoading(false)
         reset()
     }
 
     return loading ? (
-        <div className='m-auto flex h-[660px] w-[500px] items-center justify-center rounded-lg bg-neutral-700'>
+        <div className='m-auto flex h-[660px] w-11/12 max-w-[500px] items-center justify-center rounded-lg bg-neutral-700'>
             <Loader />
         </div>
     ) : (
         <form
-            className='m-auto h-[660px] w-[500px] rounded-lg bg-neutral-700 p-10 text-white'
+            className='m-auto h-fit min-h-[660px] w-11/12 max-w-[500px] rounded-lg bg-neutral-700 p-10 text-white'
             onSubmit={handleSubmit(submit)}
         >
             <h1 className='text-center text-3xl font-semibold'>Create account</h1>
             <input
                 type='text'
-                {...register('username')}
+                {...register('username', { required: true, minLength: 3 })}
                 placeholder='Username'
-                className='mt-6 w-full border-b-2 border-neutral-500 bg-transparent p-2 focus:outline-none'
+                className={`mt-6 w-full border-b-2 border-neutral-500 bg-transparent p-2 transition duration-200 focus:outline-none ${
+                    errors['username'] ? 'border-red-500' : ''
+                }`}
             />
             <input
-                type='text'
-                {...register('email')}
+                type='email'
+                {...register('email', {
+                    required: true,
+                    validate: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)
+                })}
                 placeholder='Email'
-                className='mt-6 w-full border-b-2 border-neutral-500 bg-transparent p-2 focus:outline-none'
+                className={`mt-6 w-full border-b-2 border-neutral-500 bg-transparent p-2 transition duration-200 focus:outline-none ${
+                    errors['email'] ? 'border-red-500' : ''
+                }`}
             />
             <input
-                type='text'
-                {...register('password')}
+                type='password'
+                {...register('password', {
+                    required: true,
+                    minLength: 3,
+                    validate: () => watch('password') === watch('confirmPassword')
+                })}
                 placeholder='Password'
-                className='mt-6 w-full border-b-2 border-neutral-500 bg-transparent p-2 focus:outline-none'
+                className={`mt-6 w-full border-b-2 border-neutral-500 bg-transparent p-2 transition duration-200 focus:outline-none ${
+                    errors['password'] ? 'border-red-500' : ''
+                }`}
             />
             <input
-                type='text'
-                {...register('confirmPassword')}
+                type='password'
+                {...register('confirmPassword', {
+                    required: true,
+                    minLength: 3,
+                    validate: () => watch('password') === watch('confirmPassword')
+                })}
                 placeholder='Confirm password'
-                className='mt-6 w-full border-b-2 border-neutral-500 bg-transparent p-2 focus:outline-none'
+                className={`mt-6 w-full border-b-2 border-neutral-500 bg-transparent p-2 transition duration-200 focus:outline-none ${
+                    errors['confirmPassword'] ? 'border-red-500' : ''
+                }`}
             />
 
             <label
                 htmlFor='avatar'
-                className='mt-6 flex h-14 w-full items-center justify-center rounded border-2 border-dashed border-neutral-500'
+                className='mt-6 flex h-fit w-full items-center justify-center rounded border-2 border-dashed border-neutral-500 p-3'
             >
                 {file ? (
                     <div className='flex items-center gap-3'>
@@ -108,7 +135,7 @@ const SignUp = () => {
 
             <NavLink
                 to={GOOGLE_AUTH}
-                className='mx-auto flex w-fit cursor-pointer items-center gap-5 rounded-lg border-2 border-neutral-500 px-6 py-2'
+                className='mx-auto flex w-fit cursor-pointer items-center gap-5 rounded-lg border-2 border-neutral-500 px-6 py-2  transition duration-200 hover:bg-neutral-500 hover:bg-opacity-20'
             >
                 <img src={googleIcon} className='h-8 w-8' />
                 <h3 className='font-semibold'>Sign in with Google</h3>

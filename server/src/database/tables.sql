@@ -28,3 +28,10 @@ CREATE TABLE images (
     car INT NOT NULL,
     FOREIGN KEY (car) REFERENCES cars(id)
 );
+
+CREATE TABLE refreshTokens (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    token TEXT NOT NULL,
+    user INT NOT NULL,
+    FOREIGN KEY (user) REFERENCES users(id)
+);
