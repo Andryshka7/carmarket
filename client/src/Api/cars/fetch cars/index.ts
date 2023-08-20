@@ -1,4 +1,4 @@
-import API from 'Api'
+import API from 'api'
 import { Car } from 'types'
 
 const fetchCars = async () => {

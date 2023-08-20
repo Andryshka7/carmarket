@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
 import googleIcon from 'assets/google.png'
-import { logInQuery } from 'Api/auth'
-import { Loader } from 'ui'
+import { logInQuery } from 'api/auth'
+import { Loader } from 'components'
 import { useAuthStore } from 'store'
 
 const GOOGLE_AUTH = import.meta.env.VITE_GOOGLE_AUTH

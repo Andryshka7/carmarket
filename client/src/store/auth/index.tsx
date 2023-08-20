@@ -2,7 +2,7 @@ import { User } from 'types'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import Cookies from 'js-cookie'
-import { logOutQuery } from 'Api/auth'
+import { logOutQuery } from 'api/auth'
 
 interface Store {
     user: User | null

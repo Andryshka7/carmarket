@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Navbar, Footer } from 'ui'
-import { Cars, MyListings, CreateListing, CarPreview, LogIn, SignUp } from 'pages'
-import { Loader, ProtectedPage } from 'ui'
+import { Navbar, Footer, Error } from 'components'
+import { Listings, MyListings, CreateListing, CarPreview, LogIn, SignUp, EditListing } from 'pages'
+import { Loader } from 'components'
 import { useLoadData } from 'hooks'
 
 function App() {
@@ -22,31 +22,19 @@ function App() {
                 <Navbar />
                 <Routes>
                     <Route path='/'>
-                        <Route index element={<Cars />} />
-                        <Route path=':id'>
-                            <Route index element={<CarPreview />} />
-                        </Route>
+                        <Route index element={<Listings />} />
+                        <Route path=':id' element={<CarPreview />} />
                     </Route>
 
                     <Route path='/login' element={<LogIn />} />
                     <Route path='/signup' element={<SignUp />} />
 
-                    <Route
-                        path='/mylistings'
-                        element={
-                            <ProtectedPage>
-                                <MyListings />
-                            </ProtectedPage>
-                        }
-                    />
-                    <Route
-                        path='/createlisting'
-                        element={
-                            <ProtectedPage>
-                                <CreateListing />
-                            </ProtectedPage>
-                        }
-                    />
+                    <Route path='/mylistings'>
+                        <Route index element={<MyListings />} />
+                        <Route path=':id' element={<EditListing />} />
+                    </Route>
+                    <Route path='/createlisting' element={<CreateListing />} />
+                    <Route path='/*' element={<Error />} />
                 </Routes>
 
                 <Footer />

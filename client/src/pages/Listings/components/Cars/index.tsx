@@ -5,7 +5,7 @@ const Cars = () => {
     const { cars } = useCarsStore()
 
     return (
-        <div className='my-8 flex flex-wrap justify-center gap-5 px-12'>
+        <div className='mx-auto flex flex-wrap justify-center gap-5 p-8'>
             {cars.map(({ id, model, year, price, images }) => (
                 <NavLink to={`/${id}`} className='rounded-lg bg-neutral-700 text-white' key={images[0]}>
                     <div className='overflow-hidden rounded-t-lg'>

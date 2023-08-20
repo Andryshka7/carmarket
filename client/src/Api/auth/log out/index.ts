@@ -1,4 +1,4 @@
-import API from 'Api'
+import API from 'api'
 import { User } from 'types'
 
 const logOut = async (userId: number) => {

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { fetchUserQuery } from 'Api/auth'
+import { fetchUserQuery } from 'api/auth'
 import { useCreateProtectedRequest } from 'hooks'
 import { useCarsStore, useAuthStore } from 'store'
 

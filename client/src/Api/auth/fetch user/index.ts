@@ -1,4 +1,4 @@
-import API from 'Api'
+import API from 'api'
 import { User } from 'types'
 
 const fetchUser = async (token: string) => {

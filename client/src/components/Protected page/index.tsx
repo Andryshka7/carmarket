@@ -14,7 +14,7 @@ const ProtectedPage = ({ children }: Props) => {
     ) : (
         <div className='m-auto text-white'>
             <h1 className='text-center text-2xl font-semibold'>
-                This page is protecred. <br className='sm:hidden' /> Sign in to view content
+                This page is protected. <br className='sm:hidden' /> Sign in to view content
             </h1>
             <NavLink to='/login'>
                 <button className='m-auto mt-8 block rounded-md bg-green-600 px-6 py-1 text-lg font-bold transition duration-200 hover:bg-opacity-90'>

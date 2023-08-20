@@ -1,4 +1,4 @@
-import { refreshTokenQuery } from 'Api/auth'
+import { refreshTokenQuery } from 'api/auth'
 import { getAccessToken } from 'helpers/get access token'
 import { useAuthStore } from 'store'
 

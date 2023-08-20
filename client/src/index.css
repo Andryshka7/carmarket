@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: Inter, system-components, Avenir, Helvetica, Arial, sans-serif;
 }
 
 input::-webkit-outer-spin-button,

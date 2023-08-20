@@ -1,8 +1,8 @@
-import { useParams } from 'react-router-dom'
-import { useCarsStore } from 'store'
 import { useState } from 'react'
+import { useParams, NavLink } from 'react-router-dom'
 import { FcPrevious, FcNext } from 'react-icons/fc'
-import { NavLink } from 'react-router-dom'
+import { useCarsStore } from 'store'
+import { Error } from 'components'
 
 const CarPreview = () => {
     const { id } = useParams()
@@ -10,7 +10,8 @@ const CarPreview = () => {
     const [image, setImage] = useState(0)
 
     const car = cars.find((car) => car.id === Number(id))
-    if (!car) return null
+
+    if (!car) return <Error />
 
     const {
         model,
@@ -35,7 +36,7 @@ const CarPreview = () => {
                     onClick={setPrevImage}
                 />
                 <NavLink to={`${images[image]}`}>
-                    <img src={images[image]} className='aspect-video rounded-lg object-cover' />
+                    <img src={images[image]} className='aspect-video w-full rounded-lg object-cover' />
                 </NavLink>
                 <FcNext
                     size={35}
@@ -43,7 +44,7 @@ const CarPreview = () => {
                     onClick={setNextImage}
                 />
             </div>
-            <div className='mt-1 flex justify-between text-lg font-bold xl:text-xl 2xl:text-2xl'>
+            <div className='mt-1 flex justify-between text-lg font-bold xl:mt-2 xl:text-xl 2xl:text-2xl'>
                 <h2>{model}</h2>
                 <h3>${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}</h3>
             </div>

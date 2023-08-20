@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { signUpQuery } from 'Api/auth'
-import { Loader } from 'ui'
+import { signUpQuery } from 'api/auth'
+import { Loader } from 'components'
 import { useAuthStore } from 'store'
 import googleIcon from 'assets/google.png'
 

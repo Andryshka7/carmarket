@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { HiMenu } from 'react-icons/hi'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
-import { Portal } from 'ui'
+import { Portal } from 'components'
 import { Buttons, Filters } from './components'
 
 const Menu = () => {

@@ -1,8 +1,8 @@
-import { Cars, CarFilters } from './components'
+import { Cars, Filters } from './components'
 
 const CarsPage = () => (
     <div className='flex items-start'>
-        <CarFilters />
+        <Filters />
         <Cars />
     </div>
 )
