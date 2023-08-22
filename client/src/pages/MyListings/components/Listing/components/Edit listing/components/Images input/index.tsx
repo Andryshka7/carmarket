@@ -1,10 +1,11 @@
 import { Dispatch } from 'react'
 import { Picture } from './components'
 import { BiSolidMessageSquareAdd } from 'react-icons/bi'
+import { Image } from 'types'
 
 interface Props {
-    images: File[]
-    setImages: Dispatch<React.SetStateAction<File[]>>
+    images: (Image | File)[]
+    setImages: Dispatch<React.SetStateAction<(Image | File)[]>>
 }
 
 const ImagesInput = ({ images, setImages }: Props) => {
@@ -15,11 +16,10 @@ const ImagesInput = ({ images, setImages }: Props) => {
             {images.map((image, index) => (
                 <Picture
                     image={image}
-                    key={image.name}
                     removeImage={() => removeImage(index)}
+                    key={image.name + index}
                 />
             ))}
-
             <label htmlFor='images-input'>
                 <div className='flex aspect-video w-full cursor-pointer rounded-lg bg-neutral-900'>
                     <div className='flex h-full w-full flex-col justify-center'>
@@ -31,7 +31,6 @@ const ImagesInput = ({ images, setImages }: Props) => {
                     </div>
                 </div>
             </label>
-
             <input
                 type='file'
                 id='images-input'

@@ -5,13 +5,17 @@ const Cars = () => {
     const { cars } = useCarsStore()
 
     return (
-        <div className='mx-auto flex flex-wrap justify-center gap-5 p-8'>
+        <div className='flex flex-wrap justify-center gap-5 p-8'>
             {cars.map(({ id, model, year, price, images }) => (
-                <NavLink to={`/${id}`} className='rounded-lg bg-neutral-700 text-white' key={images[0]}>
+                <NavLink
+                    to={`/${id}`}
+                    className='w-full max-w-[370px] rounded-lg bg-neutral-700 text-white'
+                    key={images[0].url}
+                >
                     <div className='overflow-hidden rounded-t-lg'>
                         <img
-                            src={images[0]}
-                            className='aspect-video w-[370px] object-cover transition duration-500 hover:scale-105'
+                            src={images[0].url}
+                            className='aspect-video w-full object-cover transition duration-500 hover:scale-105'
                         />
                     </div>
                     <div className='mx-4 mb-2 mt-1'>

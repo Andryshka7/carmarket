@@ -62,7 +62,7 @@ const CreateListing = () => {
                     </div>
                 ) : (
                     <form
-                        className='scrollbar h-fit w-11/12 rounded-lg bg-neutral-700 px-8 py-5 text-white sm:px-14 md:w-[770px] md:px-28 md:py-10'
+                        className='scrollbar h-fit w-11/12 rounded-lg bg-neutral-700 px-8 py-8 text-white sm:px-14 md:w-[700px] lg:w-[800px] lg:px-24 md:py-10'
                         onSubmit={handleSubmit(submit)}
                         onClick={(e) => e.stopPropagation()}
                     >
@@ -102,8 +102,14 @@ const CreateListing = () => {
                             </div>
                         </div>
 
-                        <Transmission transmission={transmission} switchTransmission={setTransmission} />
-                        <Type type={type} switchType={setType} />
+                        <Transmission
+                            transmission={transmission}
+                            switchTransmission={setTransmission}
+                        />
+                        <Type
+                            type={type}
+                            switchType={setType}
+                        />
 
                         <div className='mt-5'>
                             <input
@@ -126,7 +132,10 @@ const CreateListing = () => {
                             <h3 className='text-center text-sm font-bold text-[#858585]'>Description</h3>
                         </div>
 
-                        <ImagesInput images={images} setImages={setImages} />
+                        <ImagesInput
+                            images={images}
+                            setImages={setImages}
+                        />
 
                         <button
                             className='m-auto mt-5 block h-12 w-56 rounded-md bg-green-600 font-semibold transition duration-200 hover:bg-opacity-90 sm:w-72'

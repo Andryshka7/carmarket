@@ -25,6 +25,7 @@ CREATE TABLE cars (
 CREATE TABLE images (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
+    url VARCHAR(255) NOT NULL,
     car INT NOT NULL,
     FOREIGN KEY (car) REFERENCES cars(id)
 );

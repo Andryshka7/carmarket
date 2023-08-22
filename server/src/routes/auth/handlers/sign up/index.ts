@@ -2,8 +2,8 @@ import { hash } from 'bcrypt'
 import { createUser } from 'database/queries/users'
 import { Request, Response } from 'express'
 import { createAccessToken, createRefreshToken } from 'helpers/jwt'
-import dotenv from 'dotenv'
 import { storeRefreshToken } from 'database/queries/refresh tokens'
+import dotenv from 'dotenv'
 
 dotenv.config()
 

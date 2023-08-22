@@ -24,7 +24,11 @@ const DeleteConfirmation = ({ deletePending, deleteCar, cancelDelete }: Props) =
     return loading ? (
         <Loader />
     ) : (
-        <div className={`absolute transition duration-200 ${deletePending ? 'opacity-1' : 'opacity-0'}`}>
+        <div
+            className={`absolute transition duration-200 ${
+                deletePending ? 'opacity-1' : 'pointer-events-none opacity-0'
+            }`}
+        >
             <h1 className='mx-auto w-56 text-center font-semibold'>
                 Are you sure you want to delete this listing?
             </h1>

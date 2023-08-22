@@ -36,7 +36,7 @@ const CarPreview = () => {
                     onClick={setPrevImage}
                 />
                 <NavLink to={`${images[image]}`}>
-                    <img src={images[image]} className='aspect-video w-full rounded-lg object-cover' />
+                    <img src={images[image].url} className='aspect-video w-full rounded-lg object-cover' />
                 </NavLink>
                 <FcNext
                     size={35}
@@ -57,10 +57,10 @@ const CarPreview = () => {
             <div className='mt-2 flex flex-wrap gap-2 md:gap-3'>
                 {images.map((image, index) => (
                     <img
-                        src={image}
+                        src={image.url}
                         className='aspect-video w-[144px] cursor-pointer rounded-lg object-cover md:w-[190px]'
                         onClick={() => setImage(index)}
-                        key={image}
+                        key={image.url}
                     />
                 ))}
             </div>

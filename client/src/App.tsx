@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Navbar, Footer, Error } from 'components'
-import { Listings, MyListings, CreateListing, CarPreview, LogIn, SignUp, EditListing } from 'pages'
+import { Listings, MyListings, CreateListing, CarPreview, LogIn, SignUp } from 'pages'
 import { Loader } from 'components'
 import { useLoadData } from 'hooks'
 
@@ -29,10 +29,7 @@ function App() {
                     <Route path='/login' element={<LogIn />} />
                     <Route path='/signup' element={<SignUp />} />
 
-                    <Route path='/mylistings'>
-                        <Route index element={<MyListings />} />
-                        <Route path=':id' element={<EditListing />} />
-                    </Route>
+                    <Route path='/mylistings' element={<MyListings />} />
                     <Route path='/createlisting' element={<CreateListing />} />
                     <Route path='/*' element={<Error />} />
                 </Routes>

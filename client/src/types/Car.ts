@@ -1,4 +1,5 @@
 import User from './User'
+import Image from './Image'
 
 interface Car {
     id: number
@@ -10,7 +11,7 @@ interface Car {
     transmission: string
     description: string
     user: User
-    images: string[]
+    images: Image[]
 }
 
 export default Car

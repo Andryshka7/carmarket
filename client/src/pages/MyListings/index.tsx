@@ -10,7 +10,7 @@ const MyListings = () => {
 
     return (
         <ProtectedPage>
-            <div className='mx-auto flex flex-wrap justify-center gap-5 p-8'>
+            <div className='flex flex-wrap justify-center gap-5 p-8'>
                 {myListings.map((car) => (
                     <Listing {...car} key={car.id} />
                 ))}

@@ -11,7 +11,12 @@ const fetchCars = async () => {
              'email', users.email,
              'avatar', users.avatar
            ) AS user,
-           JSON_ARRAYAGG(images.name) AS images
+           JSON_ARRAYAGG(  
+             JSON_OBJECT(
+               'name', images.name,
+               'url', images.url
+              )
+           ) AS images
     FROM cars
     INNER JOIN users ON cars.user = users.id
     LEFT JOIN images ON images.car = cars.id

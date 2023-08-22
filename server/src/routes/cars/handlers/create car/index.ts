@@ -15,18 +15,20 @@ const handleCreateCar = async (req: Request, res: Response) => {
 
         const car_id = await createCar(car, user_id)
 
-        const images: string[] = []
+        const images: { name: string; url: string }[] = []
 
         if (Array.isArray(req.files)) {
             req.files.forEach((image) => {
-                images.push(`${SERVER_URL}/images/${image.filename}`)
+                const name = image.originalname
+                const url = `${SERVER_URL}/images/${image.filename}`
+                images.push({ name, url })
             })
         }
 
         const promises: Promise<void>[] = []
 
-        images.forEach((image) => {
-            promises.push(createImage(image, car_id))
+        images.forEach(({ name, url }) => {
+            promises.push(createImage(name, url, car_id))
         })
 
         await Promise.all(promises)

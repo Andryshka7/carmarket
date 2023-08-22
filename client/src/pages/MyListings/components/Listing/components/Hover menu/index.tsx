@@ -1,15 +1,14 @@
 import { useState } from 'react'
 import { EditButton, DeleteButton, DeleteConfirmation } from './components'
 import { useCarsStore } from 'store'
-import { useNavigate } from 'react-router-dom'
 
 interface Props {
     id: number
     isHovering: boolean
+    editListing: () => void
 }
 
-const HoverMenu = ({ id, isHovering }: Props) => {
-    const navigate = useNavigate()
+const HoverMenu = ({ id, isHovering, editListing }: Props) => {
     const { removeCar } = useCarsStore()
     const [deletePending, setDeletePending] = useState(false)
 
@@ -24,8 +23,8 @@ const HoverMenu = ({ id, isHovering }: Props) => {
 
     return (
         <div
-            className={`absolute flex aspect-video w-[370px] items-center justify-center rounded-t-lg bg-black text-xl transition duration-200 ${
-                isHovering ? 'opacity-1' : 'opacity-0'
+            className={`absolute flex h-full w-full items-center justify-center rounded-t-lg bg-black text-xl transition duration-200 ${
+                isHovering ? 'opacity-1' : 'pointer-events-none opacity-0'
             } ${deletePending ? 'bg-opacity-80' : 'bg-opacity-70'}`}
         >
             <DeleteConfirmation
@@ -36,10 +35,10 @@ const HoverMenu = ({ id, isHovering }: Props) => {
 
             <div
                 className={`absolute flex items-center justify-center gap-3 transition duration-200 ${
-                    deletePending ? 'opacity-0' : 'opacity-1'
+                    deletePending ? 'pointer-events-none opacity-0' : 'opacity-1'
                 }`}
             >
-                <EditButton onClick={() => navigate(String(id))} />
+                <EditButton onClick={editListing} />
                 <DeleteButton onClick={() => setDeletePending(true)} />
             </div>
         </div>
