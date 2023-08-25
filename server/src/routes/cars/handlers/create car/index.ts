@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { createCar } from 'database/queries/cars'
 import { createImage } from 'database/queries/images'
-import { User } from 'types'
+import { Image, User } from 'types'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -15,25 +15,26 @@ const handleCreateCar = async (req: Request, res: Response) => {
 
         const car_id = await createCar(car, user_id)
 
-        const images: { name: string; url: string }[] = []
+        const uploaded: Omit<Image, 'id'>[] = []
 
         if (Array.isArray(req.files)) {
             req.files.forEach((image) => {
                 const name = image.originalname
+                const originalName = image.filename
                 const url = `${SERVER_URL}/images/${image.filename}`
-                images.push({ name, url })
+                uploaded.push({ name, originalName, url })
             })
         }
 
         const promises: Promise<void>[] = []
 
-        images.forEach(({ name, url }) => {
-            promises.push(createImage(name, url, car_id))
+        uploaded.forEach(({ name, originalName, url }) => {
+            promises.push(createImage(name, originalName, url, car_id))
         })
 
         await Promise.all(promises)
 
-        const created = { ...car, id: car_id, user: req.user, images }
+        const created = { ...car, id: car_id, user: req.user, images: uploaded }
 
         res.status(200).json(created)
     } catch (error) {

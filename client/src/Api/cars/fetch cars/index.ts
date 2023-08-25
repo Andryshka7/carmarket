@@ -2,8 +2,8 @@ import API from 'api'
 import { Car } from 'types'
 
 const fetchCars = async () => {
-    const response = await API.get<Car[]>(`/cars`)
-    return response.data
+    const { data } = await API.get<Car[]>(`/cars`)
+    return data
 }
 
 export default fetchCars

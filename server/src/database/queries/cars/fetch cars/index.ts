@@ -14,6 +14,7 @@ const fetchCars = async () => {
            JSON_ARRAYAGG(  
              JSON_OBJECT(
                'name', images.name,
+               'originalName', images.originalName,
                'url', images.url
               )
            ) AS images

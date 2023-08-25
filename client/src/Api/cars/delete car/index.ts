@@ -1,8 +1,8 @@
 import API from 'api'
 
-const deleteCar = async (id: string) => {
-    const response = await API.delete(`/cars/${id}`)
-    return response.data
+const deleteCar = async (id: number) => {
+    const { data } = await API.delete(`/cars/${id}`)
+    return data
 }
 
 export default deleteCar

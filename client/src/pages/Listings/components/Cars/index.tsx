@@ -10,7 +10,7 @@ const Cars = () => {
                 <NavLink
                     to={`/${id}`}
                     className='w-full max-w-[370px] rounded-lg bg-neutral-700 text-white'
-                    key={images[0].url}
+                    key={images[0].originalName}
                 >
                     <div className='overflow-hidden rounded-t-lg'>
                         <img

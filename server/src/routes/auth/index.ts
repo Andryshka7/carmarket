@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import upload from 'helpers/multer'
+import { upload } from 'images/controller'
 import { authenticate, passport } from 'middleware'
 import {
     handleGetMe,

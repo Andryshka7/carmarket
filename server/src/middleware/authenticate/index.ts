@@ -1,17 +1,12 @@
-import jwt from 'jsonwebtoken'
-import dotenv from 'dotenv'
 import { User } from 'types'
 import { Request, Response, NextFunction } from 'express'
-
-dotenv.config()
-
-const JWT_SECRET = process.env.JWT_SECRET!
+import { verifyToken } from 'helpers/jwt'
 
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
     try {
         const token = req.headers.authorization?.replace('Bearer ', '')
         if (token) {
-            const { id, username, email, avatar } = jwt.verify(token, JWT_SECRET) as User
+            const { id, username, email, avatar } = verifyToken<User>(token)
             req.user = { id, username, email, avatar }
             next()
         } else {

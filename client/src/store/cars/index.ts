@@ -6,10 +6,11 @@ interface Store {
     cars: Car[]
     fetchCars: () => Promise<void>
     createCar: (car: Car) => void
+    editCar: (car: Car) => void
     removeCar: (id: number) => void
 }
 
-const useCarsStore = create<Store>()((set, get) => ({
+const useCarsStore = create<Store>()((set) => ({
     cars: [],
     loading: true,
     error: false,
@@ -24,9 +25,11 @@ const useCarsStore = create<Store>()((set, get) => ({
     createCar: (car: Car) => {
         set((state) => ({ cars: [...state.cars, car] }))
     },
+    editCar: (editedCar: Car) => {
+        set(({ cars }) => ({ cars: cars.map((car) => (car.id !== editedCar.id ? car : editedCar)) }))
+    },
     removeCar: (id: number) => {
-        const { cars } = get()
-        set({ cars: cars.filter((car) => car.id !== id) })
+        set(({ cars }) => ({ cars: cars.filter((car) => car.id !== id) }))
     }
 }))
 

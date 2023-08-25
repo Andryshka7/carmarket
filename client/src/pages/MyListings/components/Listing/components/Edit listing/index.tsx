@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { ImagesInput, Transmission, Type } from './components'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
-import { Car, Image } from 'types'
+import { updateCarQuery } from 'api/cars'
+import { useCreateProtectedRequest } from 'hooks'
 import { Loader } from 'components'
+import { Car, Image } from 'types'
+import { ImagesInput, Transmission, Type } from './components'
+import { createFormData, getRemovedImages } from './helpers'
+import { useCarsStore } from 'store'
 
-type Props = Car & { cancelEditing: () => void }
+type Props = Car & { closeModal: () => void }
 
 type Data = {
     model: string
@@ -15,12 +19,27 @@ type Data = {
     description: string
 }
 
-const EditListing = ({ cancelEditing, ...car }: Props) => {
+const EditListing = ({ closeModal, ...car }: Props) => {
+    const {
+        model: initialModel,
+        year: initialYear,
+        power: initialPower,
+        price: initialPrice,
+        type: initialType,
+        transmission: initialTransmission,
+        description: initialDescription,
+        images: initialImages
+    } = car
+
+    const { editCar } = useCarsStore()
+
     const [loading, setLoading] = useState(false)
 
-    const [images, setImages] = useState<(Image | File)[]>(car.images)
-    const [transmission, setTransmission] = useState(car.transmission)
-    const [type, setType] = useState(car.type)
+    const [images, setImages] = useState<(Image | File)[]>(initialImages)
+    const [transmission, setTransmission] = useState(initialTransmission)
+    const [type, setType] = useState(initialType)
+
+    const createProtectedRequest = useCreateProtectedRequest()
 
     const {
         register,
@@ -29,13 +48,31 @@ const EditListing = ({ cancelEditing, ...car }: Props) => {
     } = useForm<Data>()
 
     const submit = async (data: Data) => {
-        // handle changed attributes
         try {
             setLoading(true)
-            await new Promise((res) => setTimeout(res, 500))
+
+            const imageFiles = images.filter((item) => item instanceof File) as File[]
+            const removedImages = getRemovedImages(images, initialImages)
+
+            const formData = createFormData(
+                { ...car, ...data, type, transmission },
+                imageFiles,
+                removedImages
+            )
+
+            const updateCar = createProtectedRequest(
+                async (accessToken: string) => await updateCarQuery(formData, accessToken),
+                editCar
+            )
+
+            await updateCar()
+
             setLoading(false)
+            closeModal()
+            console.log('Car has been modified')
         } catch (error) {
             setLoading(false)
+            console.log(error)
         }
     }
 
@@ -47,7 +84,7 @@ const EditListing = ({ cancelEditing, ...car }: Props) => {
     return (
         <div
             className='fixed left-0 top-0 flex h-full w-full overflow-auto bg-neutral-700 p-8 md:overflow-hidden md:bg-black md:bg-opacity-50'
-            onClick={cancelEditing}
+            onClick={closeModal}
         >
             {loading ? (
                 <div className='flex w-[765px] items-center justify-center rounded-lg bg-neutral-700 md:m-auto md:h-[800px]'>
@@ -63,7 +100,7 @@ const EditListing = ({ cancelEditing, ...car }: Props) => {
                         <input
                             type='text'
                             {...register('model', { required: true })}
-                            defaultValue={car.model}
+                            defaultValue={initialModel}
                             className={`h-12 w-full rounded border-2 bg-transparent text-center font-semibold transition duration-200 focus:outline-none ${
                                 errors['model'] ? 'border-red-500' : 'border-[#858585]'
                             }`}
@@ -76,7 +113,7 @@ const EditListing = ({ cancelEditing, ...car }: Props) => {
                             <input
                                 type='number'
                                 {...register('year', { required: true })}
-                                defaultValue={car.year}
+                                defaultValue={initialYear}
                                 className={`h-12 w-full rounded border-2 bg-transparent text-center font-semibold transition duration-200 focus:outline-none ${
                                     errors['year'] ? 'border-red-500' : 'border-[#858585]'
                                 }`}
@@ -87,7 +124,7 @@ const EditListing = ({ cancelEditing, ...car }: Props) => {
                             <input
                                 type='text'
                                 {...register('power', { required: true })}
-                                defaultValue={car.power}
+                                defaultValue={initialPower}
                                 className={`h-12 w-full rounded border-2 bg-transparent text-center font-semibold transition duration-200 focus:outline-none ${
                                     errors['power'] ? 'border-red-500' : 'border-[#858585]'
                                 }`}
@@ -109,7 +146,7 @@ const EditListing = ({ cancelEditing, ...car }: Props) => {
                         <input
                             type='number'
                             {...register('price', { required: true })}
-                            defaultValue={car.price}
+                            defaultValue={initialPrice}
                             className={`h-12 w-full rounded border-2 bg-transparent text-center font-semibold transition duration-200 focus:outline-none ${
                                 errors['price'] ? 'border-red-500' : 'border-[#858585]'
                             }`}
@@ -120,7 +157,7 @@ const EditListing = ({ cancelEditing, ...car }: Props) => {
                     <div className='mt-3'>
                         <textarea
                             {...register('description', { required: true })}
-                            defaultValue={car.description}
+                            defaultValue={initialDescription}
                             className={`h-36 w-full rounded border-2 bg-transparent px-2 py-1 transition duration-200 focus:outline-none ${
                                 errors['description'] ? 'border-red-500' : 'border-[#858585]'
                             }`}
@@ -140,12 +177,12 @@ const EditListing = ({ cancelEditing, ...car }: Props) => {
                         Edit listing
                     </button>
 
-                    <div className='py-10'>
+                    <div className='py-10 md:hidden'>
                         <AiOutlineCloseCircle
                             size={60}
                             color='white'
-                            className='mx-auto md:hidden'
-                            onClick={cancelEditing}
+                            className='mx-auto'
+                            onClick={closeModal}
                         />
                     </div>
                 </form>

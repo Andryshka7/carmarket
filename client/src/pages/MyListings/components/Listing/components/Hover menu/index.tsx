@@ -1,19 +1,20 @@
 import { useState } from 'react'
 import { EditButton, DeleteButton, DeleteConfirmation } from './components'
 import { useCarsStore } from 'store'
+import { deleteCarQuery } from 'api/cars'
 
 interface Props {
     id: number
     isHovering: boolean
-    editListing: () => void
+    openModal: () => void
 }
 
-const HoverMenu = ({ id, isHovering, editListing }: Props) => {
+const HoverMenu = ({ id, isHovering, openModal }: Props) => {
     const { removeCar } = useCarsStore()
     const [deletePending, setDeletePending] = useState(false)
 
     const deleteCar = async () => {
-        await new Promise((res) => setTimeout(res, 500))
+        await deleteCarQuery(id)
         removeCar(id)
     }
 
@@ -38,7 +39,7 @@ const HoverMenu = ({ id, isHovering, editListing }: Props) => {
                     deletePending ? 'pointer-events-none opacity-0' : 'opacity-1'
                 }`}
             >
-                <EditButton onClick={editListing} />
+                <EditButton onClick={openModal} />
                 <DeleteButton onClick={() => setDeletePending(true)} />
             </div>
         </div>

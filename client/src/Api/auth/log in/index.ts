@@ -7,8 +7,8 @@ interface Body {
 }
 
 const logIn = async (body: Body) => {
-    const response = await API.post<User>('/auth/login', body)
-    return response.data
+    const { data } = await API.post<User>('/auth/login', body)
+    return data
 }
 
 export default logIn

@@ -9,7 +9,7 @@ interface Props {
 }
 
 const ImagesInput = ({ images, setImages }: Props) => {
-    const removeImage = (index: number) => setImages((images) => images.filter((_, id) => index !== id))
+    const removeImage = (index: number) => setImages((images) => images.filter((_, n) => index !== n))
 
     return (
         <div className='xs:grid-cols-3 mt-2 grid grid-cols-2 gap-x-4 gap-y-3'>

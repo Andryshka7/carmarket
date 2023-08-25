@@ -1,13 +1,14 @@
 import { Router } from 'express'
 import { authenticate } from 'middleware'
-import upload from 'helpers/multer'
-import { handleDeleteCar, handleCreateCar, handleFetchCars } from './handlers'
+import { handleDeleteCar, handleCreateCar, handleUpdateCar, handleFetchCars } from './handlers'
+import { upload } from 'images/controller'
 
 const carsRouter = Router()
 
 carsRouter.get('/', handleFetchCars)
 
 carsRouter.post('/', authenticate, upload.array('image'), handleCreateCar)
+carsRouter.patch('/', authenticate, upload.array('image'), handleUpdateCar)
 
 carsRouter.delete('/:id', handleDeleteCar)
 

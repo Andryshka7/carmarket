@@ -60,7 +60,7 @@ const CarPreview = () => {
                         src={image.url}
                         className='aspect-video w-[144px] cursor-pointer rounded-lg object-cover md:w-[190px]'
                         onClick={() => setImage(index)}
-                        key={image.url}
+                        key={image.originalName}
                     />
                 ))}
             </div>

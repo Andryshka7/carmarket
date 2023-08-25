@@ -10,8 +10,8 @@ const Listing = (car: Car) => {
     const ebableHover = () => setHover(true)
     const disableHover = () => setHover(false)
 
-    const startEditing = () => setEditCar(true)
-    const cancelEditing = () => setEditCar(false)
+    const openModal = () => setEditCar(true)
+    const closeModal = () => setEditCar(false)
 
     const { id, model, year, price, images } = car
 
@@ -19,7 +19,7 @@ const Listing = (car: Car) => {
         <>
             <div
                 className='w-full max-w-[370px] rounded-lg bg-neutral-700 text-white'
-                key={images[0].url}
+                key={images[0].originalName}
             >
                 <div
                     className='relative aspect-video w-full'
@@ -32,7 +32,7 @@ const Listing = (car: Car) => {
                     />
                     <HoverMenu
                         id={id}
-                        editListing={startEditing}
+                        openModal={openModal}
                         isHovering={hover}
                     />
                 </div>
@@ -50,7 +50,7 @@ const Listing = (car: Car) => {
                 <Portal>
                     <EditListing
                         {...car}
-                        cancelEditing={cancelEditing}
+                        closeModal={closeModal}
                     />
                 </Portal>
             )}

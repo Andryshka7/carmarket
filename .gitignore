@@ -1,4 +1,7 @@
 node_modules
+images/*.jpg
+images/*.png
+images/*.jpeg
 dist
 .env
 .prettierrc

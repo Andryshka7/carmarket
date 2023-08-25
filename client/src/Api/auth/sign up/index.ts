@@ -2,8 +2,8 @@ import API from 'api'
 import { User } from 'types'
 
 const signUp = async (body: FormData) => {
-    const response = await API.post<User>('/auth/signup', body)
-    return response.data
+    const { data } = await API.post<User>('/auth/signup', body)
+    return data
 }
 
 export default signUp
