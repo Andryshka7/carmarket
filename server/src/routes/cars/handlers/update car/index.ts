@@ -2,14 +2,8 @@ import { Request, Response } from 'express'
 import { updateCar } from 'database/queries/cars'
 import { createImage, deleteImage } from 'database/queries/images'
 import { Car, Image } from 'types'
-import fs from 'fs'
-import path from 'path'
-import dotenv from 'dotenv'
 import { deleteImages } from 'images/controller'
-
-dotenv.config()
-
-const SERVER_URL = process.env.SERVER_URL
+import { SERVER_URL } from 'config'
 
 const handleUpdateCar = async (req: Request, res: Response) => {
     try {
@@ -36,9 +30,10 @@ const handleUpdateCar = async (req: Request, res: Response) => {
         const removedImages = JSON.parse(req.body.removedImages) as string[]
 
         removedImages.forEach((originalName) => {
-            deleteImages(originalName)
             promises.push(deleteImage(originalName))
         })
+
+        deleteImages(...removedImages)
 
         await Promise.all(promises)
         await updateCar(car)

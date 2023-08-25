@@ -1,7 +1,7 @@
+import { Request, Response } from 'express'
 import { compare } from 'bcrypt'
 import { storeRefreshToken } from 'database/queries/refresh tokens'
 import { fetchUserByEmail } from 'database/queries/users'
-import { Request, Response } from 'express'
 import { createAccessToken, createRefreshToken } from 'helpers/jwt'
 
 const handleLogIn = async (req: Request, res: Response) => {

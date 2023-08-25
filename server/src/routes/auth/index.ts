@@ -9,12 +9,7 @@ import {
     handleSignUp,
     handleLogOut
 } from './handlers'
-
-import dotenv from 'dotenv'
-
-dotenv.config()
-
-const CLIENT_URL = process.env.CLIENT_URL
+import { CLIENT_URL } from 'config'
 
 const authRouter = Router()
 

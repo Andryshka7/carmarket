@@ -1,19 +1,15 @@
 import { Request, Response } from 'express'
 import { createCar } from 'database/queries/cars'
 import { createImage } from 'database/queries/images'
-import { Image, User } from 'types'
-import dotenv from 'dotenv'
-
-dotenv.config()
-
-const SERVER_URL = process.env.SERVER_URL
+import { Car, Image, User } from 'types'
+import { SERVER_URL } from 'config'
 
 const handleCreateCar = async (req: Request, res: Response) => {
     try {
-        const user_id = (req.user as User).id
-        const car = JSON.parse(req.body.car)
+        const user = req.user as User
+        const car = JSON.parse(req.body.car) as Car
 
-        const car_id = await createCar(car, user_id)
+        const car_id = await createCar(car, user.id)
 
         const uploaded: Omit<Image, 'id'>[] = []
 
@@ -34,7 +30,7 @@ const handleCreateCar = async (req: Request, res: Response) => {
 
         await Promise.all(promises)
 
-        const created = { ...car, id: car_id, user: req.user, images: uploaded }
+        const created = { ...car, id: car_id, user, images: uploaded }
 
         res.status(200).json(created)
     } catch (error) {

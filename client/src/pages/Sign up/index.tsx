@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { GOOGLE_AUTH } from 'config'
 import { signUpQuery } from 'api/auth'
 import { Loader } from 'components'
 import { useAuthStore } from 'store'
 import googleIcon from 'assets/google.png'
-
-const GOOGLE_AUTH = import.meta.env.VITE_GOOGLE_AUTH
 
 type Data = {
     username: string

@@ -1,4 +1,5 @@
 import pool from 'database'
+import { RowDataPacket } from 'mysql2'
 import { Image } from 'types'
 
 const fetchRelatedImages = async (carId: number) => {
@@ -6,9 +7,9 @@ const fetchRelatedImages = async (carId: number) => {
     SELECT * FROM images
     WHERE car = ?
     `
-    const [rows] = await pool.query(sql, [carId])
+    const [rows] = await pool.query<RowDataPacket[]>(sql, [carId])
 
-    if (Array.isArray(rows)) {
+    if (rows.length) {
         return (rows as Image[]).map(({ originalName }) => originalName)
     } else {
         return null

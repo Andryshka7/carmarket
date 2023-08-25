@@ -49,6 +49,7 @@ const EditListing = ({ closeModal, ...car }: Props) => {
 
     const submit = async (data: Data) => {
         try {
+            // CHECK IF THERE ARE CHANGES
             setLoading(true)
 
             const imageFiles = images.filter((item) => item instanceof File) as File[]

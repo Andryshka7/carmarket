@@ -3,11 +3,7 @@ import { createUser } from 'database/queries/users'
 import { Request, Response } from 'express'
 import { createAccessToken, createRefreshToken } from 'helpers/jwt'
 import { storeRefreshToken } from 'database/queries/refresh tokens'
-import dotenv from 'dotenv'
-
-dotenv.config()
-
-const SERVER_URL = process.env.SERVER_URL
+import { SERVER_URL } from 'config'
 
 const handleSignUp = async (req: Request, res: Response) => {
     try {

@@ -1,15 +1,10 @@
 import path from 'path'
 import express, { json } from 'express'
-import dotenv from 'dotenv'
 import cors from 'cors'
-import { passport } from 'middleware'
 import cookieParser from 'cookie-parser'
+import { passport } from 'middleware'
 import { carsRouter, authRouter } from 'routes'
-
-dotenv.config()
-
-const PORT = process.env.PORT || 4000
-const CLIENT_URL = process.env.CLIENT_URL
+import { PORT, CLIENT_URL } from 'config'
 
 const app = express()
 

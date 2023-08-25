@@ -1,13 +1,9 @@
-import { createUser, fetchUserByEmail } from 'database/queries/users'
 import { Request, Response } from 'express'
-import { createAccessToken, createRefreshToken } from 'helpers/jwt'
 import { Profile } from 'passport'
-import dotenv from 'dotenv'
+import { createAccessToken, createRefreshToken } from 'helpers/jwt'
+import { createUser, fetchUserByEmail } from 'database/queries/users'
 import { storeRefreshToken } from 'database/queries/refresh tokens'
-
-dotenv.config()
-
-const CLIENT_URL = process.env.CLIENT_URL
+import { CLIENT_URL } from 'config'
 
 const handleGoogleSignIn = async (req: Request, res: Response) => {
     try {

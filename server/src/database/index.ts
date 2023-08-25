@@ -1,12 +1,11 @@
 import { createPool } from 'mysql2'
-import dotenv from 'dotenv'
+import {
+    DATABASE_HOST as host,
+    DATABASE_USER as user,
+    DATABASE_PASSWORD as password,
+    DATABASE_NAME as database
+} from 'config'
 
-dotenv.config()
-
-const host = process.env.DATABASE_HOST
-const user = process.env.DATABASE_USER
-const password = process.env.DATABASE_PASSWORD
-const database = process.env.DATABASE_NAME
 const charset = 'utf8'
 
 const config = { host, user, password, database, charset }

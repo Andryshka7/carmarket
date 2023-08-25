@@ -1,5 +1,4 @@
 import pool from 'database'
-import { User } from 'types'
 
 const storeRefreshToken = async (token: string, userId: number) => {
     const sql = `

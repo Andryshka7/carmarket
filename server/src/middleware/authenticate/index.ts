@@ -1,4 +1,3 @@
-import { User } from 'types'
 import { Request, Response, NextFunction } from 'express'
 import { verifyToken } from 'helpers/jwt'
 
@@ -6,8 +5,8 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
     try {
         const token = req.headers.authorization?.replace('Bearer ', '')
         if (token) {
-            const { id, username, email, avatar } = verifyToken<User>(token)
-            req.user = { id, username, email, avatar }
+            const user = verifyToken(token)
+            req.user = user
             next()
         } else {
             res.status(401).json('Token not provided')

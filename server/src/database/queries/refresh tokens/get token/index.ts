@@ -8,10 +8,10 @@ const getRefreshToken = async (userId: number) => {
     `
     const [rows] = await pool.query<RowDataPacket[]>(sql, [userId])
 
-    if (!rows.length) {
-        return null
-    } else {
+    if (rows.length) {
         return rows[0].token
+    } else {
+        return null
     }
 }
 
