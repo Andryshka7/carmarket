@@ -1,7 +1,10 @@
 node_modules
 images/*.jpg
-images/*.png
 images/*.jpeg
+images/*.png
+images/*.gif
+images/*.bmp
+images/*.svg
 dist
 .env
 .prettierrc

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { EditButton, DeleteButton, DeleteConfirmation } from './components'
 import { useCarsStore } from 'store'
 import { deleteCarQuery } from 'api/cars'
+import { useCreateProtectedRequest } from 'hooks'
 
 interface Props {
     id: number
@@ -10,13 +11,14 @@ interface Props {
 }
 
 const HoverMenu = ({ id, isHovering, openModal }: Props) => {
-    const { removeCar } = useCarsStore()
+    const createProtectedRequest = useCreateProtectedRequest()
     const [deletePending, setDeletePending] = useState(false)
+    const { removeCar } = useCarsStore()
 
-    const deleteCar = async () => {
-        await deleteCarQuery(id)
-        removeCar(id)
-    }
+    const deleteCar = createProtectedRequest(
+        async (token) => await deleteCarQuery(token, id),
+        () => removeCar(id)
+    )
 
     const cancelDelete = () => {
         setDeletePending(false)

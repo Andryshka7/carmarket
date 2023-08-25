@@ -1,7 +1,9 @@
 import API from 'api'
 
-const deleteCar = async (id: number) => {
-    const { data } = await API.delete(`/cars/${id}`)
+const deleteCar = async (token: string, id: number) => {
+    const { data } = await API.delete(`/cars/${id}`, {
+        headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` }
+    })
     return data
 }
 

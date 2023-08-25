@@ -10,6 +10,6 @@ carsRouter.get('/', handleFetchCars)
 carsRouter.post('/', authenticate, upload.array('image'), handleCreateCar)
 carsRouter.patch('/', authenticate, upload.array('image'), handleUpdateCar)
 
-carsRouter.delete('/:id', handleDeleteCar)
+carsRouter.delete('/:id', authenticate, handleDeleteCar)
 
 export default carsRouter

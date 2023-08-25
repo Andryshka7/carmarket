@@ -1,12 +1,18 @@
 import { Request, Response } from 'express'
 import { deleteCar } from 'database/queries/cars'
-import { deleteRelatedImages } from 'database/queries/images'
+import { deleteRelatedImages, fetchRelatedImages } from 'database/queries/images'
+import { deleteImages } from 'images/controller'
 
 const handleDeleteCar = async (req: Request, res: Response) => {
     try {
         const id = Number(req.params.id)
+        const images = await fetchRelatedImages(id)
+
+        if (images) deleteImages(...images)
+
         await deleteRelatedImages(id)
         await deleteCar(id)
+
         res.status(200).json('Car has been deleted')
     } catch (error) {
         res.status(400).json('Error while deleting car')
