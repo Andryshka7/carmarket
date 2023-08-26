@@ -6,8 +6,8 @@ const handleFetchCars = async (req: Request, res: Response) => {
         const cars = await fetchCars()
         res.status(200).json(cars)
     } catch (error) {
-        res.status(400).json('Error while fetching cars')
-        console.log(error)
+        res.status(500).json('Error while fetching cars')
+        console.log('Error while fetching cars')
     }
 }
 

@@ -6,6 +6,7 @@ import googleIcon from 'assets/google.png'
 import { logInQuery } from 'api/auth'
 import { Loader } from 'components'
 import { useAuthStore } from 'store'
+import toast from 'react-hot-toast'
 
 type Data = {
     email: string
@@ -31,7 +32,7 @@ const LogIn = () => {
             setUser(user)
             navigate('/')
         } catch (error) {
-            console.log('Invalid credentials')
+            toast.error('Invalid credentials!')
         }
         setLoading(false)
         reset()

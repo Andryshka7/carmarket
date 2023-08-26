@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { fetchUserQuery } from 'api/auth'
 import { useCreateProtectedRequest } from 'hooks'
 import { useCarsStore, useAuthStore } from 'store'
+import toast from 'react-hot-toast';
 
 const useLoadData = () => {
     const [loading, setLoading] = useState(true)
@@ -15,9 +16,14 @@ const useLoadData = () => {
     })
 
     const loadData = async () => {
-        setLoading(true)
-        await Promise.all([fetchCars(), fetchUser()])
-        setLoading(false)
+        try {
+            setLoading(true)
+            await Promise.all([fetchCars(), fetchUser()])
+            setLoading(false)
+        } catch (error) {
+            setLoading(false)
+            toast.error('An error occured while fetching data')
+        }
     }
 
     return { loading, loadData }

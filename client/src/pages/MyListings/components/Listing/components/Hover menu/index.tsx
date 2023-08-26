@@ -16,7 +16,10 @@ const HoverMenu = ({ id, isHovering, openModal }: Props) => {
     const { removeCar } = useCarsStore()
 
     const deleteCar = createProtectedRequest(
-        async (token) => await deleteCarQuery(token, id),
+        async (token) => {
+            await new Promise((res) => setTimeout(res, 2000))
+        },
+        // async (token) => await deleteCarQuery(token, id),
         () => removeCar(id)
     )
 

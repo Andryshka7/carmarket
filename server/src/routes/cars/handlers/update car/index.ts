@@ -42,8 +42,8 @@ const handleUpdateCar = async (req: Request, res: Response) => {
 
         res.status(200).json(car)
     } catch (error) {
-        console.log(error)
         res.status(500).json('An error occured while updating car')
+        console.log('An error occured while updating car')
     }
 }
 

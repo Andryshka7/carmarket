@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { Navbar, Footer, Error } from 'components'
 import { Listings, MyListings, CreateListing, CarPreview, LogIn, SignUp } from 'pages'
 import { Loader } from 'components'
 import { useLoadData } from 'hooks'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
     const { loading, loadData } = useLoadData()
@@ -18,24 +19,43 @@ function App() {
         </div>
     ) : (
         <div className='flex min-h-screen flex-col bg-neutral-800'>
-            <BrowserRouter>
-                <Navbar />
-                <Routes>
-                    <Route path='/'>
-                        <Route index element={<Listings />} />
-                        <Route path=':id' element={<CarPreview />} />
-                    </Route>
+            <Toaster position='top-center' />
+            <Navbar />
+            <Routes>
+                <Route path='/'>
+                    <Route
+                        index
+                        element={<Listings />}
+                    />
+                    <Route
+                        path=':id'
+                        element={<CarPreview />}
+                    />
+                </Route>
 
-                    <Route path='/login' element={<LogIn />} />
-                    <Route path='/signup' element={<SignUp />} />
+                <Route
+                    path='/login'
+                    element={<LogIn />}
+                />
+                <Route
+                    path='/signup'
+                    element={<SignUp />}
+                />
 
-                    <Route path='/mylistings' element={<MyListings />} />
-                    <Route path='/createlisting' element={<CreateListing />} />
-                    <Route path='/*' element={<Error />} />
-                </Routes>
-
-                <Footer />
-            </BrowserRouter>
+                <Route
+                    path='/mylistings'
+                    element={<MyListings />}
+                />
+                <Route
+                    path='/createlisting'
+                    element={<CreateListing />}
+                />
+                <Route
+                    path='/*'
+                    element={<Error />}
+                />
+            </Routes>
+            <Footer />
         </div>
     )
 }

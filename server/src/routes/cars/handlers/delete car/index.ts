@@ -14,8 +14,8 @@ const handleDeleteCar = async (req: Request, res: Response) => {
         if (images) deleteImages(...images)
         res.status(200).json('Car has been deleted')
     } catch (error) {
-        res.status(400).json('Error while deleting car')
-        console.log(error)
+        res.status(500).json('Error while deleting car')
+        console.log('Error while deleting car')
     }
 }
 

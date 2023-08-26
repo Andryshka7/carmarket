@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Car } from 'types'
 import { EditListing, HoverMenu } from './components'
 import { Portal } from 'components'
+import toast from 'react-hot-toast'
 
 const Listing = (car: Car) => {
     const [editCar, setEditCar] = useState(false)

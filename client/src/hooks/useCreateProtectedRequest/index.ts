@@ -1,9 +1,11 @@
 import { refreshTokenQuery } from 'api/auth'
 import { getAccessToken } from 'helpers/get access token'
+import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from 'store'
 
 const useCreateProtectedRequest = () => {
-    const { user } = useAuthStore()
+    const { user, logOut } = useAuthStore()
+    const navigate = useNavigate()
 
     const createProtectedRequest = <T>(
         requestQuery: (accessToken: string) => Promise<T>,
@@ -17,17 +19,15 @@ const useCreateProtectedRequest = () => {
                     callback(response)
                 }
             } catch (error) {
-                console.log('Access token expired')
-
                 try {
                     if (user) {
                         const accessToken = await refreshTokenQuery(user.id)
-                        console.log('Access token renewed')
                         const response = await requestQuery(accessToken)
                         callback(response)
                     }
                 } catch (error) {
-                    console.log('Refresh token expired, need to login')
+                    logOut()
+                    navigate('/login')
                 }
             }
         }

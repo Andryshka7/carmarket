@@ -6,8 +6,8 @@ const handleLogOut = async (req: Request, res: Response) => {
         const userId = req.body.userId as number
         await deleteRefreshToken(userId)
     } catch (error) {
-        res.status(400).json('Error while logging out')
-        console.log(error)
+        res.status(500).json('Error while logging out')
+        console.log('Error while logging out')
     }
 }
 

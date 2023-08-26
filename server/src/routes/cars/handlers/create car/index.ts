@@ -34,8 +34,8 @@ const handleCreateCar = async (req: Request, res: Response) => {
 
         res.status(200).json(created)
     } catch (error) {
-        res.status(400).json('Error while creating car')
-        console.log(error)
+        res.status(50).json('Error while creating car')
+        console.log('Error while creating car')
     }
 }
 

@@ -1,29 +1,23 @@
-import { Loader } from 'components'
-import { useState } from 'react'
+import toast from 'react-hot-toast'
 
 interface Props {
     deletePending: boolean
-    deleteCar: () => void
+    deleteCar: () => Promise<void>
     cancelDelete: () => void
 }
 
 const DeleteConfirmation = ({ deletePending, deleteCar, cancelDelete }: Props) => {
-    const [loading, setLoading] = useState(false)
+    // NEEDS FIXES
 
     const confirmDelete = async () => {
-        try {
-            setLoading(true)
-            await deleteCar()
-            setLoading(false)
-        } catch (error) {
-            setLoading(false)
-            console.log('Error deleting car', error)
-        }
+        await toast.promise(deleteCar(), {
+            success: 'Car has been deleted',
+            loading: 'Removing listing...',
+            error: 'Error while modifying listing'
+        })
     }
 
-    return loading ? (
-        <Loader />
-    ) : (
+    return (
         <div
             className={`absolute transition duration-200 ${
                 deletePending ? 'opacity-1' : 'pointer-events-none opacity-0'

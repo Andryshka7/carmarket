@@ -35,17 +35,21 @@ const Auth = () => {
     }
 
     return (
-        <>
-            <div
-                ref={dropDownRef}
-                className='hidden cursor-pointer items-center gap-3 md:flex'
-                onClick={() => setShowDropDown(true)}
-            >
-                <img src={user.avatar} className='h-8 w-8 rounded-full' />
-                <h2 className='text-xl font-semibold text-white'>{user.username}</h2>
-            </div>
-            <Dropdown showDropdown={showDropDown} />
-        </>
+        <div
+            ref={dropDownRef}
+            className='hidden cursor-pointer items-center gap-3 md:flex'
+            onClick={() => setShowDropDown(true)}
+        >
+            <img
+                src={user.avatar}
+                className='h-8 w-8 rounded-full'
+            />
+            <h2 className='text-xl font-semibold text-white'>{user.username}</h2>
+            <Dropdown
+                showDropdown={showDropDown}
+                setShowDropDown={setShowDropDown}
+            />
+        </div>
     )
 }
 

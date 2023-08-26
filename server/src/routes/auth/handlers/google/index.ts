@@ -18,7 +18,7 @@ const handleGoogleSignIn = async (req: Request, res: Response) => {
             const accessToken = createAccessToken({ id, username, email, avatar })
             const refreshToken = createRefreshToken({ id, username, email, avatar })
 
-            res.cookie('accessToken', accessToken)
+            res.cookie('accessToken', accessToken, { maxAge: 1000 * 60 * 60 * 24 })
             await storeRefreshToken(refreshToken, id)
         } else {
             const username = profile.displayName
@@ -29,14 +29,14 @@ const handleGoogleSignIn = async (req: Request, res: Response) => {
             const accessToken = createAccessToken({ id, username, email, avatar })
             const refreshToken = createRefreshToken({ id, username, email, avatar })
 
-            res.cookie('accessToken', accessToken)
+            res.cookie('accessToken', accessToken, { maxAge: 1000 * 60 * 60 * 24 })
             await storeRefreshToken(refreshToken, id)
         }
 
         res.redirect(CLIENT_URL!)
     } catch (error) {
-        res.status(400).json('Error while signing up')
-        console.log(error)
+        res.status(500).json('Error while signing up')
+        console.log('Error while signing up')
     }
 }
 

@@ -15,12 +15,8 @@ const useCarsStore = create<Store>()((set) => ({
     loading: true,
     error: false,
     fetchCars: async () => {
-        try {
-            const cars = await fetchCarsQuery()
-            set({ cars })
-        } catch (error) {
-            console.log(error)
-        }
+        const cars = await fetchCarsQuery()
+        set({ cars })
     },
     createCar: (car: Car) => {
         set((state) => ({ cars: [...state.cars, car] }))

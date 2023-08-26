@@ -14,7 +14,7 @@ const handleLogIn = async (req: Request, res: Response) => {
             const accessToken = createAccessToken(user)
             const refreshToken = createRefreshToken(user)
 
-            res.cookie('accessToken', accessToken)
+            res.cookie('accessToken', accessToken, { maxAge: 1000 * 60 * 60 * 24 })
             await storeRefreshToken(refreshToken, user.id)
             
             res.status(200).json(user)
@@ -22,8 +22,8 @@ const handleLogIn = async (req: Request, res: Response) => {
             res.status(400).json('Wrong credentials!')
         }
     } catch (error) {
-        res.status(400).json('Error while logging in')
-        console.log(error)
+        res.status(500).json('Error while logging in')
+        console.log('Error while logging in')
     }
 }
 
