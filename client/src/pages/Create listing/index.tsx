@@ -5,9 +5,10 @@ import { createCarQuery } from 'api/cars'
 import { useCarsStore } from 'store'
 import { useCreateProtectedRequest } from 'hooks'
 import { ProtectedPage } from 'components'
-import { Transmission, Type, ImagesInput } from './components'
+import { TransmissionSelector, TypeSelector, ImagesInput } from './components'
 import createFormData from './helpers/createFormData'
 import toast from 'react-hot-toast'
+import { Transmission, Type } from 'types'
 
 type Data = {
     model: string
@@ -22,8 +23,8 @@ const CreateListing = () => {
     const createProtectedRequest = useCreateProtectedRequest()
     const { createCar } = useCarsStore()
 
-    const [transmission, setTransmission] = useState('Automatic')
-    const [type, setType] = useState('Fuel')
+    const [transmission, setTransmission] = useState<Transmission>('automatic')
+    const [type, setType] = useState<Type>('fuel')
     const [images, setImages] = useState<File[]>([])
 
     const [loading, setLoading] = useState(false)
@@ -95,11 +96,11 @@ const CreateListing = () => {
                         </div>
                     </div>
 
-                    <Transmission
+                    <TransmissionSelector
                         transmission={transmission}
                         switchTransmission={setTransmission}
                     />
-                    <Type
+                    <TypeSelector
                         type={type}
                         switchType={setType}
                     />

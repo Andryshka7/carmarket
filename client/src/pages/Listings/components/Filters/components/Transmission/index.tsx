@@ -1,34 +1,44 @@
+import { Transition } from '@headlessui/react'
 import { FaCheck } from 'react-icons/fa'
 import { useFiltersStore } from 'store'
+import { Transmission } from 'types'
 
-const Transmission = () => {
+const transmissionsArray: Transmission[] = ['automatic', 'manual']
+
+const TransmissionSelect = () => {
     const { transmissions, switchTransition } = useFiltersStore()
 
     return (
         <>
             <h2 className='mx-auto mt-5 text-4xl font-semibold text-white md:text-2xl'>Transmission</h2>
             <div className='mt-2 w-28'>
-                <div
-                    className='flex cursor-pointer items-center gap-2'
-                    onClick={() => switchTransition('automatic')}
-                >
-                    <div className='flex h-4 w-4 items-center justify-center rounded border border-[#999]'>
-                        {transmissions.automatic && <FaCheck color='#999' size={10} />}
+                {transmissionsArray.map((transmission) => (
+                    <div
+                        className='flex cursor-pointer items-center gap-2'
+                        onClick={() => switchTransition(transmission)}
+                        key={transmission}
+                    >
+                        <div className='flex h-4 w-4 items-center justify-center rounded border border-[#999]'>
+                            <Transition
+                                show={transmissions[transmission]}
+                                className='transition duration-200'
+                                enterFrom='opacity-0'
+                                leaveTo='opacity-0'
+                            >
+                                <FaCheck
+                                    color='#999'
+                                    size={10}
+                                />
+                            </Transition>
+                        </div>
+                        <h2 className='text-lg text-white'>
+                            {transmission[0].toUpperCase() + transmission.slice(1)}
+                        </h2>
                     </div>
-                    <h2 className='text-lg text-white'>Automatic</h2>
-                </div>
-                <div
-                    className='flex cursor-pointer items-center gap-2'
-                    onClick={() => switchTransition('manual')}
-                >
-                    <div className='flex h-4 w-4 items-center justify-center rounded border border-[#999]'>
-                        {transmissions.manual && <FaCheck color='#999' size={10} />}
-                    </div>
-                    <h2 className='text-lg text-white'>Manual</h2>
-                </div>
+                ))}
             </div>
         </>
     )
 }
 
-export default Transmission
+export default TransmissionSelect

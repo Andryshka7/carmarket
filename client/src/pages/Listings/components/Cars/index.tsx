@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom'
-import { useCarsStore } from 'store'
+import { useFilteredCars } from './hooks'
 
 const Cars = () => {
-    const { cars } = useCarsStore()
-
-    return (
+    const cars = useFilteredCars()
+    return !cars.length ? (
+        <h1 className='mt-20 text-center mx-auto p-8 text-4xl font-semibold text-white'>No cars matching your queries found!</h1>
+    ) : (
         <div className='flex flex-wrap justify-center gap-5 p-8'>
             {cars.map(({ id, model, year, price, images }) => (
                 <NavLink

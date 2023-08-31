@@ -1,48 +1,35 @@
+import { Transmission, Type } from 'types'
 import { create } from 'zustand'
-
-interface Price {
-    from: number | null
-    to: number | null
-}
-
-interface Transmissions {
-    automatic: boolean
-    manual: boolean
-}
-
-interface Types {
-    fuel: boolean
-    electric: boolean
-}
+import { PriceRange, Transmissions, Types } from './types'
 
 interface Filters {
     makes: string[]
-    price: Price
+    priceRange: PriceRange
     transmissions: Transmissions
     types: Types
 
     applyMakeFilter: (make: string) => void
     unApplyMakeFilter: (make: string) => void
 
-    switchTransition: (transmission: keyof Transmissions) => void
-    switchType: (type: keyof Types) => void
+    switchTransition: (transmission: Transmission) => void
+    switchType: (type: Type) => void
 
-    setPriceFilters: (price: Price) => void
+    setPriceFilters: (price: PriceRange) => void
 }
 
 const useFiltersStore = create<Filters>()((set) => ({
     makes: [],
-    price: {
+    priceRange: {
         from: null,
         to: null
     },
     transmissions: {
-        automatic: false,
-        manual: false
+        automatic: true,
+        manual: true
     },
     types: {
-        fuel: false,
-        electric: false
+        fuel: true,
+        electric: true
     },
     applyMakeFilter: (item) => {
         set((state) => {
@@ -72,10 +59,10 @@ const useFiltersStore = create<Filters>()((set) => ({
             return { ...state, types }
         })
     },
-    setPriceFilters: (price) => {
+    setPriceFilters: (priceRange) => {
         set((state) => ({
             ...state,
-            price
+            priceRange
         }))
     }
 }))

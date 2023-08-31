@@ -1,13 +1,14 @@
-import { Dispatch } from 'react'
+import { Dispatch, SetStateAction } from 'react'
+import { Transmission } from 'types'
 
-const transmissions = ['Automatic', 'Manual']
+const transmissions: Transmission[] = ['automatic', 'manual']
 
 interface Props {
-    transmission: string
-    switchTransmission: Dispatch<React.SetStateAction<string>>
+    transmission: Transmission
+    switchTransmission: Dispatch<SetStateAction<Transmission>>
 }
 
-const Transmission = ({ transmission, switchTransmission }: Props) => (
+const TransmissionSelector = ({ transmission, switchTransmission }: Props) => (
     <div className='mt-2 flex w-full justify-between'>
         {transmissions.map((item) => (
             <div
@@ -17,10 +18,10 @@ const Transmission = ({ transmission, switchTransmission }: Props) => (
                 }`}
                 key={item}
             >
-                {item}
+                {item[0].toUpperCase() + item.slice(1)}
             </div>
         ))}
     </div>
 )
 
-export default Transmission
+export default TransmissionSelector

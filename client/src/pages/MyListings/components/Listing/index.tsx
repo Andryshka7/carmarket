@@ -1,19 +1,10 @@
 import { useState } from 'react'
-import { Car } from 'types'
-import { EditListing, HoverMenu } from './components'
 import { Portal } from 'components'
-import toast from 'react-hot-toast'
+import { Car } from 'types'
+import { EditListing, Preview } from './components'
 
 const Listing = (car: Car) => {
     const [editCar, setEditCar] = useState(false)
-    const [hover, setHover] = useState(false)
-
-    const ebableHover = () => setHover(true)
-    const disableHover = () => setHover(false)
-
-    const openModal = () => setEditCar(true)
-    const closeModal = () => setEditCar(false)
-
     const { id, model, year, price, images } = car
 
     return (
@@ -22,21 +13,12 @@ const Listing = (car: Car) => {
                 className='w-full max-w-[370px] rounded-lg bg-neutral-700 text-white'
                 key={images[0].originalName}
             >
-                <div
-                    className='relative aspect-video w-full'
-                    onMouseEnter={ebableHover}
-                    onMouseLeave={disableHover}
-                >
-                    <img
-                        src={images[0].url}
-                        className='absolute aspect-video w-full rounded-t-lg object-cover'
-                    />
-                    <HoverMenu
-                        id={id}
-                        openModal={openModal}
-                        isHovering={hover}
-                    />
-                </div>
+                <Preview
+                    id={id}
+                    image={images[0]}
+                    setEditCar={setEditCar}
+                />
+
                 <div className='mx-4 mb-2 mt-1'>
                     <h1 className='text-xl font-semibold'>{model}</h1>
                     <div className='mt-0.5 flex justify-between text-xl'>
@@ -51,7 +33,7 @@ const Listing = (car: Car) => {
                 <Portal>
                     <EditListing
                         {...car}
-                        closeModal={closeModal}
+                        closeModal={() => setEditCar(false)}
                     />
                 </Portal>
             )}

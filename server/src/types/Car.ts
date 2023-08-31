@@ -7,8 +7,8 @@ interface Car {
     year: number
     price: number
     power: string
-    type: string
-    transmission: string
+    type: 'fuel' | 'electric'
+    transmission: 'manual' | 'automatic'
     description: string
     user: User
     images: Image[]

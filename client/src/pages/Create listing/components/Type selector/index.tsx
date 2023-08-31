@@ -1,13 +1,14 @@
-import { Dispatch } from 'react'
+import { Dispatch, SetStateAction } from 'react'
+import { Type } from 'types'
 
-const types = ['Fuel', 'Electric']
+const types: Type[] = ['fuel', 'electric']
 
 interface Props {
     type: string
-    switchType: Dispatch<React.SetStateAction<string>>
+    switchType: Dispatch<SetStateAction<Type>>
 }
 
-const Type = ({ type, switchType }: Props) => (
+const TypeSelector = ({ type, switchType }: Props) => (
     <div className='mt-5 flex w-full justify-between'>
         {types.map((item) => (
             <div
@@ -17,10 +18,10 @@ const Type = ({ type, switchType }: Props) => (
                 }`}
                 key={item}
             >
-                {item}
+                {item[0].toUpperCase() + item.slice(1)}
             </div>
         ))}
     </div>
 )
 
-export default Type
+export default TypeSelector
