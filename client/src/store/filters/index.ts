@@ -20,8 +20,8 @@ interface Filters {
 const useFiltersStore = create<Filters>()((set) => ({
     makes: [],
     priceRange: {
-        from: null,
-        to: null
+        minimum: null,
+        maximum: null
     },
     transmissions: {
         automatic: true,

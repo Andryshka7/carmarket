@@ -30,9 +30,9 @@ const handleCreateCar = async (req: Request, res: Response) => {
 
         await Promise.all(promises)
 
-        const created = { ...car, id: car_id, user, images: uploaded }
+        const createdCar = { ...car, id: car_id, user, images: uploaded }
 
-        res.status(200).json(created)
+        res.status(200).json(createdCar)
     } catch (error) {
         res.status(50).json('Error while creating car')
         console.log('Error while creating car')

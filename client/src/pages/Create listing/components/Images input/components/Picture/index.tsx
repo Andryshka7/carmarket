@@ -10,7 +10,7 @@ const Picture = ({ image, removeImage }: Props) => {
     const [isHovering, setIsHovering] = useState(false)
     return (
         <div
-            className='relative aspect-video w-full overflow-hidden rounded-lg'
+            className='relative aspect-video w-full overflow-hidden rounded-lg cursor-pointer'
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
         >
@@ -28,7 +28,7 @@ const Picture = ({ image, removeImage }: Props) => {
                         {image.name.length <= 10 ? image.name : image.name.slice(0, 10) + '...'}
                     </h3>
                     <AiOutlineCloseCircle
-                        className='mx-auto mt-0.5 h-2/5 w-2/5 text-red-500 transition duration-200 hover:scale-110'
+                        className='mx-auto mt-0.5 h-2/5 w-2/5 text-red-500'
                         onClick={removeImage}
                     />
                 </div>

@@ -1,5 +1,4 @@
-import { Transition } from '@headlessui/react'
-import { FaCheck } from 'react-icons/fa'
+import { CheckBox } from 'components'
 import { useFiltersStore } from 'store'
 import { Transmission } from 'types'
 
@@ -18,19 +17,7 @@ const TransmissionSelect = () => {
                         onClick={() => switchTransition(transmission)}
                         key={transmission}
                     >
-                        <div className='flex h-4 w-4 items-center justify-center rounded border border-[#999]'>
-                            <Transition
-                                show={transmissions[transmission]}
-                                className='transition duration-200'
-                                enterFrom='opacity-0'
-                                leaveTo='opacity-0'
-                            >
-                                <FaCheck
-                                    color='#999'
-                                    size={10}
-                                />
-                            </Transition>
-                        </div>
+                        <CheckBox active={transmissions[transmission]} />
                         <h2 className='text-lg text-white'>
                             {transmission[0].toUpperCase() + transmission.slice(1)}
                         </h2>

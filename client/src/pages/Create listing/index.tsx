@@ -6,14 +6,14 @@ import { useCarsStore } from 'store'
 import { useCreateProtectedRequest } from 'hooks'
 import { ProtectedPage } from 'components'
 import { TransmissionSelector, TypeSelector, ImagesInput } from './components'
-import createFormData from './helpers/createFormData'
-import toast from 'react-hot-toast'
 import { Transmission, Type } from 'types'
+import { createFormData } from './helpers'
+import toast from 'react-hot-toast'
 
 type Data = {
     model: string
-    year: number
-    price: number
+    year: string
+    price: string
     power: string
     description: string
 }
@@ -37,7 +37,12 @@ const CreateListing = () => {
 
     const submit = async (data: Data) => {
         setLoading(true)
-        const formData = createFormData({ ...data, transmission, type }, images)
+
+        const year = Number(data.year)
+        const price = Number(data.price)
+        const car = { ...data, year, price, transmission, type }
+
+        const formData = createFormData(car, images)
 
         const postCar = createProtectedRequest(
             async (token) => await createCarQuery(formData, token),
@@ -45,7 +50,7 @@ const CreateListing = () => {
         )
 
         await toast.promise(postCar(), {
-            success: 'Car has been created',
+            success: 'Car has been listed',
             loading: 'Creating listing...',
             error: 'Error while creating listing'
         })
@@ -56,7 +61,7 @@ const CreateListing = () => {
 
     return (
         <ProtectedPage>
-            <div className='m-auto my-5 flex h-full w-full items-center justify-center'>
+            <div className='mx-auto my-5 flex h-full w-full items-center justify-center'>
                 <form
                     className='scrollbar h-fit w-11/12 rounded-lg bg-neutral-700 px-8 py-8 text-white sm:px-14 md:w-[700px] md:py-10 lg:w-[800px] lg:px-24'
                     onSubmit={handleSubmit(submit)}

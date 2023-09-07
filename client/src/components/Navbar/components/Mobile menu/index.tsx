@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { HiMenu } from 'react-icons/hi'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { Portal } from 'components'
-import { Buttons, Filters } from './components'
+import { Buttons } from './components'
+import { Filters } from 'pages/shared'
 
 const Menu = () => {
     const [showMenu, setShowMenu] = useState(false)
@@ -21,7 +22,11 @@ const Menu = () => {
 
     return (
         <div className='md:hidden'>
-            <HiMenu size={35} color='white' onClick={toggleMenu} />
+            <HiMenu
+                size={35}
+                color='white'
+                onClick={toggleMenu}
+            />
             <Portal>
                 <div
                     className={`fixed left-0 top-0 flex h-full w-full overflow-y-scroll bg-neutral-700 transition duration-200 ${visibility}`}

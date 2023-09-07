@@ -2,8 +2,8 @@ import { useForm } from 'react-hook-form'
 import { useFiltersStore } from 'store'
 
 type Data = {
-    from: number
-    to: number
+    minimum: number
+    maximum: number
 }
 
 const Price = () => {
@@ -12,8 +12,8 @@ const Price = () => {
 
     const submit = (data: Data) => {
         const payload = {
-            from: +data.from || null,
-            to: +data.to || null
+            minimum: +data.minimum || null,
+            maximum: +data.maximum || null
         }
         setPriceFilters(payload)
     }
@@ -21,21 +21,27 @@ const Price = () => {
     return (
         <>
             <h2 className='mx-auto mt-5 text-4xl font-semibold text-white md:mt-3 md:text-2xl'>Price</h2>
-            <form onSubmit={handleSubmit(submit)} className='mt-4 flex gap-2 md:mt-3'>
+            <form
+                onSubmit={handleSubmit(submit)}
+                className='mt-4 flex gap-2 md:mt-3'
+            >
                 <input
-                    {...register('from')}
+                    {...register('minimum')}
                     type='number'
-                    placeholder='From'
+                    placeholder='Min'
                     className='h-8 w-20 rounded border border-[#999] bg-transparent text-center text-white focus:outline-none'
                 />
                 <p className='text-lg font-bold text-[#999]'>-</p>
                 <input
-                    {...register('to')}
+                    {...register('maximum')}
                     type='number'
-                    placeholder='To'
+                    placeholder='Max'
                     className='h-8 w-20 rounded border border-[#999] bg-transparent text-center text-white focus:outline-none'
                 />
-                <button className='submit' hidden />
+                <button
+                    className='submit'
+                    hidden
+                />
             </form>
         </>
     )

@@ -3,8 +3,11 @@ import { useFilteredCars } from './hooks'
 
 const Cars = () => {
     const cars = useFilteredCars()
+
     return !cars.length ? (
-        <h1 className='mt-20 text-center mx-auto p-8 text-4xl font-semibold text-white'>No cars matching your queries found!</h1>
+        <h1 className='mx-auto mt-20 p-8 text-center text-4xl font-semibold text-white'>
+            No cars matching your queries found!
+        </h1>
     ) : (
         <div className='flex flex-wrap justify-center gap-5 p-8'>
             {cars.map(({ id, model, year, price, images }) => (
@@ -19,6 +22,7 @@ const Cars = () => {
                             className='aspect-video w-full object-cover transition duration-500 hover:scale-105'
                         />
                     </div>
+
                     <div className='mx-4 mb-2 mt-1'>
                         <h1 className='text-xl font-semibold'>{model}</h1>
                         <div className='mt-0.5 flex justify-between text-xl'>

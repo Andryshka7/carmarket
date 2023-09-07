@@ -1,2 +1,2 @@
 export { default as Auth } from './Auth'
-export { default as Menu } from './Menu'
+export { default as MobileMenu } from './Mobile menu'

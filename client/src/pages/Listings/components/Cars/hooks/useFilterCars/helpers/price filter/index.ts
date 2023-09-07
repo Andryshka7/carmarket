@@ -1,12 +1,14 @@
 import { PriceRange } from 'store/filters/types'
 
 const priceFilter = (price: number, priceRange: PriceRange) => {
-    if (priceRange.from && priceRange.to) {
-        return priceRange.from < price && price < priceRange.to
-    } else if (priceRange.from && !priceRange.to) {
-        return priceRange.from < price
-    } else if (!priceRange.from && priceRange.to) {
-        return price < priceRange.to
+    const { minimum, maximum } = priceRange
+
+    if (minimum && maximum) {
+        return minimum < price && price < maximum
+    } else if (minimum && !maximum) {
+        return minimum < price
+    } else if (!minimum && maximum) {
+        return price < maximum
     } else {
         return true
     }

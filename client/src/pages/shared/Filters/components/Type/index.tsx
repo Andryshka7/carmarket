@@ -1,5 +1,4 @@
-import { Transition } from '@headlessui/react'
-import { FaCheck } from 'react-icons/fa'
+import { CheckBox } from 'components'
 import { useFiltersStore } from 'store'
 import { Type } from 'types'
 
@@ -18,19 +17,7 @@ const TypeSelect = () => {
                         onClick={() => switchType(type)}
                         key={type}
                     >
-                        <div className='flex h-4 w-4 items-center justify-center rounded border border-[#999]'>
-                            <Transition
-                                show={types[type]}
-                                className='transition duration-200'
-                                enterFrom='opacity-0'
-                                leaveTo='opacity-0'
-                            >
-                                <FaCheck
-                                    color='#999'
-                                    size={10}
-                                />
-                            </Transition>
-                        </div>
+                        <CheckBox active={types[type]} />
                         <h2 className='text-lg text-white'>{type[0].toUpperCase() + type.slice(1)}</h2>
                     </div>
                 ))}

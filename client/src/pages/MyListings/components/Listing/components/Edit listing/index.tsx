@@ -5,7 +5,7 @@ import { updateCarQuery } from 'api/cars'
 import { useCreateProtectedRequest } from 'hooks'
 import { Car, Image } from 'types'
 import { ImagesInput, Transmission, Type } from './components'
-import { createFormData, getRemovedImages } from './helpers'
+import { createFormData, getRemovedImages, carIsModified } from './helpers'
 import { useCarsStore } from 'store'
 import toast from 'react-hot-toast'
 
@@ -13,8 +13,8 @@ type Props = Car & { closeModal: () => void }
 
 type Data = {
     model: string
-    year: number
-    price: number
+    year: string
+    price: string
     power: string
     description: string
 }
@@ -48,11 +48,19 @@ const EditListing = ({ closeModal, ...car }: Props) => {
     } = useForm<Data>()
 
     const submit = async (data: Data) => {
-        // CHECK IF THERE ARE CHANGES
+        const year = Number(data.year)
+        const price = Number(data.price)
+
+        const modifiedCar = { ...car, ...data, year, price, type, transmission, images }
+
+        if (!carIsModified(car, modifiedCar)) {
+            return toast.error('There are no modifications!')
+        }
+
         const imageFiles = images.filter((item) => item instanceof File) as File[]
         const removedImages = getRemovedImages(images, initialImages)
 
-        const formData = createFormData({ ...car, ...data, type, transmission }, imageFiles, removedImages)
+        const formData = createFormData(modifiedCar, imageFiles, removedImages)
 
         const updateCar = createProtectedRequest(
             async (accessToken: string) => await updateCarQuery(formData, accessToken),
@@ -81,9 +89,8 @@ const EditListing = ({ closeModal, ...car }: Props) => {
             className='fixed left-0 top-0 flex h-full w-full overflow-auto bg-neutral-700 p-8 md:overflow-hidden md:bg-black md:bg-opacity-50'
             onClick={closeModal}
         >
-            (
             <form
-                className='scrollbar w-[765px] rounded-lg bg-neutral-700 px-4 py-6 text-white sm:px-14 md:m-auto md:h-[800px] md:overflow-auto md:px-28 md:py-10'
+                className='scrollbar relative w-[765px] rounded-lg bg-neutral-700 px-4 py-6 text-white sm:px-14 md:m-auto md:h-[800px] md:overflow-auto md:px-28 md:py-10'
                 onSubmit={handleSubmit(submit)}
                 onClick={(e) => e.stopPropagation()}
             >
@@ -179,7 +186,6 @@ const EditListing = ({ closeModal, ...car }: Props) => {
                     />
                 </div>
             </form>
-            )
         </div>
     )
 }
