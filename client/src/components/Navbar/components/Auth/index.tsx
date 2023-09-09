@@ -1,13 +1,11 @@
 import { Menu, Transition } from '@headlessui/react'
 import { useAuthStore } from 'store'
 import { NavLink } from 'react-router-dom'
-import { IoCarSport } from 'react-icons/io5'
-import { BiMessageSquareAdd } from 'react-icons/bi'
-import { HiLogout } from 'react-icons/hi'
 import { Fragment } from 'react'
+import { MyListings, ListCar, LogOut } from './components'
 
 const Auth = () => {
-    const { user, logOut } = useAuthStore()
+    const { user } = useAuthStore()
 
     return user ? (
         <Menu>
@@ -26,51 +24,18 @@ const Auth = () => {
                 leave='transition duration-75'
                 leaveTo='opacity-0 scale-90 -translate-y-4'
             >
-                <Menu.Items className='absolute right-16 top-14 z-[1] rounded-lg bg-neutral-600 py-2 text-white'>
-                    <Menu.Item>
-                        <NavLink
-                            to='/mylistings'
-                            className='my-0.5 flex cursor-pointer items-center gap-2 px-6 py-px hover:bg-neutral-500'
-                        >
-                            <IoCarSport
-                                size={25}
-                                color='white'
-                            />
-                            <h2 className='text-lg font-semibold'>My listings</h2>
-                        </NavLink>
-                    </Menu.Item>
-                    <Menu.Item>
-                        <NavLink
-                            to='/createlisting'
-                            className='my-0.5 flex cursor-pointer items-center gap-2 px-6 py-px hover:bg-neutral-500'
-                        >
-                            <BiMessageSquareAdd
-                                size={25}
-                                color='white'
-                            />
-                            <h2 className='text-lg font-semibold'>List car</h2>
-                        </NavLink>
-                    </Menu.Item>
-                    <Menu.Item>
-                        <div
-                            className='my-0.5 flex cursor-pointer items-center gap-2 px-6 py-px hover:bg-neutral-500'
-                            onClick={logOut}
-                        >
-                            <HiLogout
-                                size={25}
-                                color='white'
-                            />
-                            <h2 className='text-lg font-semibold'>Logout</h2>
-                        </div>
-                    </Menu.Item>
+                <Menu.Items className='absolute right-16 top-14 z-[1] rounded-md bg-neutral-600 py-2 text-white'>
+                    <MyListings />
+                    <ListCar />
+                    <LogOut />
                 </Menu.Items>
             </Transition>
         </Menu>
     ) : (
-        <div className='hidden gap-5 md:flex'>
+        <div className='hidden md:block'>
             <NavLink
                 to='login'
-                className='rounded-md border-2 border-white bg-neutral-700 px-5 py-0.5 font-semibold text-white'
+                className='rounded-md border-2 border-white bg-neutral-700 px-5 py-1.5 font-semibold text-white'
             >
                 Sign In
             </NavLink>

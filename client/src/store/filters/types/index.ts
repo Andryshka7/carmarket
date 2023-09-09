@@ -1,6 +1,6 @@
 interface PriceRange {
-    minimum: number | null
-    maximum: number | null
+    minimum?: number
+    maximum?: number
 }
 
 interface Transmissions {

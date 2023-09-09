@@ -1,3 +1,5 @@
+import { Image } from 'types'
+
 interface Payload {
     transmission: string
     type: string
@@ -8,12 +10,14 @@ interface Payload {
     description: string
 }
 
-const createFormData = (data: Payload, images: File[]) => {
+const createFormData = (data: Payload, images: (Image | File)[]) => {
     const formData = new FormData()
     formData.append('car', JSON.stringify(data))
 
     images.forEach((item) => {
-        formData.append(`image`, item)
+        if (item instanceof File) {
+            formData.append(`image`, item)
+        }
     })
 
     return formData

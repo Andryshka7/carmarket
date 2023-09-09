@@ -5,8 +5,8 @@ import { createCarQuery } from 'api/cars'
 import { useCarsStore } from 'store'
 import { useCreateProtectedRequest } from 'hooks'
 import { ProtectedPage } from 'components'
-import { TransmissionSelector, TypeSelector, ImagesInput } from './components'
-import { Transmission, Type } from 'types'
+import { TransmissionSelector, TypeSelector, ImagesInput } from 'pages/shared/Car form'
+import { Image, Transmission, Type } from 'types'
 import { createFormData } from './helpers'
 import toast from 'react-hot-toast'
 
@@ -25,7 +25,7 @@ const CreateListing = () => {
 
     const [transmission, setTransmission] = useState<Transmission>('automatic')
     const [type, setType] = useState<Type>('fuel')
-    const [images, setImages] = useState<File[]>([])
+    const [images, setImages] = useState<(Image | File)[]>([])
 
     const [loading, setLoading] = useState(false)
 
@@ -89,6 +89,7 @@ const CreateListing = () => {
                             />
                             <h3 className='mt-1 text-center text-sm font-bold text-[#858585]'>Year</h3>
                         </div>
+
                         <div className='w-[45%]'>
                             <input
                                 type='text'

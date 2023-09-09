@@ -14,15 +14,12 @@ interface Filters {
     switchTransition: (transmission: Transmission) => void
     switchType: (type: Type) => void
 
-    setPriceFilters: (price: PriceRange) => void
+    setPriceFilters: (priceRange: PriceRange) => void
 }
 
 const useFiltersStore = create<Filters>()((set) => ({
     makes: [],
-    priceRange: {
-        minimum: null,
-        maximum: null
-    },
+    priceRange: {},
     transmissions: {
         automatic: true,
         manual: true
@@ -62,7 +59,7 @@ const useFiltersStore = create<Filters>()((set) => ({
     setPriceFilters: (priceRange) => {
         set((state) => ({
             ...state,
-            priceRange
+            priceRange: { ...state.priceRange, ...priceRange }
         }))
     }
 }))

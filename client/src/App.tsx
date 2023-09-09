@@ -47,7 +47,7 @@ function App() {
                     element={<MyListings />}
                 />
                 <Route
-                    path='/createlisting'
+                    path='/listcar'
                     element={<CreateListing />}
                 />
                 <Route

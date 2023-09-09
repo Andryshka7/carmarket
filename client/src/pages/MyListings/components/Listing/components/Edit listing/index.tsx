@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { updateCarQuery } from 'api/cars'
+import { ImagesInput, TransmissionSelector, TypeSelector } from 'pages/shared/Car form'
 import { useCreateProtectedRequest } from 'hooks'
 import { Car, Image } from 'types'
-import { ImagesInput, Transmission, Type } from './components'
-import { createFormData, getRemovedImages, carIsModified } from './helpers'
 import { useCarsStore } from 'store'
+import { createFormData, getRemovedImages, carIsModified } from './helpers'
 import toast from 'react-hot-toast'
 
 type Props = Car & { closeModal: () => void }
@@ -131,11 +131,11 @@ const EditListing = ({ closeModal, ...car }: Props) => {
                     </div>
                 </div>
 
-                <Transmission
+                <TransmissionSelector
                     transmission={transmission}
                     switchTransmission={setTransmission}
                 />
-                <Type
+                <TypeSelector
                     type={type}
                     switchType={setType}
                 />
