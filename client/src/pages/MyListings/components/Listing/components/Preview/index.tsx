@@ -43,19 +43,18 @@ const Preview = ({ id, image, setEditCar }: Props) => {
                 show={hover}
                 className='absolute flex h-full w-full items-center justify-center rounded-t-lg bg-black bg-opacity-70 text-xl transition duration-200'
                 enterFrom='opacity-0'
-                enterTo='opacity-100'
                 leaveTo='pointer-events-none opacity-0'
             >
                 <Transition
                     show={showDeleteConfirm}
                     className='absolute flex h-full w-full flex-col items-center justify-center rounded-t-lg bg-black bg-opacity-30 transition duration-200'
                     enterFrom='opacity-0'
-                    enterTo='opacity-100'
                     leaveTo='pointer-events-none opacity-0'
                 >
                     <h1 className='mx-auto w-56 text-center font-semibold'>
                         Are you sure you want to delete this listing?
                     </h1>
+
                     <div className='mx-auto mt-4 flex w-fit gap-8'>
                         <button
                             className='rounded-md bg-green-600 px-4 py-1 text-sm font-semibold transition duration-200 hover:scale-105'
@@ -71,6 +70,7 @@ const Preview = ({ id, image, setEditCar }: Props) => {
                         >
                             Yes
                         </button>
+
                         <button
                             className='rounded-md bg-red-500 px-4 py-1 text-sm font-semibold transition duration-200 hover:scale-105'
                             onClick={() => setShowDeleteConfirm(false)}
@@ -84,7 +84,6 @@ const Preview = ({ id, image, setEditCar }: Props) => {
                     show={!showDeleteConfirm}
                     className='absolute flex items-center justify-center gap-3 transition duration-200'
                     enterFrom='opacity-0'
-                    enterTo='opacity-100'
                     leaveTo='pointer-events-none opacity-0'
                 >
                     <EditButton onClick={() => setEditCar(true)} />

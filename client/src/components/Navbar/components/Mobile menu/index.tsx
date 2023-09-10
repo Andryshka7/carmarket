@@ -6,7 +6,6 @@ import { ListCar, LogOut, MyListings, SignIn } from './components'
 import { Filters } from 'pages/shared'
 import { Transition } from '@headlessui/react'
 import { useAuthStore } from 'store'
-import { NavLink } from 'react-router-dom'
 
 const Menu = () => {
     const { user } = useAuthStore()
@@ -31,9 +30,9 @@ const Menu = () => {
             />
             <Portal>
                 <Transition
-                    className='fixed left-0 top-0 flex h-full w-full overflow-y-scroll bg-neutral-700 transition duration-200'
+                    className='fixed left-0 top-0 flex h-full w-full overflow-y-scroll bg-neutral-700 transition duration-150'
                     enterFrom='opacity-0 -translate-y-full'
-                    enterTo='opacity-1 translate-y-0'
+                    leaveTo='opacity-0 -translate-y-full'
                     show={showMenu}
                 >
                     <div className='my-auto flex h-fit w-full flex-col items-center'>

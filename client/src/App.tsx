@@ -20,7 +20,9 @@ function App() {
     ) : (
         <div className='flex min-h-screen flex-col bg-neutral-800'>
             <Toaster position='top-center' />
+
             <Navbar />
+
             <Routes>
                 <Route path='/'>
                     <Route
@@ -55,6 +57,7 @@ function App() {
                     element={<Error />}
                 />
             </Routes>
+
             <Footer />
         </div>
     )

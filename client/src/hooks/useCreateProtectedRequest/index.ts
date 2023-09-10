@@ -1,5 +1,5 @@
 import { refreshTokenQuery } from 'api/auth'
-import { getAccessToken } from 'helpers/get access token'
+import { getAccessToken } from 'helpers'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from 'store'
 

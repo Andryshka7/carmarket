@@ -12,7 +12,7 @@ const Auth = () => {
             <Menu.Button className='hidden cursor-pointer items-center gap-3 md:flex'>
                 <img
                     src={user.avatar}
-                    className='h-8 w-8 rounded-full'
+                    className='h-8 w-8 object-cover object-center rounded-full'
                 />
                 <h2 className='text-xl font-semibold text-white'>{user.username}</h2>
             </Menu.Button>

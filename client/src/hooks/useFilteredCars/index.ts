@@ -1,5 +1,5 @@
 import { useCarsStore, useFiltersStore } from 'store'
-import { makeFilter, priceFilter, transmissionFilter, typeFilter } from './helpers'
+import { makeFilter, priceFilter, transmissionFilter, typeFilter } from 'helpers/filters'
 
 const useFilteredCars = () => {
     const { cars } = useCarsStore()

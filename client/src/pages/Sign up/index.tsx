@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { signUpQuery } from 'api/auth'
-import { Loader } from 'components'
 import { useAuthStore } from 'store'
 import { GoogleSignIn } from 'pages/shared'
+import toast from 'react-hot-toast'
+import { isAxiosError } from 'axios'
 
 type Data = {
     username: string
@@ -16,20 +17,16 @@ type Data = {
 const SignUp = () => {
     const navigate = useNavigate()
     const { setUser } = useAuthStore()
-    const [loading, setLoading] = useState(false)
     const [file, setFile] = useState<null | File>()
 
     const {
         handleSubmit,
         register,
         watch,
-        reset,
         formState: { errors }
     } = useForm<Data>({ mode: 'onSubmit' })
 
     const submit = async (data: Data) => {
-        setLoading(true)
-
         const formData = new FormData()
 
         formData.append('username', data.username)
@@ -38,20 +35,23 @@ const SignUp = () => {
 
         if (file) formData.append('avatar', file)
 
-        const user = await signUpQuery(formData)
-
-        setUser(user)
-        navigate('/')
-
-        setLoading(false)
-        reset()
+        toast.promise(signUpQuery(formData), {
+            loading: 'Signing up..',
+            success: (user) => {
+                setUser(user)
+                navigate('/')
+                return `Successfully signed up as ${user.username}`
+            },
+            error: (e) => {
+                if (isAxiosError(e) && e.response?.status === 409) {
+                    return 'User with that email already exists!'
+                }
+                return 'Error while trying to sign up'
+            }
+        })
     }
 
-    return loading ? (
-        <div className='m-auto flex h-[660px] w-11/12 max-w-[500px] items-center justify-center rounded-lg bg-neutral-700'>
-            <Loader />
-        </div>
-    ) : (
+    return (
         <div className='m-auto'>
             <form
                 className='mx-auto my-4 h-fit min-h-[660px] w-11/12 max-w-[500px] rounded-lg bg-neutral-700 p-10 text-white'

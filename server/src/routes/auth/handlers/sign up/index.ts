@@ -1,5 +1,5 @@
 import { hash } from 'bcrypt'
-import { createUser } from 'database/queries/users'
+import { createUser, fetchUserByEmail } from 'database/queries/users'
 import { Request, Response } from 'express'
 import { createAccessToken, createRefreshToken } from 'helpers/jwt'
 import { storeRefreshToken } from 'database/queries/refresh tokens'
@@ -10,7 +10,13 @@ const handleSignUp = async (req: Request, res: Response) => {
         const username = req.body.username as string
         const email = req.body.email as string
         const password = await hash(req.body.password, 10)
-        const avatar = `${SERVER_URL}/images/${req.file?.filename}`
+        const avatar = `${SERVER_URL}/images/${req.file ? req.file.filename : 'guest.png'}`
+
+        const userExists = await fetchUserByEmail(email)
+
+        if (userExists) {
+            return res.status(409).json('User already exists')
+        }
 
         const id = await createUser({ username, email, avatar, password })
 

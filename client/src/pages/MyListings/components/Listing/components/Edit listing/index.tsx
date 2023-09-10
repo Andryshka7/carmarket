@@ -118,6 +118,7 @@ const EditListing = ({ closeModal, ...car }: Props) => {
                         />
                         <h3 className='mt-1 text-center text-sm font-bold text-[#858585]'>Year</h3>
                     </div>
+
                     <div className='w-[45%]'>
                         <input
                             type='text'

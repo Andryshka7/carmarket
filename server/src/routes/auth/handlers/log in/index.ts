@@ -16,10 +16,10 @@ const handleLogIn = async (req: Request, res: Response) => {
 
             res.cookie('accessToken', accessToken, { maxAge: 1000 * 60 * 60 * 24 })
             await storeRefreshToken(refreshToken, user.id)
-            
+
             res.status(200).json(user)
         } else {
-            res.status(400).json('Wrong credentials!')
+            res.status(401).json('Wrong credentials!')
         }
     } catch (error) {
         res.status(500).json('Error while logging in')

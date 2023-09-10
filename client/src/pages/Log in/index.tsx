@@ -1,8 +1,7 @@
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { isAxiosError } from 'axios'
 import { logInQuery } from 'api/auth'
-import { Loader } from 'components'
 import { useAuthStore } from 'store'
 import { GoogleSignIn } from 'pages/shared'
 import toast from 'react-hot-toast'
@@ -15,33 +14,31 @@ type Data = {
 const LogIn = () => {
     const navigate = useNavigate()
     const { setUser } = useAuthStore()
-    const [loading, setLoading] = useState(false)
 
     const {
         handleSubmit,
         register,
-        reset,
         formState: { errors }
     } = useForm<Data>()
 
     const submit = async (data: Data) => {
-        try {
-            setLoading(true)
-            const user = await logInQuery(data)
-            setUser(user)
-            navigate('/')
-        } catch (error) {
-            toast.error('Invalid credentials!')
-        }
-        setLoading(false)
-        reset()
+        toast.promise(logInQuery(data), {
+            loading: 'Logging in...',
+            success: (user) => {
+                setUser(user)
+                navigate('/')
+                return `Successfully logged in as ${user.username}`
+            },
+            error: (e) => {
+                if (isAxiosError(e) && e.response?.status === 401) {
+                    return 'Wrong credentials!'
+                }
+                return 'Error while trying to log in'
+            }
+        })
     }
 
-    return loading ? (
-        <div className='m-auto flex h-[480px] w-11/12 max-w-[500px] items-center justify-center rounded-lg bg-neutral-700'>
-            <Loader />
-        </div>
-    ) : (
+    return (
         <div className='m-auto'>
             <form
                 className='m-auto h-fit min-h-[480px] w-11/12 max-w-[500px] rounded-lg bg-neutral-700 p-10 text-white'
@@ -50,7 +47,7 @@ const LogIn = () => {
                 <h1 className='text-center text-3xl font-semibold'>Welcome Back</h1>
                 <input
                     type='text'
-                    {...(register('email'), { required: true })}
+                    {...register('email', { required: true })}
                     placeholder='Email'
                     className={`mt-8 w-full border-b-2 border-neutral-500 bg-transparent p-2 focus:outline-none ${
                         errors['email'] ? 'border-red-500' : ''
