@@ -1,4 +1,4 @@
-import { CheckBox } from 'components'
+import { CheckBox } from 'components/ui'
 import { useFiltersStore } from 'store'
 
 const allMakes = ['bmw', 'porche', 'mercedes']

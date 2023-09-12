@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { isAxiosError } from 'axios'
 import { logInQuery } from 'api/auth'
 import { useAuthStore } from 'store'
-import { GoogleSignIn } from 'pages/shared'
+import { GoogleSignIn } from 'components/shared'
 import toast from 'react-hot-toast'
 
 type Data = {

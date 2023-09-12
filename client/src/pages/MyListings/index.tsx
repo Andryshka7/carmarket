@@ -1,5 +1,5 @@
 import { useAuthStore, useCarsStore } from 'store'
-import { ProtectedPage } from 'components'
+import { ProtectedPage } from 'components/shared'
 import { Listing } from './components'
 
 const MyListings = () => {
@@ -12,7 +12,10 @@ const MyListings = () => {
         <ProtectedPage>
             <div className='flex flex-wrap justify-center gap-5 p-8'>
                 {myListings.map((car) => (
-                    <Listing {...car} key={car.id} />
+                    <Listing
+                        {...car}
+                        key={car.id}
+                    />
                 ))}
             </div>
         </ProtectedPage>

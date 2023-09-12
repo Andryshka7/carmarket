@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { signUpQuery } from 'api/auth'
 import { useAuthStore } from 'store'
-import { GoogleSignIn } from 'pages/shared'
+import { GoogleSignIn } from 'components/shared'
 import toast from 'react-hot-toast'
 import { isAxiosError } from 'axios'
 
@@ -108,10 +108,7 @@ const SignUp = () => {
                 >
                     {file ? (
                         <div className='flex items-center gap-3'>
-                            <img
-                                src={URL.createObjectURL(file)}
-                                className='h-8 w-8 rounded-full'
-                            />
+                            <img src={URL.createObjectURL(file)} className='h-8 w-8 rounded-full' />
                             <h3 className='line-clamp-1 max-w-[220px]'>{file.name}</h3>
                         </div>
                     ) : (

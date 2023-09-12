@@ -3,7 +3,7 @@ import express, { json } from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import { passport } from 'middleware'
-import { carsRouter, authRouter } from 'routes'
+import { carsRouter, authRouter, healthRouter } from 'routes'
 import { PORT, CLIENT_URL } from 'config'
 
 const app = express()
@@ -16,6 +16,7 @@ app.use(passport.initialize())
 
 app.use('/images', express.static(path.join(__dirname, 'images')))
 
+app.use('/health', healthRouter)
 app.use('/cars', carsRouter)
 app.use('/auth', authRouter)
 

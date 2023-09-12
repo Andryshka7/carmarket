@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { updateCarQuery } from 'api/cars'
-import { ImagesInput, TransmissionSelector, TypeSelector } from 'pages/shared/Car form'
+import { ImagesInput, TransmissionSelector, TypeSelector } from 'components/shared/Car form'
 import { useCreateProtectedRequest } from 'hooks'
 import { Car, Image } from 'types'
 import { useCarsStore } from 'store'
@@ -132,14 +132,8 @@ const EditListing = ({ closeModal, ...car }: Props) => {
                     </div>
                 </div>
 
-                <TransmissionSelector
-                    transmission={transmission}
-                    switchTransmission={setTransmission}
-                />
-                <TypeSelector
-                    type={type}
-                    switchType={setType}
-                />
+                <TransmissionSelector transmission={transmission} switchTransmission={setTransmission} />
+                <TypeSelector type={type} switchType={setType} />
 
                 <div className='mt-5'>
                     <input
@@ -164,10 +158,7 @@ const EditListing = ({ closeModal, ...car }: Props) => {
                     <h3 className='text-center text-sm font-bold text-[#858585]'>Description</h3>
                 </div>
 
-                <ImagesInput
-                    images={images}
-                    setImages={setImages}
-                />
+                <ImagesInput images={images} setImages={setImages} />
 
                 <button
                     className={`mx-auto mt-5 block h-12 w-56 rounded-md bg-green-600 font-semibold transition duration-200 sm:w-72 ${
@@ -179,12 +170,7 @@ const EditListing = ({ closeModal, ...car }: Props) => {
                 </button>
 
                 <div className='py-10 md:hidden'>
-                    <AiOutlineCloseCircle
-                        size={60}
-                        color='white'
-                        className='mx-auto'
-                        onClick={closeModal}
-                    />
+                    <AiOutlineCloseCircle size={60} color='white' className='mx-auto' onClick={closeModal} />
                 </div>
             </form>
         </div>

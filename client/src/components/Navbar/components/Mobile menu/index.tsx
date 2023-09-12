@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { HiMenu } from 'react-icons/hi'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
-import { Portal } from 'components'
+import { Portal } from 'components/ui'
 import { ListCar, LogOut, MyListings, SignIn } from './components'
-import { Filters } from 'pages/shared'
+import { Filters } from 'components/shared'
 import { Transition } from '@headlessui/react'
 import { useAuthStore } from 'store'
 

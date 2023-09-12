@@ -1,4 +1,4 @@
-import { CheckBox } from 'components'
+import { CheckBox } from 'components/ui'
 import { useFiltersStore } from 'store'
 import { Transmission } from 'types'
 

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { FcPrevious, FcNext } from 'react-icons/fc'
 import { useCarsStore } from 'store'
-import { Error } from 'components'
+import { PageNotFound } from 'pages'
 import { ImageViewer } from './components'
 
 const CarPreview = () => {
@@ -14,7 +14,7 @@ const CarPreview = () => {
 
     const car = cars.find((car) => car.id === Number(id))
 
-    if (!car) return <Error />
+    if (!car) return <PageNotFound />
 
     const {
         model,

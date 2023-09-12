@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Portal } from 'components'
+import { Portal } from 'components/ui'
 import { Car } from 'types'
 import { EditListing, Preview } from './components'
 

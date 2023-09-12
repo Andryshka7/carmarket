@@ -1,4 +1,4 @@
-import { Filters } from 'pages/shared'
+import { Filters } from 'components/shared'
 
 const CarFilters = () => (
     <div className='my-16 hidden flex-col items-center rounded-r-xl bg-neutral-700 p-8 text-white md:flex'>

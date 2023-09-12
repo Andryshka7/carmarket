@@ -1,4 +1,4 @@
-import { Portal } from 'components'
+import { Portal } from 'components/ui'
 import { useEffect, useState, useRef } from 'react'
 import { CgCloseR } from 'react-icons/cg'
 
