@@ -1,14 +1,15 @@
+import { createCarQuery } from 'api/cars'
+import { ProtectedPage } from 'components/shared'
+import { ImagesInput, TransmissionSelector, TypeSelector } from 'components/shared/Car form'
+import { useCreateProtectedRequest } from 'hooks'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
-import { createCarQuery } from 'api/cars'
-import { useCarsStore } from 'store'
-import { useCreateProtectedRequest } from 'hooks'
-import { ProtectedPage } from 'components/shared'
-import { TransmissionSelector, TypeSelector, ImagesInput } from 'components/shared/Car form'
-import { Image, Transmission, Type } from 'types'
-import { createFormData } from './helpers'
 import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
+import { useCarsStore } from 'store'
+import { Image, Transmission, Type } from 'types'
+
+import { createFormData } from './helpers'
 
 type Data = {
     model: string
@@ -125,7 +126,7 @@ const CreateListing = () => {
                     <div className='mt-3'>
                         <textarea
                             {...register('description', { required: true })}
-                            className={`h-36 w-full rounded border-2 bg-transparent px-2 py-1 transition duration-200 focus:outline-none ${
+                            className={`scrollbar h-36 w-full rounded border-2 bg-transparent px-2 py-1 transition duration-200 focus:outline-none ${
                                 errors['description'] ? 'border-red-500' : 'border-[#858585]'
                             }`}
                         />
