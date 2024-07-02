@@ -35,8 +35,8 @@ const handleGoogleSignIn = async (req: Request, res: Response) => {
 
         res.redirect(CLIENT_URL!)
     } catch (error) {
+        console.log('Error while signing up', error)
         res.status(500).json('Error while signing up')
-        console.log('Error while signing up')
     }
 }
 

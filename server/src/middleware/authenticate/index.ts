@@ -12,7 +12,7 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
             res.status(401).json('Token not provided')
         }
     } catch (error) {
-        console.log('Error while authenticating')
+        console.log('Error while authenticating', error)
         res.status(401).json('Invalid authentication token')
     }
 }

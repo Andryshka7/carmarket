@@ -16,7 +16,7 @@ const ImagesInput = ({ images, setImages }: Props) => {
             {images.map((image, index) => (
                 <Picture
                     image={image}
-                    key={image.name}
+                    key={index}
                     removeImage={() => removeImage(index)}
                 />
             ))}

@@ -8,7 +8,5 @@ server/src/images/*.gif
 server/src/images/*.bmp
 server/src/images/*.svg
 
-car images
-
 .env
 .prettierrc

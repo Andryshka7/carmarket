@@ -11,6 +11,7 @@ interface Payload {
 
 const createFormData = (data: Payload, images: File[], removedImages: string[]) => {
     const formData = new FormData()
+
     formData.append('car', JSON.stringify(data))
 
     images.forEach((item) => {

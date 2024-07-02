@@ -5,7 +5,7 @@ const fetchUser = async (token: string) => {
     const { data } = await API.get<User>('/auth/getme', {
         headers: { Authorization: `Bearer ${token}` }
     })
-    return data
+    return data || null
 }
 
 export default fetchUser

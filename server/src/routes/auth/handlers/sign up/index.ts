@@ -3,14 +3,16 @@ import { createUser, fetchUserByEmail } from 'database/queries/users'
 import { Request, Response } from 'express'
 import { createAccessToken, createRefreshToken } from 'helpers/jwt'
 import { storeRefreshToken } from 'database/queries/refresh tokens'
-import { SERVER_URL } from 'config'
+import { uploadFile } from 'helpers'
+import { uuid } from 'uuidv4'
 
 const handleSignUp = async (req: Request, res: Response) => {
     try {
         const username = req.body.username as string
         const email = req.body.email as string
         const password = await hash(req.body.password, 10)
-        const avatar = `${SERVER_URL}/images/${req.file ? req.file.filename : 'guest.png'}`
+
+        const avatar = req.file ? await uploadFile(req.file, uuid()) : 'guest.png'
 
         const userExists = await fetchUserByEmail(email)
 
@@ -30,8 +32,8 @@ const handleSignUp = async (req: Request, res: Response) => {
 
         res.status(200).json(user)
     } catch (error) {
+        console.log('Error while signing up', error)
         res.status(500).json('Error while signing up')
-        console.log('Error while signing up')
     }
 }
 

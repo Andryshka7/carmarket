@@ -10,7 +10,7 @@ const fetchRelatedImages = async (carId: number) => {
     const [rows] = await pool.query<RowDataPacket[]>(sql, [carId])
 
     if (rows.length) {
-        return (rows as Image[]).map(({ originalName }) => originalName)
+        return (rows as Image[]).map(({ url }) => url)
     } else {
         return null
     }

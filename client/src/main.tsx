@@ -7,9 +7,9 @@ import './index.css'
 const root = createRoot(document.getElementById('root')!)
 
 root.render(
-    <StrictMode>
+    // <StrictMode>
         <BrowserRouter>
             <App />
         </BrowserRouter>
-    </StrictMode>
+    // </StrictMode>
 )

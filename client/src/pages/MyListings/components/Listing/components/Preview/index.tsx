@@ -21,10 +21,10 @@ const Preview = ({ id, image, setEditCar }: Props) => {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
     const [isBeingDeleted, setIsBeingDeleted] = useState(false)
 
-    const deleteCar = createProtectedRequest(
-        async (token) => await deleteCarQuery(token, id),
-        () => removeCar(id)
-    )
+    const deleteCar = createProtectedRequest({
+        requestQuery: async (token) => await deleteCarQuery(token, id),
+        callback: () => removeCar(id)
+    })
 
     const pointerEvents = isBeingDeleted ? 'pointer-events-none' : 'pointer-events-auto'
 
@@ -63,7 +63,7 @@ const Preview = ({ id, image, setEditCar }: Props) => {
                                 await toast.promise(deleteCar(), {
                                     success: 'Car has been deleted',
                                     loading: 'Removing listing...',
-                                    error: 'Error while modifying listing'
+                                    error: 'Error while deleting listing'
                                 })
                                 setIsBeingDeleted(false)
                             }}

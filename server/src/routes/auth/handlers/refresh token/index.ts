@@ -13,7 +13,7 @@ const handleRefreshToken = async (req: Request, res: Response) => {
         res.cookie('accessToken', accessToken, { maxAge: 1000 * 60 * 60 * 24 })
         res.json(accessToken)
     } catch (error) {
-        console.log('Error while refreshing tokens')
+        console.log('Error while refreshing tokens', error)
         res.status(401).json('Error while refreshing tokens')
     }
 }

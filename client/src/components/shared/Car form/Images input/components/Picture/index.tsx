@@ -12,7 +12,7 @@ const Picture = ({ image, removeImage }: Props) => {
     const [isHovering, setIsHovering] = useState(false)
 
     const source = image instanceof File ? URL.createObjectURL(image) : image.url
-    const name = image.name
+    const originalName = image instanceof File ? image.name : image.originalName
 
     return (
         <div
@@ -32,7 +32,7 @@ const Picture = ({ image, removeImage }: Props) => {
             >
                 <div className='flex h-full w-full flex-col justify-center'>
                     <h3 className='mx-auto text-sm font-semibold md:text-lg'>
-                        {name.length <= 10 ? name : name.slice(0, 10) + '...'}
+                        {originalName.length <= 10 ? originalName : originalName.slice(0, 10) + '...'}
                     </h3>
                     <AiOutlineCloseCircle
                         className='mx-auto mt-0.5 h-2/5 w-2/5 text-red-500'

@@ -12,6 +12,10 @@ const DATABASE_USER = process.env.DATABASE_USER!
 const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD!
 const DATABASE_NAME = process.env.DATABASE_NAME!
 
+const publicKey = process.env.IMAGEKIT_PUBLIC_KEY!
+const privateKey = process.env.IMAGEKIT_PRIVATE_KEY!
+const urlEndpoint = process.env.IMAGEKIT_URL_ENDPOINT!
+
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID!
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!
 
@@ -25,6 +29,9 @@ export {
     DATABASE_NAME,
     DATABASE_PASSWORD,
     DATABASE_USER,
+    publicKey,
+    privateKey,
+    urlEndpoint,
     GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET,
     JWT_SECRET

@@ -45,10 +45,10 @@ const CreateListing = () => {
 
         const formData = createFormData(car, images)
 
-        const postCar = createProtectedRequest(
-            async (token) => await createCarQuery(formData, token),
-            createCar
-        )
+        const postCar = createProtectedRequest({
+            requestQuery: async (token) => await createCarQuery(formData, token),
+            callback: createCar
+        })
 
         await toast.promise(postCar(), {
             success: 'Car has been listed',

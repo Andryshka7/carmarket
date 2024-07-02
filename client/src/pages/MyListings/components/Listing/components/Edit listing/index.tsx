@@ -52,9 +52,9 @@ const EditListing = ({ closeModal, ...car }: Props) => {
         const year = Number(data.year)
         const price = Number(data.price)
 
-        const modifiedCar = { ...car, ...data, year, price, type, transmission, images }
+        const modifiedCar = { ...car, ...data, year, price, type, transmission }
 
-        if (!carIsModified(car, modifiedCar)) {
+        if (!carIsModified(car, { ...modifiedCar, images })) {
             return toast.error('There are no modifications!')
         }
 
@@ -63,10 +63,10 @@ const EditListing = ({ closeModal, ...car }: Props) => {
 
         const formData = createFormData(modifiedCar, imageFiles, removedImages)
 
-        const updateCar = createProtectedRequest(
-            async (accessToken: string) => await updateCarQuery(formData, accessToken),
-            editCar
-        )
+        const updateCar = createProtectedRequest({
+            requestQuery: async (accessToken: string) => await updateCarQuery(formData, accessToken),
+            callback: editCar
+        })
 
         setLoading(true)
 

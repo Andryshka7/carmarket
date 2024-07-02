@@ -22,8 +22,8 @@ const handleLogIn = async (req: Request, res: Response) => {
             res.status(401).json('Wrong credentials!')
         }
     } catch (error) {
+        console.log('Error while logging in', error)
         res.status(500).json('Error while logging in')
-        console.log('Error while logging in')
     }
 }
 

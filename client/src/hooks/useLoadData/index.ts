@@ -14,7 +14,11 @@ const useLoadData = () => {
 
     const createProtectedRequest = useCreateProtectedRequest()
 
-    const fetchUser = createProtectedRequest(fetchUserQuery, setUser)
+    const fetchUser = createProtectedRequest({
+        requestQuery: fetchUserQuery,
+        callback: setUser,
+        redirect: false
+    })
 
     const loadData = async () => {
         if (await healthCheck()) {

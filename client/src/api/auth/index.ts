@@ -1,3 +1,4 @@
+export { default as checkAuthQuery } from './check auth'
 export { default as fetchUserQuery } from './fetch user'
 export { default as logInQuery } from './log in'
 export { default as logOutQuery } from './log out'
