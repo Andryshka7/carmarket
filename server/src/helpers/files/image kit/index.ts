@@ -1,6 +1,5 @@
 import { publicKey, privateKey, urlEndpoint } from 'config'
-
-const ImageKit = require('imagekit')
+import ImageKit from 'imagekit'
 
 const imageKit = new ImageKit({
     publicKey,
