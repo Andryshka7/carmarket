@@ -11,4 +11,3 @@ server/images/*.svg
 !server/images/guest.png
 
 .env
-.prettierrc
