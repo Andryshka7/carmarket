@@ -14,7 +14,7 @@ app.use(cors({ origin: CLIENT_URL, credentials: true }))
 
 app.use(passport.initialize())
 
-app.use('/images', express.static(path.join(__dirname, 'images')))
+app.use('/images', express.static(path.join(__dirname, '..', 'images')))
 
 app.use('/health', healthRouter)
 app.use('/cars', carsRouter)

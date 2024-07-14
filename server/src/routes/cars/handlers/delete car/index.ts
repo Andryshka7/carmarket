@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { deleteCar } from 'database/queries/cars'
 import { deleteRelatedImages, fetchRelatedImages } from 'database/queries/images'
-import { deleteFile } from 'helpers'
+import { deleteFiles } from 'helpers'
 
 const handleDeleteCar = async (req: Request, res: Response) => {
     try {
@@ -12,7 +12,7 @@ const handleDeleteCar = async (req: Request, res: Response) => {
         await deleteCar(id)
 
         if (images) {
-            await Promise.all(images.map(async (url) => await deleteFile(url)))
+            await deleteFiles(...images)
         }
         res.status(200).json('Car has been deleted')
     } catch (error) {

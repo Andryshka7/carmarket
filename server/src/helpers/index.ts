@@ -1,8 +1,3 @@
-import multer from 'multer'
-
-const storage = multer.memoryStorage()
-
-export const upload = multer({ storage })
-
-export { uploadFile, deleteFile } from './files'
+export { default as upload } from './upload'
+export { default as deleteFiles } from './delete files'
 export { createAccessToken, createRefreshToken, verifyToken } from './jwt'

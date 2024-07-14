@@ -1,12 +1,14 @@
 node_modules
 dist
 
-server/src/images/*.jpg
-server/src/images/*.jpeg
-server/src/images/*.png
-server/src/images/*.gif
-server/src/images/*.bmp
-server/src/images/*.svg
+server/images/*.jpg
+server/images/*.jpeg
+server/images/*.png
+server/images/*.gif
+server/images/*.bmp
+server/images/*.svg
+
+!server/images/guest.png
 
 .env
 .prettierrc

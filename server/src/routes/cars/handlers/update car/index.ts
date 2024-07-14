@@ -2,8 +2,8 @@ import { Request, Response } from 'express'
 import { updateCar } from 'database/queries/cars'
 import { createImage, deleteImage } from 'database/queries/images'
 import { Car } from 'types'
-import { uuid } from 'uuidv4'
-import { deleteFile, uploadFile } from 'helpers'
+import { deleteFiles } from 'helpers'
+import { SERVER_URL } from 'config'
 
 const handleUpdateCar = async (req: Request, res: Response) => {
     try {
@@ -12,13 +12,10 @@ const handleUpdateCar = async (req: Request, res: Response) => {
         if (Array.isArray(req.files)) {
             await Promise.all(
                 req.files.map(async (file) => {
-                    const name = uuid()
-                    const extension = file.originalname.split('.')[1]
-
-                    const fileName = `${name}.${extension}`
+                    const fileName = file.filename
                     const originalName = file.originalname
 
-                    const url = await uploadFile(file, fileName)
+                    const url = `${SERVER_URL}/images/${file.filename}`
 
                     await createImage(fileName, originalName, url, car.id)
                     car.images.push({ name: fileName, originalName, url })
@@ -31,10 +28,7 @@ const handleUpdateCar = async (req: Request, res: Response) => {
         car.images = car.images.filter(({ url }) => !removedImages.includes(url))
 
         await Promise.all([
-            removedImages.map(async (url) => {
-                await deleteFile(url)
-                await deleteImage(url)
-            }),
+            await deleteFiles(...removedImages),
             await updateCar(car)
         ])
 

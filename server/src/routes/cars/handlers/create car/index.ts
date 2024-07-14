@@ -2,8 +2,7 @@ import { Request, Response } from 'express'
 import { createCar } from 'database/queries/cars'
 import { createImage } from 'database/queries/images'
 import { Car, Image, User } from 'types'
-import { uuid } from 'uuidv4'
-import { uploadFile } from 'helpers'
+import { SERVER_URL } from 'config'
 
 const handleCreateCar = async (req: Request, res: Response) => {
     try {
@@ -17,13 +16,10 @@ const handleCreateCar = async (req: Request, res: Response) => {
         if (Array.isArray(req.files)) {
             await Promise.all(
                 req.files.map(async (file) => {
-                    const name = uuid()
-                    const extension = file.originalname.split('.')[1]
-
-                    const fileName = `${name}.${extension}`
+                    const fileName = file.filename
                     const originalName = file.originalname
 
-                    const url = await uploadFile(file, fileName)
+                    const url = `${SERVER_URL}/images/${file.filename}`
 
                     await createImage(fileName, originalName, url, car_id)
                     uploaded.push({ name: fileName, originalName, url })

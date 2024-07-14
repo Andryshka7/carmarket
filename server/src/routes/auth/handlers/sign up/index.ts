@@ -3,8 +3,7 @@ import { createUser, fetchUserByEmail } from 'database/queries/users'
 import { Request, Response } from 'express'
 import { createAccessToken, createRefreshToken } from 'helpers/jwt'
 import { storeRefreshToken } from 'database/queries/refresh tokens'
-import { uploadFile } from 'helpers'
-import { uuid } from 'uuidv4'
+import { SERVER_URL } from 'config'
 
 const handleSignUp = async (req: Request, res: Response) => {
     try {
@@ -12,7 +11,7 @@ const handleSignUp = async (req: Request, res: Response) => {
         const email = req.body.email as string
         const password = await hash(req.body.password, 10)
 
-        const avatar = req.file ? await uploadFile(req.file, uuid()) : 'guest.png'
+        const avatar = `${SERVER_URL}/images/${req.file ? req.file.filename : 'guest.png'}`
 
         const userExists = await fetchUserByEmail(email)
 
