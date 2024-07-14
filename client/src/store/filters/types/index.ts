@@ -1,16 +1,16 @@
 interface PriceRange {
-    minimum?: number
-    maximum?: number
+	minimum?: number
+	maximum?: number
 }
 
 interface Transmissions {
-    automatic: boolean
-    manual: boolean
+	automatic: boolean
+	manual: boolean
 }
 
 interface Types {
-    fuel: boolean
-    electric: boolean
+	fuel: boolean
+	electric: boolean
 }
 
 export { PriceRange, Transmissions, Types }

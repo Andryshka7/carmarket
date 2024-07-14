@@ -1,8 +1,17 @@
 import pool from 'database'
 import { Car } from 'types'
 
-const updateCar = async ({ id, model, year, price, power, type, transmission, description }: Car) => {
-    const sql = `
+const updateCar = async ({
+	id,
+	model,
+	year,
+	price,
+	power,
+	type,
+	transmission,
+	description
+}: Car) => {
+	const sql = `
     UPDATE cars
     SET
         model = ?,
@@ -14,7 +23,7 @@ const updateCar = async ({ id, model, year, price, power, type, transmission, de
         description = ?
     WHERE id = ?
     `
-    await pool.query(sql, [model, year, price, power, type, transmission, description, id])
+	await pool.query(sql, [model, year, price, power, type, transmission, description, id])
 }
 
 export default updateCar

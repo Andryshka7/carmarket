@@ -3,7 +3,7 @@ import { RowDataPacket } from 'mysql2'
 import { Car } from 'types'
 
 const fetchCars = async () => {
-    const sql = `
+	const sql = `
     SELECT cars.*,
            JSON_OBJECT(
              'id', users.id,
@@ -23,13 +23,13 @@ const fetchCars = async () => {
     LEFT JOIN images ON images.car = cars.id
     GROUP BY cars.id
   `
-    const [rows] = await pool.query<RowDataPacket[]>(sql)
+	const [rows] = await pool.query<RowDataPacket[]>(sql)
 
-    if (rows.length) {
-        return rows as Car[]
-    } else {
-        return []
-    }
+	if (rows.length) {
+		return rows as Car[]
+	} else {
+		return []
+	}
 }
 
 export default fetchCars

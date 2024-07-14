@@ -1,10 +1,10 @@
-import { createPool } from 'mysql2'
 import {
-    DATABASE_HOST as host,
-    DATABASE_USER as user,
-    DATABASE_PASSWORD as password,
-    DATABASE_NAME as database
+	DATABASE_NAME as database,
+	DATABASE_HOST as host,
+	DATABASE_PASSWORD as password,
+	DATABASE_USER as user
 } from 'config'
+import { createPool } from 'mysql2'
 
 const charset = 'utf8'
 

@@ -3,53 +3,53 @@
 @tailwind utilities;
 
 body {
-    font-family: Inter, system-components, Avenir, Helvetica, Arial, sans-serif;
+	font-family: Inter, system-components, Avenir, Helvetica, Arial, sans-serif;
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+	-webkit-appearance: none;
+	margin: 0;
 }
 input[type='number'] {
-    -moz-appearance: textfield;
+	-moz-appearance: textfield;
 }
 
 .scrollbar::-webkit-scrollbar {
-    width: 8px;
-    background-color: transparent;
+	width: 8px;
+	background-color: transparent;
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background-color: #777;
+	border-radius: 2px;
+	background-color: #777;
 }
 
 .loader div {
-    animation: bounce 1s ease-in-out infinite;
+	animation: bounce 1s ease-in-out infinite;
 }
 
 .loader div:nth-child(1) {
-    background-color: #3498db;
-    animation-delay: 0.1s;
+	background-color: #3498db;
+	animation-delay: 0.1s;
 }
 .loader div:nth-child(2) {
-    background-color: #f39c12;
-    animation-delay: 0.2s;
+	background-color: #f39c12;
+	animation-delay: 0.2s;
 }
 .loader div:nth-child(3) {
-    background-color: #27ae60;
-    animation-delay: 0.3s;
+	background-color: #27ae60;
+	animation-delay: 0.3s;
 }
 
 @keyframes bounce {
-    0% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-15px);
-    }
-    100% {
-        transform: translateY(0px);
-    }
+	0% {
+		transform: translateY(0px);
+	}
+	50% {
+		transform: translateY(-15px);
+	}
+	100% {
+		transform: translateY(0px);
+	}
 }

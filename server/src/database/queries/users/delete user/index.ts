@@ -1,11 +1,11 @@
 import pool from 'database'
 
 const deleteUser = async (id: number) => {
-    const sql = `
+	const sql = `
     DELETE FROM users
     WHERE id = ?
     `
-    await pool.query(sql, [id])
+	await pool.query(sql, [id])
 }
 
 export default deleteUser

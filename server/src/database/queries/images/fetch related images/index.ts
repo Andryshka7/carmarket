@@ -3,17 +3,17 @@ import { RowDataPacket } from 'mysql2'
 import { Image } from 'types'
 
 const fetchRelatedImages = async (carId: number) => {
-    const sql = `
+	const sql = `
     SELECT * FROM images
     WHERE car = ?
     `
-    const [rows] = await pool.query<RowDataPacket[]>(sql, [carId])
+	const [rows] = await pool.query<RowDataPacket[]>(sql, [carId])
 
-    if (rows.length) {
-        return (rows as Image[]).map(({ url }) => url)
-    } else {
-        return null
-    }
+	if (rows.length) {
+		return (rows as Image[]).map(({ url }) => url)
+	} else {
+		return null
+	}
 }
 
 export default fetchRelatedImages

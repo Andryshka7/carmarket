@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 
 interface Props {
-    children: ReactNode
+	children: ReactNode
 }
 
 const portal = document.getElementById('portal')!

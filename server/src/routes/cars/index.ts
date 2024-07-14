@@ -1,7 +1,8 @@
 import { Router } from 'express'
-import { authenticate } from 'middleware'
-import { handleDeleteCar, handleCreateCar, handleUpdateCar, handleFetchCars } from './handlers'
 import { upload } from 'helpers'
+import { authenticate } from 'middleware'
+
+import { handleCreateCar, handleDeleteCar, handleFetchCars, handleUpdateCar } from './handlers'
 
 const carsRouter = Router()
 
