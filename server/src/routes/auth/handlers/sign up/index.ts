@@ -26,7 +26,10 @@ const handleSignUp = async (req: Request, res: Response) => {
 		const accessToken = createAccessToken(user)
 		const refreshToken = createRefreshToken(user)
 
-		res.cookie('accessToken', accessToken, { maxAge: 1000 * 60 * 60 * 24 })
+		res.cookie('accessToken', accessToken, {
+			sameSite: 'none',
+			maxAge: 1000 * 60 * 60 * 24
+		})
 		await storeRefreshToken(refreshToken, user.id)
 
 		res.status(200).json(user)

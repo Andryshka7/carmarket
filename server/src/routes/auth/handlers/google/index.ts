@@ -18,7 +18,10 @@ const handleGoogleSignIn = async (req: Request, res: Response) => {
 			const accessToken = createAccessToken({ id, username, email, avatar })
 			const refreshToken = createRefreshToken({ id, username, email, avatar })
 
-			res.cookie('accessToken', accessToken, { maxAge: 1000 * 60 * 60 * 24 })
+			res.cookie('accessToken', accessToken, {
+				sameSite: 'none',
+				maxAge: 1000 * 60 * 60 * 24
+			})
 			await storeRefreshToken(refreshToken, id)
 		} else {
 			const username = profile.displayName
@@ -29,7 +32,10 @@ const handleGoogleSignIn = async (req: Request, res: Response) => {
 			const accessToken = createAccessToken({ id, username, email, avatar })
 			const refreshToken = createRefreshToken({ id, username, email, avatar })
 
-			res.cookie('accessToken', accessToken, { maxAge: 1000 * 60 * 60 * 24 })
+			res.cookie('accessToken', accessToken, {
+				sameSite: 'none',
+				maxAge: 1000 * 60 * 60 * 24
+			})
 			await storeRefreshToken(refreshToken, id)
 		}
 
