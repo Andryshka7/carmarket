@@ -20,6 +20,7 @@ const handleGoogleSignIn = async (req: Request, res: Response) => {
 
 			res.cookie('accessToken', accessToken, {
 				sameSite: 'none',
+				domain: CLIENT_URL,
 				maxAge: 1000 * 60 * 60 * 24
 			})
 			await storeRefreshToken(refreshToken, id)
@@ -34,6 +35,7 @@ const handleGoogleSignIn = async (req: Request, res: Response) => {
 
 			res.cookie('accessToken', accessToken, {
 				sameSite: 'none',
+				domain: CLIENT_URL,
 				maxAge: 1000 * 60 * 60 * 24
 			})
 			await storeRefreshToken(refreshToken, id)

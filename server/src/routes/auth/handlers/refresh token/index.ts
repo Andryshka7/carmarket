@@ -1,4 +1,5 @@
 import getRefreshToken from 'database/queries/refresh tokens/get token'
+import { CLIENT_URL } from 'config'
 import { Request, Response } from 'express'
 import { createAccessToken, verifyToken } from 'helpers/jwt'
 
@@ -12,6 +13,7 @@ const handleRefreshToken = async (req: Request, res: Response) => {
 
 		res.cookie('accessToken', accessToken, {
 			sameSite: 'none',
+			domain: CLIENT_URL,
 			maxAge: 1000 * 60 * 60 * 24
 		})
 		res.json(accessToken)
