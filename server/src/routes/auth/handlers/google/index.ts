@@ -1,4 +1,4 @@
-import { CLIENT_URL } from 'config'
+import { CLIENT_URL, DOMAIN_NAME } from 'config'
 import { storeRefreshToken } from 'database/queries/refresh tokens'
 import { createUser, fetchUserByEmail } from 'database/queries/users'
 import { Request, Response } from 'express'
@@ -19,8 +19,7 @@ const handleGoogleSignIn = async (req: Request, res: Response) => {
 			const refreshToken = createRefreshToken({ id, username, email, avatar })
 
 			res.cookie('accessToken', accessToken, {
-				sameSite: 'none',
-				domain: CLIENT_URL,
+				domain: DOMAIN_NAME,
 				maxAge: 1000 * 60 * 60 * 24
 			})
 			await storeRefreshToken(refreshToken, id)
@@ -34,8 +33,7 @@ const handleGoogleSignIn = async (req: Request, res: Response) => {
 			const refreshToken = createRefreshToken({ id, username, email, avatar })
 
 			res.cookie('accessToken', accessToken, {
-				sameSite: 'none',
-				domain: CLIENT_URL,
+				domain: DOMAIN_NAME,
 				maxAge: 1000 * 60 * 60 * 24
 			})
 			await storeRefreshToken(refreshToken, id)

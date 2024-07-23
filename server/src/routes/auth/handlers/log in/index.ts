@@ -1,5 +1,5 @@
 import { compare } from 'bcrypt'
-import { CLIENT_URL } from 'config'
+import { DOMAIN_NAME } from 'config'
 import { storeRefreshToken } from 'database/queries/refresh tokens'
 import { fetchUserByEmail } from 'database/queries/users'
 import { Request, Response } from 'express'
@@ -16,8 +16,7 @@ const handleLogIn = async (req: Request, res: Response) => {
 			const refreshToken = createRefreshToken(user)
 
 			res.cookie('accessToken', accessToken, {
-				sameSite: 'none',
-				domain: CLIENT_URL,
+				domain: DOMAIN_NAME,
 				maxAge: 1000 * 60 * 60 * 24
 			})
 			await storeRefreshToken(refreshToken, user.id)
