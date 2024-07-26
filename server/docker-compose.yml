@@ -1,5 +1,5 @@
 services:
-    tasker-client:
+    carmarket-server:
         container_name: carmarket-server
         volumes:
             - ./src:/app/src

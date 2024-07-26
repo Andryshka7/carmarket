@@ -1,8 +1,7 @@
-import { logOutQuery } from 'api/auth'
-import Cookies from 'js-cookie'
-import { User } from 'types'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { logOutQuery } from 'api/auth'
+import { User } from 'types'
 
 interface Store {
 	user: User | null
@@ -21,7 +20,6 @@ const useAuthStore = create<Store>()(
 				const user = get().user
 				if (user) {
 					set({ user: null })
-					Cookies.remove('accessToken')
 					logOutQuery(user.id)
 				}
 			}

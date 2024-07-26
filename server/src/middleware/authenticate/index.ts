@@ -3,7 +3,8 @@ import { verifyToken } from 'helpers/jwt'
 
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const token = req.headers.authorization?.replace('Bearer ', '')
+		const token = req.cookies['accessToken']
+
 		if (token) {
 			const user = verifyToken(token)
 			req.user = user

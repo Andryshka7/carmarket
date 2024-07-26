@@ -1,1 +1,1 @@
-export { default as getAccessToken } from './get access token'
+export { makeFilter, priceFilter, transmissionFilter, typeFilter } from './filters'

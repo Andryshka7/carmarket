@@ -23,7 +23,7 @@ const Preview = ({ id, image, setEditCar }: Props) => {
 	const [isBeingDeleted, setIsBeingDeleted] = useState(false)
 
 	const deleteCar = createProtectedRequest({
-		requestQuery: async (token) => await deleteCarQuery(token, id),
+		requestQuery: async () => await deleteCarQuery(id),
 		callback: () => removeCar(id)
 	})
 

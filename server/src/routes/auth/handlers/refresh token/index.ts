@@ -1,5 +1,4 @@
 import getRefreshToken from 'database/queries/refresh tokens/get token'
-import { DOMAIN_NAME } from 'config'
 import { Request, Response } from 'express'
 import { createAccessToken, verifyToken } from 'helpers/jwt'
 
@@ -12,10 +11,12 @@ const handleRefreshToken = async (req: Request, res: Response) => {
 		const accessToken = createAccessToken(user)
 
 		res.cookie('accessToken', accessToken, {
-			domain: DOMAIN_NAME,
-			maxAge: 1000 * 60 * 60 * 24
+			maxAge: 1000 * 60 * 60 * 24,
+			secure: true,
+			httpOnly: true
 		})
-		res.json(accessToken)
+
+		res.json()
 	} catch (error) {
 		console.log('Error while refreshing tokens', error)
 		res.status(401).json('Error while refreshing tokens')

@@ -1,12 +1,11 @@
 import { refreshTokenQuery } from 'api/auth'
 import checkAuth from 'api/auth/check auth'
-import { getAccessToken } from 'helpers'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from 'store'
 
 type ProtectedRequestOptions<T> = {
 	redirect?: boolean
-	requestQuery: (accessToken: string) => Promise<T>
+	requestQuery: () => Promise<T>
 	callback: (response: T) => void
 }
 
@@ -23,16 +22,13 @@ const useCreateProtectedRequest = () => {
 			let isAuthenticated = false
 
 			try {
-				const accessToken = getAccessToken()
-				if (accessToken) {
-					await checkAuth(accessToken)
-					isAuthenticated = true
-				}
+				await checkAuth()
+				isAuthenticated = true
 			} catch (error) {
 				try {
 					if (user) {
-						const accessToken = await refreshTokenQuery(user.id)
-						await checkAuth(accessToken)
+						await refreshTokenQuery(user.id)
+						await checkAuth()
 						isAuthenticated = true
 					}
 				} catch (error) {
@@ -42,8 +38,7 @@ const useCreateProtectedRequest = () => {
 			}
 
 			if (isAuthenticated) {
-				const accessToken = getAccessToken()
-				const response = await requestQuery(accessToken!)
+				const response = await requestQuery()
 				callback(response)
 			} else {
 				logOut()

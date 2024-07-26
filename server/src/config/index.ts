@@ -7,8 +7,6 @@ const PORT = process.env.PORT!
 const SERVER_URL = process.env.SERVER_URL!
 const CLIENT_URL = process.env.CLIENT_URL!
 
-const DOMAIN_NAME = process.env.DOMAIN_NAME!
-
 const DATABASE_HOST = process.env.DATABASE_HOST!
 const DATABASE_USER = process.env.DATABASE_USER!
 const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD!
@@ -27,7 +25,6 @@ export {
 	PORT,
 	SERVER_URL,
 	CLIENT_URL,
-	DOMAIN_NAME,
 	DATABASE_HOST,
 	DATABASE_NAME,
 	DATABASE_PASSWORD,

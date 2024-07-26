@@ -1,9 +1,7 @@
 import API from 'api'
 
-const checkAuth = async (token: string) => {
-	await API.get('/auth/checkauth', {
-		headers: { Authorization: `Bearer ${token}` }
-	})
+const checkAuth = async () => {
+	await API.get('/auth/checkauth')
 	return true
 }
 

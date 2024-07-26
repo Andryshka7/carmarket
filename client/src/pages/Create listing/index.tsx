@@ -47,7 +47,7 @@ const CreateListing = () => {
 		const formData = createFormData(car, images)
 
 		const postCar = createProtectedRequest({
-			requestQuery: async (token) => await createCarQuery(formData, token),
+			requestQuery: async () => await createCarQuery(formData),
 			callback: createCar
 		})
 
