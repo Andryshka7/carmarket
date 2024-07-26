@@ -1,0 +1,13 @@
+services:
+    tasker-client:
+        container_name: carmarket-server
+        volumes:
+            - ./src:/app/src
+            - ./public:/app/public
+        build:
+            context: .
+            dockerfile: Dockerfile
+        env_file:
+            - .env
+        ports:
+            - 4000:4000
