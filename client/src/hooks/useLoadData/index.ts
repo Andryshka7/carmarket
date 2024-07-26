@@ -1,4 +1,4 @@
-import { fetchUserQuery } from 'api/auth'
+import { checkAuthQuery } from 'api/auth'
 import { useCreateProtectedRequest } from 'hooks'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -16,7 +16,7 @@ const useLoadData = () => {
 	const createProtectedRequest = useCreateProtectedRequest()
 
 	const fetchUser = createProtectedRequest({
-		requestQuery: fetchUserQuery,
+		requestQuery: checkAuthQuery,
 		callback: setUser,
 		redirect: false
 	})

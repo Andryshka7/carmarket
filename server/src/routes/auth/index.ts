@@ -1,11 +1,10 @@
 import { CLIENT_URL } from 'config'
 import { Router } from 'express'
 import { upload } from 'helpers'
-import { authenticate, passport } from 'middleware'
+import { passport } from 'middleware'
 
 import {
 	handleCheckAuth,
-	handleGetMe,
 	handleGoogleSignIn,
 	handleLogIn,
 	handleLogOut,
@@ -15,8 +14,7 @@ import {
 
 const authRouter = Router()
 
-authRouter.get('/checkauth', authenticate, handleCheckAuth)
-authRouter.get('/getme', authenticate, handleGetMe)
+authRouter.get('/', handleCheckAuth)
 
 authRouter.post('/login', handleLogIn)
 authRouter.post('/signup', upload.single('avatar'), handleSignUp)

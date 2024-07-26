@@ -1,8 +1,9 @@
 import API from 'api'
+import { User } from 'types'
 
 const checkAuth = async () => {
-	await API.get('/auth/checkauth')
-	return true
+	const { data } = await API.get<User>('/auth')
+	return data || null
 }
 
 export default checkAuth

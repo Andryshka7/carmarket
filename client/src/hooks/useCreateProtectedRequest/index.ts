@@ -1,5 +1,4 @@
-import { refreshTokenQuery } from 'api/auth'
-import checkAuth from 'api/auth/check auth'
+import { checkAuthQuery, refreshTokenQuery } from 'api/auth'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from 'store'
 
@@ -22,14 +21,12 @@ const useCreateProtectedRequest = () => {
 			let isAuthenticated = false
 
 			try {
-				await checkAuth()
-				isAuthenticated = true
+				isAuthenticated = !!(await checkAuthQuery())
 			} catch (error) {
 				try {
 					if (user) {
 						await refreshTokenQuery(user.id)
-						await checkAuth()
-						isAuthenticated = true
+						isAuthenticated = !!(await checkAuthQuery())
 					}
 				} catch (error) {
 					logOut()
